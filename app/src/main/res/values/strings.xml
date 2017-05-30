@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Comodin</string>
+    <string name="hint_username">correo o teléfono</string>
+    <string name="hint_password">contraseña</string>
+    <string name="signin">Ingresar</string>
+    <string name="signup">Registrarse</string>
+    <string name="forgot_password"><u>¿Olvidaste tu contraseña?</u></string>
+</resources>
+
+
