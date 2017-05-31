@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/ComodinTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".InicioActivity"
             android:theme="@style/ComodinTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,10 @@
         </activity>
         <activity android:name=".UserActivity" />
         <activity
-
-            android:name=".SigninActivity"
-            android:label="Registrar">
-
-        </activity>
+            android:name=".SignupActivity"
+            android:label="@string/registrar"
+            android:theme="@style/ComodinTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

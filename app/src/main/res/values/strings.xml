@@ -5,6 +5,8 @@
     <string name="signin">Ingresar</string>
     <string name="signup">Registrarse</string>
     <string name="forgot_password"><u>¿Olvidaste tu contraseña?</u></string>
+    <string name="registrar">Registro</string>
+    <string name="seleccionar_usuario">¿Qué usuario eres?</string>
 </resources>
 
 

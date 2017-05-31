@@ -5,11 +5,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import com.tusueldo.comodin.utils.ComodinUtils;
 
-public class LoginActivity extends AppCompatActivity {
+public class InicioActivity extends AppCompatActivity {
 
     private TextInputLayout username;
     private TextInputLayout password;
@@ -17,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_inicio);
         username = (TextInputLayout) findViewById(R.id.username);
         password = (TextInputLayout) findViewById(R.id.password);
 
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_registrar:
-                Intent i = new Intent(v.getContext(), SigninActivity.class);
+                Intent i = new Intent(v.getContext(), SignupActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.animator.enter, R.animator.exit);
 
