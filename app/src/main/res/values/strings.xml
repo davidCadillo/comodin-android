@@ -7,6 +7,8 @@
     <string name="forgot_password"><u>¿Olvidaste tu contraseña?</u></string>
     <string name="registrar">Registro</string>
     <string name="seleccionar_usuario">¿Qué usuario eres?</string>
+    <string name="independiente">Independiente</string>
+    <string name="empresa">Empresa</string>
 </resources>
 
 
