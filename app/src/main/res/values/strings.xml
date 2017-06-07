@@ -9,6 +9,11 @@
     <string name="seleccionar_usuario">¿Qué usuario eres?</string>
     <string name="independiente">Independiente</string>
     <string name="empresa">Empresa</string>
+    <string name="nombres">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="correo">Correo</string>
+    <string name="mobile">Celular</string>
+    <string name="nacimiento">DD/MM/YYYY</string>
 </resources>
 
 

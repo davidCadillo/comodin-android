@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_user"
                     android:drawablePadding="16dp"
-                    android:drawableTint="#000"
+                    android:drawableTint="@color/colorSecundary"
                     android:ems="10"
                     android:hint="@string/hint_username"
                     android:inputType="text" />
@@ -76,9 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:backgroundTintMode="add"
+                android:backgroundTintMode="@color/colorSecundary"
                 app:errorEnabled="true"
-
                 app:passwordToggleDrawable="@drawable/ic_show_password"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/colorPrimaryDark">
@@ -90,6 +89,8 @@
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="16dp"
                     android:drawableStart="@drawable/ic_password"
+                    android:drawableTint="@color/colorSecundary"
+                    android:drawableTintMode="@color/colorSecundary"
                     android:ems="10"
                     android:hint="@string/hint_password"
                     android:inputType="textPassword" />
