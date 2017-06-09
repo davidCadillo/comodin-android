@@ -1,8 +1,6 @@
 <resources>
 
     <!-- Base application theme. -->
-
-
     <style name="ComodinTheme" parent="ComodinTheme.Base">
 
 
@@ -13,11 +11,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="ComodinTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -25,11 +25,15 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Error" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">#FF9800</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Validado" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/colorValidado</item>
     </style>
 
     <style name="Hint" parent="TextAppearance.Design.Hint">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/colorValidado</item>
     </style>
 
     <style name="Counter" parent="TextAppearance.Design.Counter">
@@ -39,4 +43,14 @@
     <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
         <item name="android:textColor">#FF7043</item>
     </style>
+
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#ff00ff</item>
+        <item name="android:textSize">12sp</item>
+        <item name="colorControlHighlight">#0f0</item>
+        <item name="colorControlActivated">#009688</item>
+        <item name="colorControlNormal">#2196F3</item>
+    </style>
+
+
 </resources>

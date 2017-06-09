@@ -13,5 +13,5 @@
     <color name="colorPrimaryDark">#c00a27</color>
     <color name="colorAccent">#c00a27</color>
     <color name="colorSecundary">#e32346</color>
-
+    <color name="colorValidado">#02c900</color>
 </resources>

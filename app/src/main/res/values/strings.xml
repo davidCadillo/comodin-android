@@ -13,7 +13,7 @@
     <string name="apellidos">Apellidos</string>
     <string name="correo">Correo</string>
     <string name="mobile">Celular</string>
-    <string name="nacimiento">DD/MM/YYYY</string>
+    <string name="nacimiento">Fecha de nacimiento</string>
 </resources>
 
 
