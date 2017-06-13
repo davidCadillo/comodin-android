@@ -84,6 +84,7 @@
             android:id="@+id/datos_basicos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -112,14 +113,15 @@
                     app:counterMaxLength="30"
                     app:errorEnabled="true">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/campo_nombre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableTint="@color/colorValidado"
                         android:ems="10"
                         android:hint="@string/nombres"
-                        android:drawableTint="@color/colorValidado"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:selectAllOnFocus="false" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -138,13 +140,13 @@
                     app:counterMaxLength="50"
                     app:errorEnabled="true">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/campo_apellido"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableTint="@color/colorValidado"
                         android:ems="10"
                         android:hint="@string/apellidos"
-                        android:drawableTint="@color/colorValidado"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -177,10 +179,11 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="40">
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/campo_correo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableTint="@color/colorValidado"
                     android:hint="@string/correo"
                     android:inputType="textEmailAddress"
                     app:errorEnabled="true" />
@@ -188,14 +191,14 @@
         </LinearLayout>
         <!--END Aqui va el campo de correo-->
 
-
+        <!--BEGIN Aqui va la fecha de nacimiento-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-15dp"
             android:orientation="horizontal"
             android:weightSum="7">
-            <!--BEGIN Aqui va la fecha de nacimiento-->
+
             <LinearLayout
                 android:id="@+id/area_fecha_nac"
                 android:layout_width="wrap_content"
@@ -217,12 +220,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/campo_fecha_nac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/nacimiento"
                         android:inputType="date"
+                        android:drawableTint="@color/colorValidado"
                         app:errorEnabled="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -254,10 +258,11 @@
                     app:counterMaxLength="9"
                     app:errorEnabled="true">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/campo_telefono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableTint="@color/colorValidado"
                         android:hint="@string/mobile"
                         android:inputType="phone" />
                 </android.support.design.widget.TextInputLayout>
