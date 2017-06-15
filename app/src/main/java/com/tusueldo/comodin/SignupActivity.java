@@ -3,7 +3,10 @@ package com.tusueldo.comodin;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,11 +40,23 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.img_fecha_nac)
     ImageView img_fecha_nac;
 
+    static boolean pulsado = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
+        til_fecha_nac.setError("dd/mm/yyyy");
+        til_fecha_nac.getEditText().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_BACK)
+                    pulsado = true;
+                return false;
+            }
+        });
     }
 
     @OnTextChanged(R.id.campo_nombre)
@@ -69,17 +84,25 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.validateFechaNac(this, fecha_nac, til_fecha_nac, img_fecha_nac);
     }
 
-    @OnFocusChange(R.id.campo_nombre)
-    protected void onFocusChange(View v, boolean hasFocus) {
-
-        switch (v.getId()) {
-            case R.id.campo_nombre:
-                if (!v.hasFocus()) {
-
-                }
+    @OnTextChanged(value = {R.id.campo_fecha_nac}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void inputFecha(Editable editable) {
+        String fecha = editable.toString();
+        if ((fecha.length() == 2 || fecha.length() == 5) && pulsado == false) {
+            pulsado = false;
+            editable.append("/");
         }
 
+    }
 
+
+    @OnFocusChange(R.id.campo_nombre)
+    protected void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.campo_nombre:
+                if (!v.hasFocus() && ComodinValidator.nombreValidado == false) {
+                    til_nombre.setErrorEnabled(false);
+                }
+        }
     }
 
 }

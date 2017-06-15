@@ -84,13 +84,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1.0">
+            android:weightSum="2">
 
             <LinearLayout
                 android:id="@+id/area_nombre"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -113,8 +113,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/colorValidado"
+                        android:ems="1"
                         android:hint="@string/nombres"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/campo_apellido"
+                        android:nextFocusRight="@+id/campo_apellido" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -122,9 +125,9 @@
 
             <LinearLayout
                 android:id="@+id/area_apellido"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
@@ -138,7 +141,8 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/colorValidado"
                         android:hint="@string/apellidos"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/campo_correo" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -175,7 +179,8 @@
                     android:layout_height="wrap_content"
                     android:drawableTint="@color/colorValidado"
                     android:hint="@string/correo"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:nextFocusDown="@+id/campo_fecha_nac" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
         <!--END Aqui va el campo de correo-->
@@ -216,7 +221,9 @@
                         android:drawableTint="@color/colorValidado"
                         android:ems="9"
                         android:hint="@string/nacimiento"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:nextFocusDown="@+id/campo_telefono"
+                        android:nextFocusRight="@+id/campo_telefono" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -251,7 +258,8 @@
                         android:drawableTint="@color/colorValidado"
                         android:ems="6"
                         android:hint="@string/mobile"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:nextFocusDown="@id/campo_password" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -277,12 +285,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp">
+                android:layout_marginStart="8dp"
+                app:passwordToggleDrawable="@drawable/ic_show_password"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimaryDark">
 
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password"
+                    android:hint="@string/pass"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/re_password"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                app:hintEnabled="false"
+                app:hintTextAppearance="@style/TextAppearance.Design.Hint"
+                app:passwordToggleDrawable="@drawable/ic_show_password"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimaryDark">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/re_pass"
+                    android:fontFamily="sans-serif"
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>

@@ -25,7 +25,7 @@ public class ComodinPattern {
     El nombre como mínimo ha de ser de 3 letras y máximo de 30. Se permiten nombres compuestos
     * */
 
-    public static final String NOMBRES = "([a-zA-Záéíóú]+['\\s-]?){1,5}";
+    public static final String NOMBRES = "([a-zA-ZáéíóúñÑ]+['\\s-]?){1,5}";
 
     /*Expresión regular usada para detectar al menos un dígito en una cadena*/
     public static final String TIENE_ALGUN_NUMERO = ".*\\d+.*";
