@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        til_fecha_nac.setError("dd/mm/yyyy");
+        //til_fecha_nac.setError("dd/mm/yyyy");
         til_fecha_nac.getEditText().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @OnTextChanged(R.id.campo_fecha_nac)
     protected void onTextChangedFechaNac(CharSequence fecha_nac) {
-        ComodinValidator.validateFechaNac(this, fecha_nac, til_fecha_nac, img_fecha_nac);
+       // ComodinValidator.validateFechaNac(this, fecha_nac, til_fecha_nac, img_fecha_nac);
     }
 
     @OnTextChanged(value = {R.id.campo_fecha_nac}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -95,13 +95,21 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    @OnFocusChange(R.id.campo_nombre)
+    @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac})
     protected void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.campo_nombre:
                 if (!v.hasFocus() && ComodinValidator.nombreValidado == false) {
                     til_nombre.setErrorEnabled(false);
                 }
+                break;
+
+            case R.id.campo_fecha_nac:
+                if(v.hasFocus()){
+                    til_fecha_nac.setHint("Día");
+                }
+
+                break;
         }
     }
 

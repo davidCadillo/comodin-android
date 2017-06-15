@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -140,6 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/colorValidado"
+                        android:ems="1"
                         android:hint="@string/apellidos"
                         android:inputType="textPersonName"
                         android:nextFocusDown="@+id/campo_correo" />
@@ -191,13 +193,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="7">
+            android:weightSum="1.0">
 
             <LinearLayout
                 android:id="@+id/area_fecha_nac"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="0.7"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -208,23 +210,106 @@
                     android:src="@drawable/ic_date"
                     android:tint="@color/colorPrimaryDark" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/til_fecha_nac"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/fecha"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp">
+                    android:orientation="horizontal"
+                    android:weightSum="8.5">
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/campo_fecha_nac"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:drawableTint="@color/colorValidado"
-                        android:ems="9"
-                        android:hint="@string/nacimiento"
-                        android:inputType="date"
-                        android:nextFocusDown="@+id/campo_telefono"
-                        android:nextFocusRight="@+id/campo_telefono" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_weight="1.5">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_fecha_nac"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/campo_fecha_nac"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="dd"
+                                android:inputType="number" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
+                        android:layout_weight="0.25">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom"
+                            android:text="/"
+                            android:textAlignment="center"
+                            android:textColor="#c6c6c6"
+                            android:textSize="30sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="mm"
+                                android:inputType="number" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
+                        android:layout_weight="0.25">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom"
+                            android:text="/"
+                            android:textAlignment="center"
+                            android:textColor="#c6c6c6"
+                            android:textSize="30sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:hint="yyyy"
+                                android:inputType="number" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
             <!--END Aqui va la fecha de nacimiento-->
@@ -232,9 +317,9 @@
             <!--BEGIN Aqui va el teléfono-->
             <LinearLayout
                 android:id="@+id/area_telefono"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="0.3"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -247,16 +332,16 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/til_telefono"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/campo_telefono"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="@color/colorValidado"
-                        android:ems="6"
+                        android:ems="1"
                         android:hint="@string/mobile"
                         android:inputType="phone"
                         android:nextFocusDown="@id/campo_password" />
@@ -299,11 +384,12 @@
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/re_password"
             android:layout_width="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -319,8 +405,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/re_pass"
                     android:fontFamily="sans-serif"
+                    android:hint="@string/re_pass"
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
