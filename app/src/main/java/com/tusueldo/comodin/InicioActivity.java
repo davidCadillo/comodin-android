@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
 import com.tusueldo.comodin.utils.ComodinUtils;
 
 public class InicioActivity extends AppCompatActivity {
@@ -18,21 +19,14 @@ public class InicioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
         username = (TextInputLayout) findViewById(R.id.username);
         password = (TextInputLayout) findViewById(R.id.password);
-
-
     }
 
 
     public void procesar(View v) {
-
-
         switch (v.getId()) {
-
-
             case R.id.btn_login:
 
                 if (username.getEditText().getText().toString().equals("admin") && password.getEditText().getText().toString().equals("admin")) {
-
                     Intent i = new Intent(v.getContext(), UserActivity.class);
                     startActivity(i);
 

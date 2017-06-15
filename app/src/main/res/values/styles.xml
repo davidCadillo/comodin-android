@@ -44,9 +44,7 @@
         <item name="android:textColor">#FF7043</item>
     </style>
 
-    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">#ff00ff</item>
-        <item name="android:textSize">12sp</item>
+    <style name="ThemeEditText" parent="@android:style/TextAppearance">
         <item name="colorControlHighlight">#0f0</item>
         <item name="colorControlActivated">#009688</item>
         <item name="colorControlNormal">#2196F3</item>

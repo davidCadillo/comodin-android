@@ -14,6 +14,7 @@
     <string name="correo">Correo</string>
     <string name="mobile">Celular</string>
     <string name="nacimiento">Fecha de nacimiento</string>
+    <string name="password">Contraseña</string>
 </resources>
 
 

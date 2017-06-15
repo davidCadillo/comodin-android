@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+
 import com.tusueldo.comodin.R;
 
 import java.util.regex.Pattern;
@@ -17,12 +18,11 @@ import java.util.regex.Pattern;
 
 public class ComodinValidator {
 
-    private static boolean nombreValidado = false;
-    private static boolean apellidoValidado = false;
-    private static boolean telefonoValidado = false;
-    private static boolean fechaValidada = false;
-    private static boolean correoValidado = false;
-
+    public static boolean nombreValidado = false;
+    public static boolean apellidoValidado = false;
+    public static boolean telefonoValidado = false;
+    public static boolean fechaValidada = false;
+    public static boolean correoValidado = false;
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
@@ -35,8 +35,6 @@ public class ComodinValidator {
             markEmpty(context, til_nombre, img_nombres, "No permitido.");
         } else if (nombre.length() < 3) {
             markEmpty(context, til_nombre, img_nombres, "Mínimo 3 letras.");
-        } else if (nombre.length() > til_nombre.getCounterMaxLength()) {
-            markEmpty(context, til_nombre, img_nombres, "Exceso de caracteres.");
         } else if (validarNombre) {
             nombreValidado = true;
             markValidate(til_nombre);
@@ -57,8 +55,6 @@ public class ComodinValidator {
             markEmpty(context, til_apellido, img_nombres, "No permitido.");
         } else if (apellido.length() < 3) {
             markEmpty(context, til_apellido, img_nombres, "Mínimo 3 letras.");
-        } else if (apellido.length() > til_apellido.getCounterMaxLength()) {
-            markEmpty(context, til_apellido, img_nombres, "Exceso de caracteres.");
         } else if (validarApellido) {
             apellidoValidado = true;
             markValidate(til_apellido);
@@ -112,6 +108,8 @@ public class ComodinValidator {
 
 
     private static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message) {
+        textInputLayout.setCounterEnabled(true);
+        textInputLayout.setCounterMaxLength(30);
         textInputLayout.setHintTextAppearance(R.style.Error);
         textInputLayout.setErrorTextAppearance(R.style.Error);
         textInputLayout.setError(message);
