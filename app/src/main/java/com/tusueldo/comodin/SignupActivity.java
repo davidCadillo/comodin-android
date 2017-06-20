@@ -1,20 +1,15 @@
 package com.tusueldo.comodin;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
-
 import com.tusueldo.comodin.utils.ComodinValidator;
 
 public class SignupActivity extends AppCompatActivity {
@@ -28,8 +23,17 @@ public class SignupActivity extends AppCompatActivity {
     TextInputLayout til_correo;
     @BindView(R.id.til_telefono)
     TextInputLayout til_telefono;
-    @BindView(R.id.til_fecha_nac)
-    TextInputLayout til_fecha_nac;
+    @BindView(R.id.til_fecha_nac_dia)
+    TextInputLayout til_fecha_nac_dia;
+    @BindView(R.id.campo_fecha_nac_mes)
+    TextInputEditText campo_fecha_nac_mes;
+    @BindView(R.id.til_fecha_nac_mes)
+    TextInputLayout til_fecha_nac_mes;
+    @BindView(R.id.campo_fecha_nac_anio)
+    TextInputEditText campo_fecha_nac_anio;
+    @BindView(R.id.til_fecha_nac_anio)
+    TextInputLayout til_fecha_nac_anio;
+
     /*Cargando los imageView*/
     @BindView(R.id.img_nombres)
     ImageView img_nombres;
@@ -42,21 +46,12 @@ public class SignupActivity extends AppCompatActivity {
 
     static boolean pulsado = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        //til_fecha_nac.setError("dd/mm/yyyy");
-        til_fecha_nac.getEditText().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
-                if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_BACK)
-                    pulsado = true;
-                return false;
-            }
-        });
     }
 
     @OnTextChanged(R.id.campo_nombre)
@@ -79,23 +74,8 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.validateTelefono(this, telefono, til_telefono, img_telefono);
     }
 
-    @OnTextChanged(R.id.campo_fecha_nac)
-    protected void onTextChangedFechaNac(CharSequence fecha_nac) {
-       // ComodinValidator.validateFechaNac(this, fecha_nac, til_fecha_nac, img_fecha_nac);
-    }
 
-    @OnTextChanged(value = {R.id.campo_fecha_nac}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void inputFecha(Editable editable) {
-        String fecha = editable.toString();
-        if ((fecha.length() == 2 || fecha.length() == 5) && pulsado == false) {
-            pulsado = false;
-            editable.append("/");
-        }
-
-    }
-
-
-    @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac})
+    @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio})
     protected void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.campo_nombre:
@@ -104,11 +84,22 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.campo_fecha_nac:
-                if(v.hasFocus()){
-                    til_fecha_nac.setHint("Día");
+            case R.id.campo_fecha_nac_dia:
+                if (v.hasFocus()) {
+                    til_fecha_nac_dia.setHint("Día");
                 }
+                break;
 
+            case R.id.campo_fecha_nac_mes:
+                if (v.hasFocus()) {
+                    til_fecha_nac_mes.setHint("Mes");
+                }
+                break;
+
+            case R.id.campo_fecha_nac_anio:
+                if (v.hasFocus()) {
+                    til_fecha_nac_anio.setHint("Año");
+                }
                 break;
         }
     }

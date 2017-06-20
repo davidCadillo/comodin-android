@@ -199,7 +199,7 @@
                 android:id="@+id/area_fecha_nac"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
+                android:layout_weight="0.5"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -215,21 +215,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="8.5">
-
+                    android:weightSum="6.5">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.5">
+                        android:layout_weight="2">
 
                         <android.support.design.widget.TextInputLayout
-                            android:id="@+id/til_fecha_nac"
+                            android:id="@+id/til_fecha_nac_dia"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <android.support.design.widget.TextInputEditText
-                                android:id="@+id/campo_fecha_nac"
+                                android:id="@+id/campo_fecha_nac_dia"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
@@ -241,7 +240,6 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-
                         android:layout_weight="0.25">
 
                         <TextView
@@ -257,13 +255,15 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.5">
+                        android:layout_weight="2">
 
                         <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_fecha_nac_mes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/campo_fecha_nac_mes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
@@ -295,10 +295,12 @@
                         android:layout_weight="2">
 
                         <android.support.design.widget.TextInputLayout
+                            android:id="@+id/til_fecha_nac_anio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <android.support.design.widget.TextInputEditText
+                                android:id="@+id/campo_fecha_nac_anio"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
@@ -319,8 +321,9 @@
                 android:id="@+id/area_telefono"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:orientation="horizontal">
+                android:layout_weight="0.5"
+                android:orientation="horizontal"
+                tools:layout_weight="0.5">
 
                 <ImageView
                     android:id="@+id/img_telefono"
