@@ -74,6 +74,20 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.validateTelefono(this, telefono, til_telefono, img_telefono);
     }
 
+    @OnTextChanged(R.id.campo_fecha_nac_dia)
+    protected void onTextChangedFechaDia(CharSequence dia) {
+        ComodinValidator.validateFechaDia(this, dia, til_fecha_nac_dia, null);
+    }
+
+    @OnTextChanged(R.id.campo_fecha_nac_mes)
+    protected void onTextChangedFechaMes(CharSequence mes) {
+        ComodinValidator.validateFechaMes(this, mes, til_fecha_nac_mes, null);
+    }
+
+    @OnTextChanged(R.id.campo_fecha_nac_anio)
+    protected void onTextChangedFechaAnio(CharSequence anio) {
+        ComodinValidator.validateFechaAnio(this, anio, til_fecha_nac_anio, null);
+    }
 
     @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio})
     protected void onFocusChange(View v, boolean hasFocus) {
@@ -102,6 +116,10 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void showHint(String texto, TextInputLayout til) {
+        til.setHint(texto);
     }
 
 }

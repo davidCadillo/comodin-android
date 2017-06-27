@@ -233,6 +233,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="dd"
+                                android:maxLength="2"
                                 android:inputType="number" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -268,6 +269,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="mm"
+                                android:maxLength="2"
                                 android:inputType="number" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -305,6 +307,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="yyyy"
+                                android:maxLength="4"
                                 android:inputType="number" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
@@ -346,6 +349,7 @@
                         android:drawableTint="@color/colorValidado"
                         android:ems="1"
                         android:hint="@string/mobile"
+                        android:maxLength="9"
                         android:inputType="phone"
                         android:nextFocusDown="@id/campo_password" />
                 </android.support.design.widget.TextInputLayout>

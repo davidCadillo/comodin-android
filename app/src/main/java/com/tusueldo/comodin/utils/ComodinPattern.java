@@ -30,4 +30,8 @@ public class ComodinPattern {
     /*Expresión regular usada para detectar al menos un dígito en una cadena*/
     public static final String TIENE_ALGUN_NUMERO = ".*\\d+.*";
 
+    public static final String FECHA_DIA = "^0[1-9]|[12][0-9]|3[01]$";
+    public static final String FECHA_MES = "^0[1-9]|1[012]$";
+    public static final String FECHA_ANIO = "^(19|20)[4-9]\\d$";
+
 }

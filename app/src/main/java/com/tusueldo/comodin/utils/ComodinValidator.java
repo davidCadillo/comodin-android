@@ -23,6 +23,9 @@ public class ComodinValidator {
     public static boolean telefonoValidado = false;
     public static boolean fechaValidada = false;
     public static boolean correoValidado = false;
+    public static boolean fechaDiaValidada = false;
+    public static boolean fechaMesValidada = false;
+    public static boolean fechaAnioValidada = false;
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
@@ -101,11 +104,63 @@ public class ComodinValidator {
         }
     }
 
+    public static void validateFechaDia(Context context, CharSequence campo_fecha_nac_dia, TextInputLayout til_fecha_nac_dia, ImageView imageview) {
+        String fecha_nac_dia = getTrim(campo_fecha_nac_dia);
+        fechaDiaValidada = !TextUtils.isEmpty(fecha_nac_dia) && Pattern.matches(ComodinPattern.FECHA_DIA,fecha_nac_dia);
+        if(fechaDiaValidada){
+            til_fecha_nac_dia.setHintTextAppearance(R.style.Hint);
+            til_fecha_nac_dia.setErrorTextAppearance(R.style.Validado);
+            til_fecha_nac_dia.setErrorEnabled(true);
+            til_fecha_nac_dia.setError("Ok");
+        }else{
+            //markEmpty(context,til_fecha_nac_dia,null,"");
+            til_fecha_nac_dia.setHintTextAppearance(R.style.Error);
+            til_fecha_nac_dia.setErrorTextAppearance(R.style.Error);
+            til_fecha_nac_dia.setError("No");
+            til_fecha_nac_dia.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+    public static void validateFechaMes(Context context, CharSequence campo_fecha_nac_mes, TextInputLayout til_fecha_nac_mes, ImageView imageview) {
+        String fecha_nac_mes = getTrim(campo_fecha_nac_mes);
+        fechaMesValidada = !TextUtils.isEmpty(fecha_nac_mes) && Pattern.matches(ComodinPattern.FECHA_MES,fecha_nac_mes);
+        if(fechaMesValidada){
+            til_fecha_nac_mes.setHintTextAppearance(R.style.Hint);
+            til_fecha_nac_mes.setErrorTextAppearance(R.style.Validado);
+            til_fecha_nac_mes.setErrorEnabled(true);
+            til_fecha_nac_mes.setError("Ok");
+        }else{
+            //markEmpty(context,til_fecha_nac_dia,null,"");
+            til_fecha_nac_mes.setHintTextAppearance(R.style.Error);
+            til_fecha_nac_mes.setErrorTextAppearance(R.style.Error);
+            til_fecha_nac_mes.setError("No");
+            til_fecha_nac_mes.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+
+    public static void validateFechaAnio(Context context, CharSequence campo_fecha_nac_anio, TextInputLayout til_fecha_nac_anio, ImageView imageview) {
+        String fecha_nac_anio = getTrim(campo_fecha_nac_anio);
+        fechaAnioValidada = !TextUtils.isEmpty(fecha_nac_anio) && Pattern.matches(ComodinPattern.FECHA_ANIO,fecha_nac_anio);
+        if(fechaAnioValidada){
+            til_fecha_nac_anio.setHintTextAppearance(R.style.Hint);
+            til_fecha_nac_anio.setErrorTextAppearance(R.style.Validado);
+            til_fecha_nac_anio.setErrorEnabled(true);
+            til_fecha_nac_anio.setError("Ok");
+        }else{
+            //markEmpty(context,til_fecha_nac_dia,null,"");
+            til_fecha_nac_anio.setHintTextAppearance(R.style.Error);
+            til_fecha_nac_anio.setErrorTextAppearance(R.style.Error);
+            til_fecha_nac_anio.setError("No");
+            til_fecha_nac_anio.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+
     @NonNull
     private static String getTrim(CharSequence campo_fecha_nac) {
         return campo_fecha_nac.toString().trim();
     }
-
 
     private static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message) {
         textInputLayout.setCounterEnabled(true);
@@ -114,8 +169,10 @@ public class ComodinValidator {
         textInputLayout.setErrorTextAppearance(R.style.Error);
         textInputLayout.setError(message);
         textInputLayout.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+        if (imageView != null)
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
     }
+
 
     private static void markValidate(TextInputLayout campo) {
         campo.setHintTextAppearance(R.style.Hint);
