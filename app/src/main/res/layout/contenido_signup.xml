@@ -182,7 +182,7 @@
                     android:drawableTint="@color/colorValidado"
                     android:hint="@string/correo"
                     android:inputType="textEmailAddress"
-                    android:nextFocusDown="@+id/campo_fecha_nac" />
+                    android:nextFocusDown="@+id/campo_fecha_nac_dia" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
         <!--END Aqui va el campo de correo-->
@@ -233,20 +233,22 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="dd"
+                                android:inputType="number"
                                 android:maxLength="2"
-                                android:inputType="number" />
+                                android:nextFocusDown="@+id/campo_fecha_nac_mes" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/separador1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.25">
+                        android:layout_weight="0.20">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="bottom"
+                            android:gravity="center"
                             android:text="/"
                             android:textAlignment="center"
                             android:textColor="#c6c6c6"
@@ -269,8 +271,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="mm"
+                                android:inputType="number"
                                 android:maxLength="2"
-                                android:inputType="number" />
+                                android:nextFocusDown="@+id/campo_fecha_nac_anio" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
@@ -279,12 +282,12 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
 
-                        android:layout_weight="0.25">
+                        android:layout_weight="0.20">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="bottom"
+                            android:gravity="center"
                             android:text="/"
                             android:textAlignment="center"
                             android:textColor="#c6c6c6"
@@ -307,13 +310,18 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:hint="yyyy"
+                                android:inputType="number"
                                 android:maxLength="4"
-                                android:inputType="number" />
+                                android:nextFocusDown="@+id/campo_telefono" />
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/text_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>
@@ -349,8 +357,8 @@
                         android:drawableTint="@color/colorValidado"
                         android:ems="1"
                         android:hint="@string/mobile"
-                        android:maxLength="9"
                         android:inputType="phone"
+                        android:maxLength="9"
                         android:nextFocusDown="@id/campo_password" />
                 </android.support.design.widget.TextInputLayout>
 

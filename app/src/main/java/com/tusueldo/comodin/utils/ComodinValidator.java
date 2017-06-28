@@ -33,7 +33,7 @@ public class ComodinValidator {
         if (Pattern.matches(ComodinPattern.TIENE_ALGUN_NUMERO, nombre)) {
             markEmpty(context, til_nombre, img_nombres, "No números");
         } else if (nombre.length() == 0) {
-            markEmpty(context, til_nombre, img_nombres, "No puede quedar vacío.");
+            markEmpty(context, til_nombre, img_nombres, "Es requerido.");
         } else if (!validarNombre) {
             markEmpty(context, til_nombre, img_nombres, "No permitido.");
         } else if (nombre.length() < 3) {
@@ -106,54 +106,51 @@ public class ComodinValidator {
 
     public static void validateFechaDia(Context context, CharSequence campo_fecha_nac_dia, TextInputLayout til_fecha_nac_dia, ImageView imageview) {
         String fecha_nac_dia = getTrim(campo_fecha_nac_dia);
-        fechaDiaValidada = !TextUtils.isEmpty(fecha_nac_dia) && Pattern.matches(ComodinPattern.FECHA_DIA,fecha_nac_dia);
-        if(fechaDiaValidada){
+        fechaDiaValidada = !TextUtils.isEmpty(fecha_nac_dia) && Pattern.matches(ComodinPattern.FECHA_DIA, fecha_nac_dia);
+        if (fechaDiaValidada) {
             til_fecha_nac_dia.setHintTextAppearance(R.style.Hint);
             til_fecha_nac_dia.setErrorTextAppearance(R.style.Validado);
             til_fecha_nac_dia.setErrorEnabled(true);
-            til_fecha_nac_dia.setError("Ok");
-        }else{
+        } else {
             //markEmpty(context,til_fecha_nac_dia,null,"");
             til_fecha_nac_dia.setHintTextAppearance(R.style.Error);
             til_fecha_nac_dia.setErrorTextAppearance(R.style.Error);
-            til_fecha_nac_dia.setError("No");
             til_fecha_nac_dia.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
+        til_fecha_nac_dia.setError(" ");
     }
 
     public static void validateFechaMes(Context context, CharSequence campo_fecha_nac_mes, TextInputLayout til_fecha_nac_mes, ImageView imageview) {
         String fecha_nac_mes = getTrim(campo_fecha_nac_mes);
-        fechaMesValidada = !TextUtils.isEmpty(fecha_nac_mes) && Pattern.matches(ComodinPattern.FECHA_MES,fecha_nac_mes);
-        if(fechaMesValidada){
+        fechaMesValidada = !TextUtils.isEmpty(fecha_nac_mes) && Pattern.matches(ComodinPattern.FECHA_MES, fecha_nac_mes);
+        if (fechaMesValidada) {
             til_fecha_nac_mes.setHintTextAppearance(R.style.Hint);
             til_fecha_nac_mes.setErrorTextAppearance(R.style.Validado);
             til_fecha_nac_mes.setErrorEnabled(true);
-            til_fecha_nac_mes.setError("Ok");
-        }else{
+        } else {
             //markEmpty(context,til_fecha_nac_dia,null,"");
             til_fecha_nac_mes.setHintTextAppearance(R.style.Error);
             til_fecha_nac_mes.setErrorTextAppearance(R.style.Error);
-            til_fecha_nac_mes.setError("No");
             til_fecha_nac_mes.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
+        til_fecha_nac_mes.setError(" ");
     }
 
 
     public static void validateFechaAnio(Context context, CharSequence campo_fecha_nac_anio, TextInputLayout til_fecha_nac_anio, ImageView imageview) {
         String fecha_nac_anio = getTrim(campo_fecha_nac_anio);
-        fechaAnioValidada = !TextUtils.isEmpty(fecha_nac_anio) && Pattern.matches(ComodinPattern.FECHA_ANIO,fecha_nac_anio);
-        if(fechaAnioValidada){
+        fechaAnioValidada = !TextUtils.isEmpty(fecha_nac_anio) && Pattern.matches(ComodinPattern.FECHA_ANIO, fecha_nac_anio);
+        if (fechaAnioValidada) {
+            til_fecha_nac_anio.setErrorEnabled(true);
             til_fecha_nac_anio.setHintTextAppearance(R.style.Hint);
             til_fecha_nac_anio.setErrorTextAppearance(R.style.Validado);
-            til_fecha_nac_anio.setErrorEnabled(true);
-            til_fecha_nac_anio.setError("Ok");
-        }else{
+        } else {
             //markEmpty(context,til_fecha_nac_dia,null,"");
             til_fecha_nac_anio.setHintTextAppearance(R.style.Error);
             til_fecha_nac_anio.setErrorTextAppearance(R.style.Error);
-            til_fecha_nac_anio.setError("No");
             til_fecha_nac_anio.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
+        til_fecha_nac_anio.setError(" ");
     }
 
 

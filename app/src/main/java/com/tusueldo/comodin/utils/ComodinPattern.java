@@ -32,6 +32,6 @@ public class ComodinPattern {
 
     public static final String FECHA_DIA = "^0[1-9]|[12][0-9]|3[01]$";
     public static final String FECHA_MES = "^0[1-9]|1[012]$";
-    public static final String FECHA_ANIO = "^(19|20)[4-9]\\d$";
+    public static final String FECHA_ANIO = "^(19[4-9]\\d|200[0-3])$";
 
 }

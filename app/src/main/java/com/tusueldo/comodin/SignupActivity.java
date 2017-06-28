@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
@@ -77,6 +78,7 @@ public class SignupActivity extends AppCompatActivity {
     @OnTextChanged(R.id.campo_fecha_nac_dia)
     protected void onTextChangedFechaDia(CharSequence dia) {
         ComodinValidator.validateFechaDia(this, dia, til_fecha_nac_dia, null);
+
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_mes)
@@ -87,6 +89,7 @@ public class SignupActivity extends AppCompatActivity {
     @OnTextChanged(R.id.campo_fecha_nac_anio)
     protected void onTextChangedFechaAnio(CharSequence anio) {
         ComodinValidator.validateFechaAnio(this, anio, til_fecha_nac_anio, null);
+
     }
 
     @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio})
