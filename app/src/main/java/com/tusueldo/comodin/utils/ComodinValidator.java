@@ -21,11 +21,12 @@ public class ComodinValidator {
     public static boolean nombreValidado = false;
     public static boolean apellidoValidado = false;
     public static boolean telefonoValidado = false;
-    public static boolean fechaValidada = false;
     public static boolean correoValidado = false;
     public static boolean fechaDiaValidada = false;
     public static boolean fechaMesValidada = false;
     public static boolean fechaAnioValidada = false;
+    public static boolean fechaValidada = false;
+    public static boolean fechaCorrecta;
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
@@ -93,7 +94,6 @@ public class ComodinValidator {
         }
     }
 
-  
 
     public static void validateFieldDate(TypeFieldDate fieldToValidate, TextInputLayout til_field_date) {
 
@@ -113,7 +113,7 @@ public class ComodinValidator {
                 campoValidado = fechaAnioValidada;
                 break;
         }
-
+        fechaValidada = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
         if (campoValidado) {
             til_field_date.setHintTextAppearance(R.style.Hint);
             til_field_date.setErrorTextAppearance(R.style.Validado);

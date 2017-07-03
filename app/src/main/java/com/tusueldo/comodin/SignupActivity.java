@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import com.tusueldo.comodin.utils.ComodinValidator;
+import com.tusueldo.comodin.utils.TypeFieldDate;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -76,20 +77,18 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_dia)
-    protected void onTextChangedFechaDia(CharSequence dia) {
-        ComodinValidator.validateFechaDia(this, dia, til_fecha_nac_dia, null);
-
+    protected void onTextChangedFechaDia() {
+        ComodinValidator.validateFieldDate(TypeFieldDate.DIA, til_fecha_nac_dia);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_mes)
-    protected void onTextChangedFechaMes(CharSequence mes) {
-        ComodinValidator.validateFechaMes(this, mes, til_fecha_nac_mes, null);
+    protected void onTextChangedFechaMes() {
+        ComodinValidator.validateFieldDate(TypeFieldDate.MES, til_fecha_nac_mes);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_anio)
-    protected void onTextChangedFechaAnio(CharSequence anio) {
-        ComodinValidator.validateFechaAnio(this, anio, til_fecha_nac_anio, null);
-
+    protected void onTextChangedFechaAnio() {
+        ComodinValidator.validateFieldDate(TypeFieldDate.ANIO, til_fecha_nac_anio);
     }
 
     @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio})
