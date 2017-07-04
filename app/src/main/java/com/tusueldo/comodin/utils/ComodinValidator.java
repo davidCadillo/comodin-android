@@ -18,6 +18,10 @@ import java.util.regex.Pattern;
 
 public class ComodinValidator {
 
+    public static String campoDia = "";
+    public static String campoMes = "";
+    public static String campoAnio = "";
+    public static String campoFechaCompleta;
     public static boolean nombreValidado = false;
     public static boolean apellidoValidado = false;
     public static boolean telefonoValidado = false;
@@ -25,7 +29,7 @@ public class ComodinValidator {
     public static boolean fechaDiaValidada = false;
     public static boolean fechaMesValidada = false;
     public static boolean fechaAnioValidada = false;
-    public static boolean fechaValidada = false;
+    public static boolean camposFechaValidados = false;
     public static boolean fechaCorrecta;
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
@@ -103,18 +107,30 @@ public class ComodinValidator {
             case 0:
                 fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_DIA, field_date);
                 campoValidado = fechaDiaValidada;
+                campoDia = field_date;
+                Log.d("DIA", campoDia);
+
                 break;
             case 1:
                 fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_MES, field_date);
                 campoValidado = fechaMesValidada;
+                campoMes = field_date;
+                Log.d("MES", campoMes);
                 break;
             case 2:
                 fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_ANIO, field_date);
                 campoValidado = fechaAnioValidada;
+                campoAnio = field_date;
+                Log.d("ANIO", campoAnio);
                 break;
         }
-        fechaValidada = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
+        campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoDia);
+        Log.d("FECHA", campoFechaCompleta);
+        camposFechaValidados = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
         if (campoValidado) {
+            if (camposFechaValidados) {
+                fechaCorrecta = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
+            }
             til_field_date.setHintTextAppearance(R.style.Hint);
             til_field_date.setErrorTextAppearance(R.style.Validado);
             til_field_date.setErrorEnabled(true);

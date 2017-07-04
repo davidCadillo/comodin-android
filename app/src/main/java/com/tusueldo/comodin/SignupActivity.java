@@ -6,12 +6,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
+import com.tusueldo.comodin.utils.ComodinUtils;
 import com.tusueldo.comodin.utils.ComodinValidator;
+import com.tusueldo.comodin.utils.ComodinValues;
 import com.tusueldo.comodin.utils.TypeFieldDate;
 
 public class SignupActivity extends AppCompatActivity {
@@ -91,37 +92,34 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.validateFieldDate(TypeFieldDate.ANIO, til_fecha_nac_anio);
     }
 
-    @OnFocusChange(value = {R.id.campo_nombre, R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio})
+    @OnFocusChange(value = {R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio,
+            R.id.campo_nombre, R.id.campo_apellido, R.id.campo_correo, R.id.campo_telefono})
     protected void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.campo_nombre:
-                if (!v.hasFocus() && ComodinValidator.nombreValidado == false) {
-                    til_nombre.setErrorEnabled(false);
-                }
+                ComodinUtils.setHintFocusField(hasFocus, til_nombre);
                 break;
-
+            case R.id.campo_apellido:
+                ComodinUtils.setHintFocusField(hasFocus, til_apellido);
+                break;
+            case R.id.campo_correo:
+                ComodinUtils.setHintFocusField(hasFocus, til_correo);
+                break;
+            case R.id.campo_telefono:
+                ComodinUtils.setHintFocusField(hasFocus, til_telefono);
+                break;
             case R.id.campo_fecha_nac_dia:
-                if (v.hasFocus()) {
-                    til_fecha_nac_dia.setHint("Día");
-                }
+                ComodinUtils.setHintFocusField(hasFocus, til_fecha_nac_dia, ComodinValues.DAY, ComodinValues.DAY_SIMPLE);
                 break;
 
             case R.id.campo_fecha_nac_mes:
-                if (v.hasFocus()) {
-                    til_fecha_nac_mes.setHint("Mes");
-                }
+                ComodinUtils.setHintFocusField(hasFocus, til_fecha_nac_mes, ComodinValues.MONTH, ComodinValues.MONTH_SIMPLE);
                 break;
 
             case R.id.campo_fecha_nac_anio:
-                if (v.hasFocus()) {
-                    til_fecha_nac_anio.setHint("Año");
-                }
+                ComodinUtils.setHintFocusField(hasFocus, til_fecha_nac_anio, ComodinValues.YEAR, ComodinValues.YEAR_SIMPLE);
                 break;
         }
-    }
-
-    private void showHint(String texto, TextInputLayout til) {
-        til.setHint(texto);
     }
 
 }

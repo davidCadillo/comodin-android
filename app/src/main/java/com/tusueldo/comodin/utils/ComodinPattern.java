@@ -8,12 +8,6 @@ import android.util.Patterns;
 
 public class ComodinPattern {
 
-
-    /*Expresión regular para validar el formato de la fecha de nacimiento con el formato dd/mm/yyyy teniendo en cuenta
-    * los dígitos adecuados para mes, año y día.
-    * */
-    public static final String FECHA_NACIMIENTO = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d\\d$";
-
     /*Expresión regular usado para validar un celular con el formato 9XXXXXXXXX*/
     public static final String CELULAR = "9\\d{8}";
 
