@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import com.tusueldo.comodin.R;
 
 /**
@@ -30,6 +31,8 @@ public class ComodinUtils {
         if (elemento instanceof EditText) {
             ((EditText) elemento).startAnimation(shake);
             return;
+        } else if (elemento instanceof ImageView) {
+            ((ImageView) elemento).startAnimation(shake);
         }
     }
 

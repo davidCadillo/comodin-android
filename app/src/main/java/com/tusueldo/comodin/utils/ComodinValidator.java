@@ -13,24 +13,28 @@ import com.tusueldo.comodin.R;
 import java.util.regex.Pattern;
 
 /**
- * Created by USUARIO on 09/06/2017.
+ * Created by David Cadillo on 09/06/2017.
  */
 
 public class ComodinValidator {
 
-    public static String campoDia = "";
-    public static String campoMes = "";
-    public static String campoAnio = "";
-    public static String campoFechaCompleta;
-    public static boolean nombreValidado = false;
-    public static boolean apellidoValidado = false;
-    public static boolean telefonoValidado = false;
-    public static boolean correoValidado = false;
-    public static boolean fechaDiaValidada = false;
-    public static boolean fechaMesValidada = false;
-    public static boolean fechaAnioValidada = false;
-    public static boolean camposFechaValidados = false;
-    public static boolean fechaCorrecta;
+    private static String campoDia = "";
+    private static String campoMes = "";
+    private static String campoAnio = "";
+    private static String campoFechaCompleta;
+    private static boolean nombreValidado = false;
+    private static boolean apellidoValidado = false;
+    private static boolean telefonoValidado = false;
+    private static boolean correoValidado = false;
+    private static boolean fechaDiaValidada = false;
+    private static boolean fechaMesValidada = false;
+    private static boolean fechaAnioValidada = false;
+    private static boolean camposFechaValidados = false;
+    public static boolean fechaCorrecta = false;
+    public static TextInputLayout ti_dia = null;
+    public static TextInputLayout ti_mes = null;
+    public static TextInputLayout ti_anio = null;
+    public static TextInputLayout ti_telefono = null;
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
@@ -45,7 +49,7 @@ public class ComodinValidator {
             markEmpty(context, til_nombre, img_nombres, "Mínimo 3 letras.", 30);
         } else if (validarNombre) {
             nombreValidado = true;
-            markValidate(til_nombre);
+            markValidate(til_nombre, "Correcto", true);
             if (apellidoValidado) {
                 addDrawableValidado(context, img_nombres);
             }
@@ -64,8 +68,7 @@ public class ComodinValidator {
         } else if (apellido.length() < 3) {
             markEmpty(context, til_apellido, img_nombres, "Mínimo 3 letras.", 30);
         } else if (validarApellido) {
-            apellidoValidado = true;
-            markValidate(til_apellido);
+            markValidate(til_apellido, "Correcto", true);
             if (nombreValidado) {
                 addDrawableValidado(context, img_nombres);
             }
@@ -78,7 +81,7 @@ public class ComodinValidator {
         String correo = getTrim(campo_email).toLowerCase();
         correoValidado = !TextUtils.isEmpty(campo_email) && Pattern.matches(ComodinPattern.EMAIL, correo);
         if (correoValidado) {
-            markValidate(til_correo);
+            markValidate(til_correo, "Correcto", true);
             addDrawableValidado(context, img_correo);
         } else {
             markEmpty(context, til_correo, img_correo, "No es un correo válido.", 30);
@@ -91,15 +94,14 @@ public class ComodinValidator {
         boolean esVacio = !TextUtils.isEmpty(telefono);
         telefonoValidado = esVacio && Pattern.matches(ComodinPattern.CELULAR, telefono);
         if (telefonoValidado) {
-            markValidate(til_telefono);
+            markValidate(til_telefono, "Correcto", true);
             addDrawableValidado(context, img_telefono);
         } else {
             markEmpty(context, til_telefono, img_telefono, " ", 9);
         }
     }
 
-
-    public static void validateFieldDate(TypeFieldDate fieldToValidate, TextInputLayout til_field_date) {
+    public static void validateFieldDate(Context context, TypeFieldDate fieldToValidate, TextInputLayout til_field_date, ImageView imageView) {
 
         String field_date = getTrim(til_field_date.getEditText().getText());
         boolean campoValidado = false;
@@ -108,46 +110,67 @@ public class ComodinValidator {
                 fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_DIA, field_date);
                 campoValidado = fechaDiaValidada;
                 campoDia = field_date;
-                Log.d("DIA", campoDia);
-
+                if (campoValidado && !fechaCorrecta) {
+                    ti_mes.getEditText().requestFocus();
+                }
                 break;
             case 1:
                 fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_MES, field_date);
                 campoValidado = fechaMesValidada;
                 campoMes = field_date;
-                Log.d("MES", campoMes);
+                if (campoValidado && !fechaCorrecta) {
+                    ti_anio.getEditText().requestFocus();
+                }
                 break;
             case 2:
                 fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_ANIO, field_date);
                 campoValidado = fechaAnioValidada;
                 campoAnio = field_date;
-                Log.d("ANIO", campoAnio);
                 break;
         }
-        campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoDia);
-        Log.d("FECHA", campoFechaCompleta);
-        camposFechaValidados = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
         if (campoValidado) {
-            if (camposFechaValidados) {
-                fechaCorrecta = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
-            }
+            camposFechaValidados = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
             til_field_date.setHintTextAppearance(R.style.Hint);
             til_field_date.setErrorTextAppearance(R.style.Validado);
             til_field_date.setErrorEnabled(true);
+            if (camposFechaValidados) {
+                campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoAnio);
+                fechaCorrecta = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
+                if (!fechaCorrecta) {
+                    ComodinUtils.vibrar(context, imageView, R.anim.shake);
+                    ti_dia.setHintTextAppearance(R.style.Error);
+                    ti_dia.setErrorTextAppearance(R.style.Error);
+                    ti_dia.setError(" ");
+                    ti_mes.setHintTextAppearance(R.style.Error);
+                    ti_mes.setErrorTextAppearance(R.style.Error);
+                    ti_mes.setError(" ");
+                    ti_anio.setHintTextAppearance(R.style.Error);
+                    ti_anio.setErrorTextAppearance(R.style.Error);
+                    ti_anio.setError(" ");
+                    imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorNoValidado));
+                    return;
+
+                } else {
+                    markValidate(ti_dia);
+                    markValidate(ti_mes);
+                    markValidate(ti_anio);
+                    imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
+                    ti_telefono.getEditText().requestFocus();
+                }
+            }
+
         } else {
             til_field_date.setHintTextAppearance(R.style.Error);
             til_field_date.setErrorTextAppearance(R.style.Error);
-            til_field_date.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            addDrawableValidado(context, imageView, false);
         }
         til_field_date.setError(" ");
-
     }
 
     @NonNull
     private static String getTrim(CharSequence campo_fecha_nac) {
         return campo_fecha_nac.toString().trim();
     }
-
 
     private static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message, int counterMaxLength) {
         textInputLayout.setCounterEnabled(true);
@@ -157,21 +180,31 @@ public class ComodinValidator {
         textInputLayout.setError(message);
         textInputLayout.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         if (imageView != null)
-            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            addDrawableValidado(context, imageView, false);
     }
 
-
-    private static void markValidate(TextInputLayout campo) {
+    private static void markValidate(TextInputLayout campo, String message, boolean checkImage) {
         campo.setHintTextAppearance(R.style.Hint);
         campo.setErrorTextAppearance(R.style.Validado);
         campo.setErrorEnabled(true);
-        campo.setError("Correcto");
-        campo.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_black_24px, 0);
+        campo.setError(message);
+        if (checkImage)
+            campo.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_black_24px, 0);
     }
 
-    private static void addDrawableValidado(Context context, ImageView image) {
-        image.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
+    private static void markValidate(TextInputLayout campo) {
+        markValidate(campo, " ", false);
     }
 
+    private static void addDrawableValidado(Context context, ImageView imageView, boolean validate) {
+        if (validate)
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
+        else {
+            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorNoValidado));
+        }
+    }
 
+    private static void addDrawableValidado(Context context, ImageView imageView) {
+        imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
+    }
 }

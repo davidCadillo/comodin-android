@@ -10,10 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
-import com.tusueldo.comodin.utils.ComodinUtils;
-import com.tusueldo.comodin.utils.ComodinValidator;
-import com.tusueldo.comodin.utils.ComodinValues;
-import com.tusueldo.comodin.utils.TypeFieldDate;
+import com.tusueldo.comodin.utils.*;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -47,14 +44,15 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.img_fecha_nac)
     ImageView img_fecha_nac;
 
-    static boolean pulsado = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
+        ComodinValidator.ti_dia = til_fecha_nac_dia;
+        ComodinValidator.ti_mes = til_fecha_nac_mes;
+        ComodinValidator.ti_anio = til_fecha_nac_anio;
+        ComodinValidator.ti_telefono = til_telefono;
     }
 
     @OnTextChanged(R.id.campo_nombre)
@@ -79,17 +77,17 @@ public class SignupActivity extends AppCompatActivity {
 
     @OnTextChanged(R.id.campo_fecha_nac_dia)
     protected void onTextChangedFechaDia() {
-        ComodinValidator.validateFieldDate(TypeFieldDate.DIA, til_fecha_nac_dia);
+        ComodinValidator.validateFieldDate(this, TypeFieldDate.DIA, til_fecha_nac_dia, img_fecha_nac);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_mes)
     protected void onTextChangedFechaMes() {
-        ComodinValidator.validateFieldDate(TypeFieldDate.MES, til_fecha_nac_mes);
+        ComodinValidator.validateFieldDate(this, TypeFieldDate.MES, til_fecha_nac_mes, img_fecha_nac);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_anio)
     protected void onTextChangedFechaAnio() {
-        ComodinValidator.validateFieldDate(TypeFieldDate.ANIO, til_fecha_nac_anio);
+        ComodinValidator.validateFieldDate(this, TypeFieldDate.ANIO, til_fecha_nac_anio, img_fecha_nac);
     }
 
     @OnFocusChange(value = {R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio,
