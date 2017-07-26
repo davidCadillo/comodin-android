@@ -2,6 +2,7 @@ package com.tusueldo.comodin.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -26,15 +27,41 @@ public class ComodinValidator {
     private static boolean apellidoValidado = false;
     private static boolean telefonoValidado = false;
     private static boolean correoValidado = false;
+    public static boolean fechaCorrecta = false;
+    public static boolean passwordCorrecto = false;
+    private static String password = null;
+
     private static boolean fechaDiaValidada = false;
     private static boolean fechaMesValidada = false;
     private static boolean fechaAnioValidada = false;
     private static boolean camposFechaValidados = false;
-    public static boolean fechaCorrecta = false;
+
     public static TextInputLayout ti_dia = null;
     public static TextInputLayout ti_mes = null;
     public static TextInputLayout ti_anio = null;
     public static TextInputLayout ti_telefono = null;
+
+
+    public static void validatePassword(Context context, CharSequence campo_password, TextInputLayout til_password, ImageView img_password) {
+
+        int tamanioPassword = campo_password.length();
+
+        if (tamanioPassword < 8) {
+            markEmpty(context, til_password, null, "Entre 8 y 15 caracteres", 15);
+            passwordCorrecto = false;
+        } else if (tamanioPassword >= 8 && tamanioPassword <= 15) {
+            markValidate(til_password, "Correcto", true);
+            password = campo_password.toString();
+            passwordCorrecto = true;
+        } else if (tamanioPassword > 15) {
+            markEmpty(context, til_password, null, "No permitido", 15);
+            passwordCorrecto = false;
+        }
+        addDrawableValidado(context, img_password, passwordCorrecto);
+
+
+    }
+
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
@@ -100,6 +127,7 @@ public class ComodinValidator {
             markEmpty(context, til_telefono, img_telefono, " ", 9);
         }
     }
+
 
     public static void validateFieldDate(Context context, TypeFieldDate fieldToValidate, TextInputLayout til_field_date, ImageView imageView) {
 
@@ -183,6 +211,12 @@ public class ComodinValidator {
             addDrawableValidado(context, imageView, false);
     }
 
+    private static void markEmpty(Context context, TextInputLayout textInputLayout, String message) {
+        textInputLayout.setHintTextAppearance(R.style.Error);
+        textInputLayout.setErrorTextAppearance(R.style.Error);
+        textInputLayout.setError(message);
+    }
+
     private static void markValidate(TextInputLayout campo, String message, boolean checkImage) {
         campo.setHintTextAppearance(R.style.Hint);
         campo.setErrorTextAppearance(R.style.Validado);
@@ -204,7 +238,7 @@ public class ComodinValidator {
         }
     }
 
-    private static void addDrawableValidado(Context context, ImageView imageView) {
+    public static void addDrawableValidado(Context context, ImageView imageView) {
         imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
     }
 }
