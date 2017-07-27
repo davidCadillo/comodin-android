@@ -1,16 +1,14 @@
 package com.tusueldo.comodin;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import butterknife.*;
 import com.tusueldo.comodin.utils.*;
 
@@ -28,6 +26,10 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.til_fecha_nac_anio) TextInputLayout til_fecha_nac_anio;
     @BindView(R.id.til_password) TextInputLayout til_password;
     @BindView(R.id.campo_password) TextInputEditText campo_password;
+    @BindView(R.id.til_ruc) TextInputLayout til_ruc;
+    @BindView(R.id.campo_ruc) TextInputEditText campo_ruc;
+    @BindView(R.id.sw_ruc) Switch sw_ruc;
+    @BindView(R.id.area_razon_social) LinearLayout area_razon_social;
 
 
     /*Cargando los imageView*/
@@ -37,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.img_fecha_nac) ImageView img_fecha_nac;
     @BindView(R.id.img_genero) ImageView img_genero;
     @BindView(R.id.img_password) ImageView img_password;
+    @BindView(R.id.img_ruc) ImageView img_ruc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.ti_mes = til_fecha_nac_mes;
         ComodinValidator.ti_anio = til_fecha_nac_anio;
         ComodinValidator.ti_telefono = til_telefono;
+
     }
 
 
@@ -54,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
     public void click(RadioButton boton) {
         boolean checked = boton.isChecked();
         if (checked) {
-            ComodinValidator.addDrawableValidado(this, img_genero);
+            ComodinValidator.setIconValidate(this, img_genero);
         }
     }
 
@@ -98,6 +102,23 @@ public class SignupActivity extends AppCompatActivity {
         ComodinValidator.validatePassword(this, password, til_password, img_password);
     }
 
+    @OnTextChanged(R.id.campo_ruc)
+    protected void onTextChangedRuc(CharSequence ruc) {
+        ComodinValidator.validateRuc(this, ruc, til_ruc, img_ruc);
+    }
+
+    @OnCheckedChanged(R.id.sw_ruc)
+    protected void onCheckChangedRuc(boolean onSwitch) {
+        if (onSwitch) {
+            til_ruc.setVisibility(View.VISIBLE);
+            campo_ruc.requestFocus();
+            area_razon_social.setVisibility(View.VISIBLE);
+        } else {
+            til_ruc.setVisibility(View.INVISIBLE);
+            area_razon_social.setVisibility(View.GONE);
+        }
+
+    }
 
     @OnFocusChange({R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio,
             R.id.campo_nombre, R.id.campo_apellido, R.id.campo_correo, R.id.campo_telefono, R.id.campo_password})
@@ -130,7 +151,6 @@ public class SignupActivity extends AppCompatActivity {
             case R.id.campo_password:
                 ComodinUtils.setHintFocusField(hasFocus, til_password);
                 break;
-
 
 
         }

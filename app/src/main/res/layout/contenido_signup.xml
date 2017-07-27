@@ -79,6 +79,76 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
 
+        <LinearLayout
+            android:id="@+id/area_ruc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_ruc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_business_black_24dp"
+                android:tint="@color/colorPrimaryDark" />
+
+            <Switch
+                android:id="@+id/sw_ruc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:checked="false"
+                android:text="Tengo RUC: "
+                android:textAppearance="@style/TextAppearance.Design.Hint"
+                android:textColor="#b5b5b5"
+                android:textSize="15sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_ruc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:counterMaxLength="11">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/campo_ruc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="RUC"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:nextFocusDown="@id/campo_nombre" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/area_razon_social"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_razon_social"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/campo_racon_social"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+
+        </LinearLayout>
+
+
         <!--BEGIN Aqui va los campos de nombres y apellidos -->
         <LinearLayout
             android:id="@+id/datos_basicos"
@@ -400,6 +470,7 @@
                     android:checked="false"
                     android:drawableEnd="@drawable/ic_human_male"
                     android:drawableRight="@drawable/ic_human_male"
+                    android:drawableTint="@color/colorPrimaryDark"
                     android:text="Masculino"
                     android:textAppearance="@style/TextAppearance.Design.Hint"
                     android:textColor="#b5b5b5"
@@ -423,6 +494,21 @@
             </RadioGroup>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar" />
+
+            <AutoCompleteTextView
+                android:id="@+id/txtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -461,6 +547,13 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
 
         <Button
             android:layout_width="match_parent"
@@ -469,7 +562,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Registar"
+            android:text="Registrar"
             android:textColor="#fff"
             android:textSize="16sp" />
 
