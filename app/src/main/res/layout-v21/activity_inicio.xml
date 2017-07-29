@@ -87,8 +87,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTintMode="@color/colorSecundary"
                     android:drawableLeft="@drawable/ic_password"
-                    android:drawableStart="@drawable/ic_password"
                     android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_password"
                     android:drawableTint="@color/colorSecundary"
                     android:hint="@string/hint_password"
                     android:inputType="textPassword" />
@@ -116,7 +116,7 @@
                 android:textColor="#FFF" />
 
             <Button
-                android:id="@+id/btn_registrar"
+                android:id="@+id/btn_registrarse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

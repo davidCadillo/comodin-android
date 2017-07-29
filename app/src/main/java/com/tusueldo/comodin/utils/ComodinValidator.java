@@ -1,22 +1,38 @@
 package com.tusueldo.comodin.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
+import android.widget.Toast;
 import com.tusueldo.comodin.R;
+import com.tusueldo.comodin.connections.ruc.InformationRuc;
+import com.tusueldo.comodin.connections.ruc.RequestRuc;
+import com.tusueldo.comodin.connections.ruc.RetrofitAdapter;
+import com.tusueldo.comodin.connections.ruc.RetrofitService;
+import com.tusueldo.comodin.notifications.DialogoAlerta;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import java.util.regex.Pattern;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by David Cadillo on 09/06/2017.
  */
 
 public class ComodinValidator {
+
 
     private static String campoDia = "";
     private static String campoMes = "";
@@ -42,13 +58,42 @@ public class ComodinValidator {
     public static TextInputLayout ti_telefono = null;
 
 
-    public static void validateRuc(Context context, CharSequence campo_ruc, TextInputLayout til_ruc, ImageView img_ruc) {
+    public static void validateRuc(final Context context, CharSequence campo_ruc, TextInputLayout til_ruc, final TextInputEditText campo_razon_social, ImageView img_ruc) {
 
         int tamanioRuc = campo_ruc.length();
         til_ruc.setCounterEnabled(true);
         til_ruc.setCounterMaxLength(11);
+
         if (tamanioRuc == 11) {
             rucvalidado = true;
+            if (String.valueOf(campo_ruc.charAt(0)).equals("2")) {
+                new DialogoAlerta().show(((AppCompatActivity) context).getSupportFragmentManager(), "Alerta RUC");
+            }
+            Retrofit retrofit = new RetrofitAdapter().getAdapater();
+            RetrofitService service = retrofit.create(RetrofitService.class);
+            RequestRuc requestRuc = new RequestRuc(ComodinValues.API_TOKEN_RUC, campo_ruc.toString());
+            Call<InformationRuc> call = service.loadInfoRuc(requestRuc);
+            call.enqueue(new Callback<InformationRuc>() {
+                @Override
+                public void onResponse(Call<InformationRuc> call, Response<InformationRuc> response) {
+                    try {
+
+                        InformationRuc informationRuc = response.body();
+                        InformationRuc.Entity entity = informationRuc.getEntity();
+                        if (informationRuc.isSuccess()) {
+                            campo_razon_social.setText(entity.getNombreORazonSocial());
+                        }
+
+                    } catch (NullPointerException e) {
+                        Toast.makeText(context, "Error al consultar", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<InformationRuc> call, Throwable t) {
+                    Toast.makeText(context, "Error al consultar 2", Toast.LENGTH_LONG).show();
+                }
+            });
         } else {
             rucvalidado = false;
         }
@@ -77,10 +122,10 @@ public class ComodinValidator {
 
     public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
         String nombre = getTrim(campo_nombre).toLowerCase();
-        boolean validarNombre = Pattern.matches(ComodinPattern.NOMBRES, nombre);
+        boolean validarNombre = Pattern.matches(ComodinPatterns.NAMES, nombre);
 
         //Validación para evitar numeros
-        if (Pattern.matches(ComodinPattern.TIENE_ALGUN_NUMERO, nombre)) {
+        if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, nombre)) {
             markEmpty(context, til_nombre, img_nombres, "No números", 30);
             nombreValidado = false;
             //Validación para que no sea vacío
@@ -108,8 +153,8 @@ public class ComodinValidator {
 
     public static void validateApellido(Context context, CharSequence campo_apellido, TextInputLayout til_apellido, ImageView img_nombres) {
         String apellido = getTrim(campo_apellido);
-        boolean validarApellido = Pattern.matches(ComodinPattern.NOMBRES, apellido);
-        if (Pattern.matches(ComodinPattern.TIENE_ALGUN_NUMERO, apellido)) {
+        boolean validarApellido = Pattern.matches(ComodinPatterns.NAMES, apellido);
+        if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, apellido)) {
             markEmpty(context, til_apellido, img_nombres, "No números", 30);
             apellidoValidado = false;
         } else if (apellido.length() == 0) {
@@ -133,7 +178,7 @@ public class ComodinValidator {
 
     public static void validateCorreo(Context context, CharSequence campo_email, TextInputLayout til_correo, ImageView img_correo) {
         String correo = getTrim(campo_email).toLowerCase();
-        correoValidado = !TextUtils.isEmpty(campo_email) && Pattern.matches(ComodinPattern.EMAIL, correo);
+        correoValidado = !TextUtils.isEmpty(campo_email) && Pattern.matches(ComodinPatterns.EMAIL, correo);
         if (correoValidado) {
             setFieldValidate(til_correo, "Correcto", true);
             setIconValidate(context, img_correo);
@@ -146,7 +191,7 @@ public class ComodinValidator {
     public static void validateTelefono(Context context, CharSequence campo_telefono, TextInputLayout til_telefono, ImageView img_telefono) {
         String telefono = getTrim(campo_telefono);
         boolean esVacio = !TextUtils.isEmpty(telefono);
-        telefonoValidado = esVacio && Pattern.matches(ComodinPattern.CELULAR, telefono);
+        telefonoValidado = esVacio && Pattern.matches(ComodinPatterns.MOBILE_PHONE, telefono);
         if (telefonoValidado) {
             setFieldValidate(til_telefono, "Correcto", true);
             setIconValidate(context, img_telefono);
@@ -166,7 +211,7 @@ public class ComodinValidator {
 
             case 0://Se va a validar el dia
                 //Se valida el día según una expresión regular
-                fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_DIA, field_date);
+                fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_DAY, field_date);
                 campoValidado = fechaDiaValidada;
                 //Se guarda el dia introducido
                 campoDia = field_date;
@@ -176,7 +221,7 @@ public class ComodinValidator {
                 }
                 break;
             case 1:
-                fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_MES, field_date);
+                fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_MONTH, field_date);
                 campoValidado = fechaMesValidada;
                 campoMes = field_date;
                 if (campoValidado && !fechaNacimientoValidada) {
@@ -184,7 +229,7 @@ public class ComodinValidator {
                 }
                 break;
             case 2:
-                fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPattern.FECHA_ANIO, field_date);
+                fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_YEAR, field_date);
                 campoValidado = fechaAnioValidada;
                 campoAnio = field_date;
                 break;

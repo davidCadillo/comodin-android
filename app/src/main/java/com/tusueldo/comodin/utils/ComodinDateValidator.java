@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by USUARIO on 12/06/2017.
+ * @author David Cadillo Blas
  */
 
 public class ComodinDateValidator {
@@ -39,8 +39,6 @@ public class ComodinDateValidator {
         }
         return true;
     }
-
-
 
 
 }

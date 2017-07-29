@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.tusueldo.comodin.R;
 
 /**
- * Created by USUARIO on 30/05/2017.
+ * @author David Cadillo Blas
  */
 
 public class ComodinUtils {

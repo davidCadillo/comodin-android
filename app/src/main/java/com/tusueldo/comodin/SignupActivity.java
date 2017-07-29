@@ -5,11 +5,9 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.Switch;
+import android.widget.*;
 import butterknife.*;
+import com.tusueldo.comodin.notifications.DialogoAlerta;
 import com.tusueldo.comodin.utils.*;
 
 public class SignupActivity extends AppCompatActivity {
@@ -30,6 +28,8 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.campo_ruc) TextInputEditText campo_ruc;
     @BindView(R.id.sw_ruc) Switch sw_ruc;
     @BindView(R.id.area_razon_social) LinearLayout area_razon_social;
+    @BindView(R.id.til_razon_social) TextInputLayout til_razon_social;
+    @BindView(R.id.campo_razon_social) TextInputEditText campo_razon_social;
 
 
     /*Cargando los imageView*/
@@ -40,6 +40,7 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.img_genero) ImageView img_genero;
     @BindView(R.id.img_password) ImageView img_password;
     @BindView(R.id.img_ruc) ImageView img_ruc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(this, ruc, til_ruc, img_ruc);
+        ComodinValidator.validateRuc(this, ruc, til_ruc, campo_razon_social, img_ruc);
     }
 
     @OnCheckedChanged(R.id.sw_ruc)
@@ -119,6 +120,16 @@ public class SignupActivity extends AppCompatActivity {
         }
 
     }
+
+    @OnClick(R.id.btn_registro)
+    protected void click() {
+        /*Retrofit retrofit = new RetrofitAdapter().getAdapater();
+        RetrofitService service =  retrofit.create(RetrofitService.class);
+        RequestRuc requestRuc = new RequestRuc(ComodinValues.API_TOKEN_RUC, campo_ruc.getText().toString());*/
+
+
+    }
+
 
     @OnFocusChange({R.id.campo_fecha_nac_dia, R.id.campo_fecha_nac_mes, R.id.campo_fecha_nac_anio,
             R.id.campo_nombre, R.id.campo_apellido, R.id.campo_correo, R.id.campo_telefono, R.id.campo_password})

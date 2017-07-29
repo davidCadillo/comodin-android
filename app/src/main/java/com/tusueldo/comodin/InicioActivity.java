@@ -44,7 +44,7 @@ public class InicioActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.btn_registrar:
+            case R.id.btn_registrarse:
                 Intent i = new Intent(v.getContext(), SignupActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.animator.enter, R.animator.exit);

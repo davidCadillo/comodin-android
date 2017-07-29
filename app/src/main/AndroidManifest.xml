@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tusueldo.comodin">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_comodin"
@@ -10,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ComodinTheme">
+
+
         <activity
             android:name=".InicioActivity"
             android:theme="@style/ComodinTheme.NoActionBar">
@@ -23,8 +26,7 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/registrar"
-            android:theme="@style/ComodinTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/ComodinTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
