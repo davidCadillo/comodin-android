@@ -11,10 +11,10 @@ import retrofit2.http.POST;
  * @author David Cadillo Blas
  */
 
-public interface RetrofitService {
+public interface IRetrofitServiceRUC {
 
     @Headers("Content-Type:application/json")
     @POST("api/beta/ruc")
-    Call<InformationRuc> loadInfoRuc(@Body RequestRuc requestRuc);
+    Call<InformationRUC> loadInfoRuc(@Body RequestRUC requestRUC);
 
 }

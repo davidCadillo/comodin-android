@@ -1,31 +1,17 @@
 package com.tusueldo.comodin.utils;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-
-import android.widget.Toast;
 import com.tusueldo.comodin.R;
-import com.tusueldo.comodin.connections.ruc.InformationRuc;
-import com.tusueldo.comodin.connections.ruc.RequestRuc;
-import com.tusueldo.comodin.connections.ruc.RetrofitAdapter;
-import com.tusueldo.comodin.connections.ruc.RetrofitService;
-import com.tusueldo.comodin.notifications.DialogoAlerta;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import com.tusueldo.comodin.connections.RetrofitController;
 
 import java.util.regex.Pattern;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by David Cadillo on 09/06/2017.
@@ -57,48 +43,21 @@ public class ComodinValidator {
     public static TextInputLayout ti_anio = null;
     public static TextInputLayout ti_telefono = null;
 
+    private ProgressDialog progressDialog;
 
-    public static void validateRuc(final Context context, CharSequence campo_ruc, TextInputLayout til_ruc, final TextInputEditText campo_razon_social, ImageView img_ruc) {
+    //@StringRes(R.string.mensajeRUC) String mensajeRUC;
 
+    public static void validateRuc(TypeUser typeUser, final Context context, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout til_razon_social, ImageView img_ruc) {
         int tamanioRuc = campo_ruc.length();
-        til_ruc.setCounterEnabled(true);
-        til_ruc.setCounterMaxLength(11);
-
         if (tamanioRuc == 11) {
             rucvalidado = true;
-            if (String.valueOf(campo_ruc.charAt(0)).equals("2")) {
-                new DialogoAlerta().show(((AppCompatActivity) context).getSupportFragmentManager(), "Alerta RUC");
-            }
-            Retrofit retrofit = new RetrofitAdapter().getAdapater();
-            RetrofitService service = retrofit.create(RetrofitService.class);
-            RequestRuc requestRuc = new RequestRuc(ComodinValues.API_TOKEN_RUC, campo_ruc.toString());
-            Call<InformationRuc> call = service.loadInfoRuc(requestRuc);
-            call.enqueue(new Callback<InformationRuc>() {
-                @Override
-                public void onResponse(Call<InformationRuc> call, Response<InformationRuc> response) {
-                    try {
-
-                        InformationRuc informationRuc = response.body();
-                        InformationRuc.Entity entity = informationRuc.getEntity();
-                        if (informationRuc.isSuccess()) {
-                            campo_razon_social.setText(entity.getNombreORazonSocial());
-                        }
-
-                    } catch (NullPointerException e) {
-                        Toast.makeText(context, "Error al consultar", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<InformationRuc> call, Throwable t) {
-                    Toast.makeText(context, "Error al consultar 2", Toast.LENGTH_LONG).show();
-                }
-            });
+            String firsLetter = String.valueOf(campo_ruc.charAt(0));
+            RetrofitController.requestRUC(til_ruc, til_razon_social, campo_ruc, img_ruc);
         } else {
             rucvalidado = false;
+            markEmpty(context, til_ruc, img_ruc, "", 11);
         }
-        setFieldValidate(til_ruc, "Correcto", rucvalidado);
-        setIconValidate(context, img_ruc, rucvalidado);
+
     }
 
     public static void validatePassword(Context context, CharSequence campo_password, TextInputLayout til_password, ImageView img_password) {
@@ -289,7 +248,7 @@ public class ComodinValidator {
      * @param message
      * @param counterMaxLength
      */
-    private static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message, int counterMaxLength) {
+    public static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message, int counterMaxLength) {
         textInputLayout.setCounterEnabled(true);
         textInputLayout.setCounterMaxLength(counterMaxLength);
         textInputLayout.setHintTextAppearance(R.style.Error);
@@ -309,7 +268,7 @@ public class ComodinValidator {
      * @param message
      * @param checkImage
      */
-    private static void setFieldValidate(TextInputLayout campo, String message, boolean checkImage) {
+    public static void setFieldValidate(TextInputLayout campo, String message, boolean checkImage) {
         campo.setHintTextAppearance(R.style.Hint);
         campo.setErrorTextAppearance(R.style.Validado);
         campo.setErrorEnabled(true);

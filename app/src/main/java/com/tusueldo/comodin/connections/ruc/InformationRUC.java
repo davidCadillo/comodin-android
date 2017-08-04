@@ -3,11 +3,8 @@ package com.tusueldo.comodin.connections.ruc;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by USUARIO on 29/07/2017.
- */
 
-public class InformationRuc {
+public class InformationRUC {
 
     @SerializedName("success")
     @Expose
@@ -17,11 +14,11 @@ public class InformationRuc {
     @Expose
     private Entity entity;
 
-    public InformationRuc() {
+    public InformationRUC() {
 
     }
 
-    public InformationRuc(boolean success, Entity entity) {
+    public InformationRUC(boolean success, Entity entity) {
         this.success = success;
         this.entity = entity;
     }

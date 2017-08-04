@@ -1,6 +1,5 @@
 package com.tusueldo.comodin.connections.ruc;
 
-import com.tusueldo.comodin.utils.ComodinValues;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,10 +15,10 @@ public class RetrofitAdapter {
 
     }
 
-    public Retrofit getAdapater() {
+    public Retrofit getAdapater(String baseURL) {
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(ComodinValues.BASE_URL_RUC)
+                .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

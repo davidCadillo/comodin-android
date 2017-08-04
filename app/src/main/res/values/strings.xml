@@ -21,6 +21,8 @@
     <string name="datos_personales">Datos personales</string>
     <string name="razon_social">Razón social</string>
     <string name="direccion">Dirección</string>
+    <string name="mensajeRUC">El RUC debe ser el de una persona natural. Si desea, regístre como empresa.</string>
+    <string name="tituloRUC">RUC no válido</string>
 </resources>
 
 

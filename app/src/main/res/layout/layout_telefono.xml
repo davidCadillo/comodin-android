@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_phone"
+            android:layout_marginRight="8dp"
             android:tint="@color/colorPrimaryDark" />
 
         <android.support.design.widget.TextInputLayout

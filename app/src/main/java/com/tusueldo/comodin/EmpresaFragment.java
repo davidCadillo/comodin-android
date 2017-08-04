@@ -1,16 +1,18 @@
 package com.tusueldo.comodin;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
+import com.tusueldo.comodin.utils.ComodinValidator;
+import com.tusueldo.comodin.utils.TypeUser;
 
 
 /**
@@ -24,21 +26,30 @@ public class EmpresaFragment extends Fragment {
     @BindView(R.id.campo_ruc) TextInputEditText campo_ruc;
     @BindView(R.id.til_razon_social) TextInputLayout til_razon_social;
     @BindView(R.id.campo_razon_social) TextInputEditText campo_razon_social;
+    @BindView(R.id.img_ruc) ImageView img_ruc;
+
 
     public EmpresaFragment() {
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_empresa, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-        //campo_razon_social.setHint(getString(R.string.razon_social));
+
     }
+
+    @OnTextChanged(R.id.campo_ruc)
+    protected void onTextChangedRuc(CharSequence ruc) {
+        ComodinValidator.validateRuc(TypeUser.EMPRESA, getActivity(), ruc, til_ruc, til_razon_social, img_ruc);
+    }
+
+
 }

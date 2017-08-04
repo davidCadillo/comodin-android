@@ -6,17 +6,17 @@ package com.tusueldo.comodin.connections.ruc;
  * @author David Cadillo Blas
  */
 
-public class RequestRuc {
+public class RequestRUC {
 
     private String token;
     private String ruc;
 
 
-    public RequestRuc() {
+    public RequestRUC() {
 
     }
 
-    public RequestRuc(String token, String ruc) {
+    public RequestRUC(String token, String ruc) {
         this.token = token;
         this.ruc = ruc;
     }
