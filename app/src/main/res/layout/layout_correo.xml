@@ -9,6 +9,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:contentDescription="@string/icon_email_description"
             android:id="@+id/img_correo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,8 +21,6 @@
             android:id="@+id/til_correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
             app:counterMaxLength="40">
 
             <android.support.design.widget.TextInputEditText

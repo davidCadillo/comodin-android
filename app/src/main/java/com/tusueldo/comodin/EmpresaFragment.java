@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
+import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.utils.ComodinValidator;
-import com.tusueldo.comodin.utils.TypeUser;
 
 
 /**
@@ -48,7 +48,7 @@ public class EmpresaFragment extends Fragment {
 
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(TypeUser.EMPRESA, getActivity(), ruc, til_ruc, til_razon_social, img_ruc);
+        ComodinValidator.validateRuc(TypeUserLogin.EMPRESA, ruc, til_ruc, til_razon_social, img_ruc);
     }
 
 

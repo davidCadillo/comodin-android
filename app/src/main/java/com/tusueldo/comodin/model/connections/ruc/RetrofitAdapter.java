@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.connections.ruc;
+package com.tusueldo.comodin.model.connections.ruc;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAdapter {
 
-    Retrofit retrofit;
+    private Retrofit retrofit;
 
     public RetrofitAdapter() {
 

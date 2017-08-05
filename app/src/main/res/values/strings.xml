@@ -21,8 +21,28 @@
     <string name="datos_personales">Datos personales</string>
     <string name="razon_social">Razón social</string>
     <string name="direccion">Dirección</string>
-    <string name="mensajeRUC">El RUC debe ser el de una persona natural. Si desea, regístre como empresa.</string>
-    <string name="tituloRUC">RUC no válido</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="icon_mobilephone_description">Icono de teléfono móvil</string>
+    <string name="icon_email_description">Icono de correo electrónico</string>
+    <string name="icon_password_description">Icono de password</string>
+    <string name="datos">Datos</string>
+    <string name="separador">/</string>
+    <string name="dd">dd</string>
+    <string name="mm">mm</string>
+    <string name="yyyy">yyyy</string>
+    <string name="icon_ruc_description">Icono de RUC</string>
+    <string name="icon_razon_social_description">Icono de razón social</string>
+    <string name="icon_direccion_description">Icono de casa - direccion</string>
+    <string name="ir">Ir</string>
+
+    <!--Relacionados con el RUC-->
+    <string name="mensaje_ruc_alertdialog_independiente">El RUC debe ser el de una persona natural, no de empresa. Regístrese como usuario empresa.</string>
+    <string name="mensaje_ruc_alertdialog_empresa">El RUC debe ser el de una empresa. Regístrese como usuario independiente.</string>
+    <string name="titulo_ruc_alertdialog">RUC no válido</string>
+    <string name="tengo_ruc">Tengo RUC:</string>
+    <string name="titulo_ruc_progressdialog">RUC</string>
+    <string name="mensaje_ruc_progressdialog">Buscando RUC</string>
 </resources>
 
 

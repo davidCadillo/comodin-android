@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.utils;
+package com.tusueldo.comodin.model.types;
 
 /**
  * Created by USUARIO on 03/07/2017.
@@ -6,7 +6,7 @@ package com.tusueldo.comodin.utils;
 
 public enum TypeFieldDate {
 
-    DIA, MES, ANIO;
+    DIA, MES, ANIO
 
 
 }

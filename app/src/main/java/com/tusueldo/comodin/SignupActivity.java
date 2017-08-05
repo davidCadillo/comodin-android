@@ -4,16 +4,14 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.RelativeLayout;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.tusueldo.comodin.utils.ComodinValidator;
 
 public class SignupActivity extends AppCompatActivity {
 
     private boolean independiente_pressed = false;
     private boolean empresa_pressed = false;
-    @BindView(R.id.main_content) RelativeLayout main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +22,6 @@ public class SignupActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.loadFragments, new IndependienteFragment());
         fragmentTransaction.commit();
         independiente_pressed = true;
-        //Snackbar.make(main,"Ha ocurrido un error",Snackbar.LENGTH_INDEFINITE).show();
-
     }
 
 
@@ -40,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.loadFragments, new EmpresaFragment());
                     empresa_pressed = true;
                     independiente_pressed = false;
+                    ComodinValidator.rucvalidado = false;
                 }
                 break;
 

@@ -12,7 +12,11 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import butterknife.*;
-import com.tusueldo.comodin.utils.*;
+import com.tusueldo.comodin.model.types.ComodinValues;
+import com.tusueldo.comodin.model.types.TypeFieldDate;
+import com.tusueldo.comodin.model.types.TypeUserLogin;
+import com.tusueldo.comodin.utils.ComodinUtils;
+import com.tusueldo.comodin.utils.ComodinValidator;
 
 
 public class IndependienteFragment extends Fragment {
@@ -105,17 +109,17 @@ public class IndependienteFragment extends Fragment {
 
     @OnTextChanged(R.id.campo_fecha_nac_dia)
     protected void onTextChangedFechaDia() {
-        ComodinValidator.validateFieldDate(getActivity().getBaseContext(), TypeFieldDate.DIA, til_fecha_nac_dia, img_fecha_nac);
+        ComodinValidator.validateFechaNacimiento(getActivity().getBaseContext(), TypeFieldDate.DIA, til_fecha_nac_dia, img_fecha_nac);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_mes)
     protected void onTextChangedFechaMes() {
-        ComodinValidator.validateFieldDate(getActivity().getBaseContext(), TypeFieldDate.MES, til_fecha_nac_mes, img_fecha_nac);
+        ComodinValidator.validateFechaNacimiento(getActivity().getBaseContext(), TypeFieldDate.MES, til_fecha_nac_mes, img_fecha_nac);
     }
 
     @OnTextChanged(R.id.campo_fecha_nac_anio)
     protected void onTextChangedFechaAnio() {
-        ComodinValidator.validateFieldDate(getActivity().getBaseContext(), TypeFieldDate.ANIO, til_fecha_nac_anio, img_fecha_nac);
+        ComodinValidator.validateFechaNacimiento(getActivity().getBaseContext(), TypeFieldDate.ANIO, til_fecha_nac_anio, img_fecha_nac);
     }
 
     @OnTextChanged(R.id.campo_password)
@@ -125,7 +129,7 @@ public class IndependienteFragment extends Fragment {
 
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(TypeUser.INDEPENDIENTE, getActivity(), ruc, til_ruc, til_razon_social, img_ruc);
+        ComodinValidator.validateRuc(TypeUserLogin.INDEPENDIENTE, ruc, til_ruc, til_razon_social, img_ruc);
     }
 
     @OnCheckedChanged(R.id.sw_ruc)

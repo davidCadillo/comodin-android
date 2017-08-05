@@ -1,6 +1,5 @@
 package com.tusueldo.comodin.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -9,13 +8,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import com.tusueldo.comodin.R;
-import com.tusueldo.comodin.connections.RetrofitController;
+import com.tusueldo.comodin.model.connections.RetrofitController;
+import com.tusueldo.comodin.model.types.TypeFieldDate;
+import com.tusueldo.comodin.model.types.TypeUserLogin;
+import com.tusueldo.comodin.ui.ComodinAlertDialog;
+import com.tusueldo.comodin.ui.adapters.EventPositiveRuc;
 
 import java.util.regex.Pattern;
 
-/**
- * Created by David Cadillo on 09/06/2017.
- */
 
 public class ComodinValidator {
 
@@ -29,8 +29,8 @@ public class ComodinValidator {
     private static boolean apellidoValidado = false;
     private static boolean telefonoValidado = false;
     private static boolean correoValidado = false;
-    public static boolean fechaNacimientoValidada = false;
-    public static boolean passwordValidado = false;
+    private static boolean fechaNacimientoValidada = false;
+    private static boolean passwordValidado = false;
     public static boolean rucvalidado = false;
 
     private static boolean fechaDiaValidada = false;
@@ -43,19 +43,38 @@ public class ComodinValidator {
     public static TextInputLayout ti_anio = null;
     public static TextInputLayout ti_telefono = null;
 
-    private ProgressDialog progressDialog;
 
-    //@StringRes(R.string.mensajeRUC) String mensajeRUC;
-
-    public static void validateRuc(TypeUser typeUser, final Context context, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout til_razon_social, ImageView img_ruc) {
+    public static void validateRuc(TypeUserLogin typeUserLogin, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout til_razon_social, final ImageView img_ruc) {
         int tamanioRuc = campo_ruc.length();
+        Context context = til_ruc.getContext();
+        boolean alertShowed = false;
         if (tamanioRuc == 11) {
-            rucvalidado = true;
-            String firsLetter = String.valueOf(campo_ruc.charAt(0));
-            RetrofitController.requestRUC(til_ruc, til_razon_social, campo_ruc, img_ruc);
+
+            switch (typeUserLogin) {
+
+                case INDEPENDIENTE:
+                    if (campo_ruc.toString().startsWith("2")) {
+                        ComodinAlertDialog.showDialogRuc(context, R.string.mensaje_ruc_alertdialog_independiente, new EventPositiveRuc(context, typeUserLogin));
+                        alertShowed = true;
+                    }
+                    break;
+                case EMPRESA:
+                    if (campo_ruc.toString().startsWith("1")) {
+                        ComodinAlertDialog.showDialogRuc(context, R.string.mensaje_ruc_alertdialog_empresa, new EventPositiveRuc(context, typeUserLogin));
+                        alertShowed = true;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+            if (!alertShowed) {
+                rucvalidado = true;
+                RetrofitController.requestRUC(til_ruc, til_razon_social, campo_ruc, img_ruc);
+            }
         } else {
             rucvalidado = false;
-            markEmpty(context, til_ruc, img_ruc, "", 11);
+            markEmpty(til_ruc.getContext(), til_ruc, img_ruc, "", 11);
         }
 
     }
@@ -100,7 +119,7 @@ public class ComodinValidator {
             markEmpty(context, til_nombre, img_nombres, "Mínimo 3 letras.", 30);
             nombreValidado = false;
             //Cuando el nombre ya está validado
-        } else if (validarNombre) {
+        } else {
             nombreValidado = true;
             setFieldValidate(til_nombre, "Correcto", true);
             if (apellidoValidado) {
@@ -125,12 +144,11 @@ public class ComodinValidator {
         } else if (apellido.length() < 3) {
             markEmpty(context, til_apellido, img_nombres, "Mínimo 3 letras.", 30);
             apellidoValidado = false;
-        } else if (validarApellido) {
+        } else {
             apellidoValidado = true;
             setFieldValidate(til_apellido, "Correcto", true);
-            if (nombreValidado) {
+            if (nombreValidado)
                 setIconValidate(context, img_nombres);
-            }
         }
         Log.d("Apellido", String.valueOf(apellidoValidado));
     }
@@ -160,10 +178,13 @@ public class ComodinValidator {
         Log.d("Telefono", String.valueOf(telefonoValidado));
     }
 
-    public static void validateFieldDate(Context context, TypeFieldDate fieldToValidate, TextInputLayout til_field_date, ImageView imageView) {
+    public static void validateFechaNacimiento(Context context, TypeFieldDate fieldToValidate, TextInputLayout til_field_date, ImageView imageView) {
 
         //Se obtiene el campo de la fecha(mes, dia año) y se limpia
-        String field_date = getTrim(til_field_date.getEditText().getText());
+        String field_date = null;
+        if (til_field_date.getEditText() != null) {
+            field_date = getTrim(til_field_date.getEditText().getText());
+        }
         boolean campoValidado = false;
         //Se evalua el tiempo de campo a validar
         switch (fieldToValidate.ordinal()) {
@@ -175,7 +196,8 @@ public class ComodinValidator {
                 //Se guarda el dia introducido
                 campoDia = field_date;
                 //Cuando es correcto el día, pero aún faltan datos en la fecha o no es correcta, entonces se da el foco al mes.
-                if (campoValidado && !fechaNacimientoValidada) {
+                if (campoValidado && !fechaNacimientoValidada && ti_mes.getEditText() != null) {
+
                     ti_mes.getEditText().requestFocus();
                 }
                 break;
@@ -183,7 +205,7 @@ public class ComodinValidator {
                 fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_MONTH, field_date);
                 campoValidado = fechaMesValidada;
                 campoMes = field_date;
-                if (campoValidado && !fechaNacimientoValidada) {
+                if (campoValidado && !fechaNacimientoValidada && ti_anio.getEditText() != null) {
                     ti_anio.getEditText().requestFocus();
                 }
                 break;
@@ -202,13 +224,15 @@ public class ComodinValidator {
                 campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoAnio);
                 fechaNacimientoValidada = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
                 if (!fechaNacimientoValidada) {
-                    ComodinUtils.vibrar(context, imageView, R.anim.shake);
                     ti_dia.setHintTextAppearance(R.style.Error);
                     ti_dia.setErrorTextAppearance(R.style.Error);
                     ti_dia.setError(" ");
+
+
                     ti_mes.setHintTextAppearance(R.style.Error);
                     ti_mes.setErrorTextAppearance(R.style.Error);
                     ti_mes.setError(" ");
+
                     ti_anio.setHintTextAppearance(R.style.Error);
                     ti_anio.setErrorTextAppearance(R.style.Error);
                     ti_anio.setError(" ");
@@ -219,7 +243,8 @@ public class ComodinValidator {
                     setFieldValidate(ti_mes);
                     setFieldValidate(ti_anio);
                     imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
-                    ti_telefono.getEditText().requestFocus();
+                    if (ti_telefono.getEditText() != null)
+                        ti_telefono.getEditText().requestFocus();
                 }
             }
         } else {
@@ -242,11 +267,11 @@ public class ComodinValidator {
      * Esta función marca en rojo(error) un textinputlayout, además le quita el icono verde si es que el campo ha estado validado,
      * también marca en rojo el icono a los campos a los que representa. Se puede especificar un mensaje y el tamaño del contador.
      *
-     * @param context
-     * @param textInputLayout
-     * @param imageView
-     * @param message
-     * @param counterMaxLength
+     * @param context          la activity
+     * @param textInputLayout  el cuadro de texto en el que se efectúa la función
+     * @param imageView        un icono
+     * @param message          texto descriptivo informativo
+     * @param counterMaxLength cantidad máxima de caracteres permitidos del cuadro de texto.
      */
     public static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message, int counterMaxLength) {
         textInputLayout.setCounterEnabled(true);
@@ -254,7 +279,8 @@ public class ComodinValidator {
         textInputLayout.setHintTextAppearance(R.style.Error);
         textInputLayout.setErrorTextAppearance(R.style.Error);
         textInputLayout.setError(message);
-        textInputLayout.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        if (textInputLayout.getEditText() != null)
+            textInputLayout.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         if (imageView != null)
             setIconValidate(context, imageView, false);
     }
@@ -264,23 +290,23 @@ public class ComodinValidator {
      * Esta función pone en verde a un TextInput layout, le añade un texto y además añade un pequeño icono verde a la derecha del campo
      * si es que se especifica.
      *
-     * @param campo
-     * @param message
-     * @param checkImage
+     * @param campo      cuadro de texto a marcar
+     * @param message    una descripcion informativa
+     * @param checkImage un booleando que comprueba si se deberá marcar el campo
      */
     public static void setFieldValidate(TextInputLayout campo, String message, boolean checkImage) {
         campo.setHintTextAppearance(R.style.Hint);
         campo.setErrorTextAppearance(R.style.Validado);
         campo.setErrorEnabled(true);
         campo.setError(message);
-        if (checkImage)
+        if (checkImage && campo.getEditText() != null)
             campo.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_black_24px, 0);
     }
 
     /**
      * Esta función marca en verde un TextInputLayout sin agregarle iconos y sin texto
      *
-     * @param campo
+     * @param campo cuadro de texto a marcar
      */
     private static void setFieldValidate(TextInputLayout campo) {
         setFieldValidate(campo, " ", false);
@@ -290,9 +316,9 @@ public class ComodinValidator {
      * Esta función establece el icono de los formularios en rojo o verde, de acuerdo a si sus campos
      * correspondientes están validados o no.
      *
-     * @param context
-     * @param imageView
-     * @param validate
+     * @param context   activy
+     * @param imageView imagen a pintar
+     * @param validate  indica si la validación es buena o mala para ver el color del imageview a pintar
      */
     public static void setIconValidate(Context context, ImageView imageView, boolean validate) {
         if (validate)
@@ -305,8 +331,8 @@ public class ComodinValidator {
     /**
      * Esta función marca en verde un icono.
      *
-     * @param context
-     * @param imageView
+     * @param context   la activity
+     * @param imageView icono a pintar
      */
     public static void setIconValidate(Context context, ImageView imageView) {
         imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));

@@ -37,12 +37,17 @@
             android:layout_gravity="center_vertical"
             android:checked="false"
             android:text="Tengo RUC: "
-            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
             android:textColor="@android:color/darker_gray" />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp">
+
         <include layout="@layout/layout_ruc" />
-
-
     </LinearLayout>
 
 
@@ -59,14 +64,12 @@
         android:id="@+id/datos_basicos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/area_nombre"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <ImageView
@@ -80,7 +83,9 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_nombre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/campo_nombre"
@@ -100,9 +105,9 @@
 
         <LinearLayout
             android:id="@+id/area_apellido"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="24dp"
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
@@ -139,14 +144,12 @@
         android:id="@+id/area_fecha_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1.0">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/area_fecha_nac"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <ImageView
@@ -163,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="6.4">
+                android:weightSum="6.5">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -268,27 +271,30 @@
         <!--END Aqui va la fecha de nacimiento-->
 
         <!--BEGIN Aqui va el teléfono-->
-        <LinearLayout
-            android:id="@+id/area_telefono"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            tools:layout_weight="0.5">
-            <include layout="@layout/layout_telefono" />
 
-        </LinearLayout>
         <!--END Aqui va el teléfono-->
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/area_telefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <include layout="@layout/layout_telefono" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/area_genero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <RadioGroup
             android:id="@+id/rg_genero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -307,9 +313,8 @@
                 android:drawableRight="@drawable/ic_human_male"
                 android:drawableTint="@color/colorPrimaryDark"
                 android:text="Masculino"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_femenino"
@@ -320,10 +325,10 @@
                 android:drawableRight="@drawable/ic_human_female"
                 android:drawableTint="@color/colorPrimaryDark"
                 android:text="Femenino"
-                android:textSize="18sp"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+                android:textSize="16sp"
                 android:textColor="@android:color/darker_gray" />
         </RadioGroup>
+    </LinearLayout>
 
     <include layout="@layout/layout_password" />
 
