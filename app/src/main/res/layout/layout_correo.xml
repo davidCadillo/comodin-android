@@ -9,12 +9,14 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:contentDescription="@string/icon_email_description"
             android:id="@+id/img_correo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_email"
+            android:layout_marginRight="@dimen/margin_large_horizontal"
+            android:layout_marginEnd="@dimen/margin_large_horizontal"
+            android:contentDescription="@string/icon_email_description"
+            android:src="@drawable/ic_email_black_24dp"
             android:tint="@color/colorPrimaryDark" />
 
         <android.support.design.widget.TextInputLayout
@@ -27,7 +29,6 @@
                 android:id="@+id/campo_correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableTint="@color/colorValidado"
                 android:hint="@string/correo"
                 android:inputType="textEmailAddress"
                 android:nextFocusDown="@+id/campo_fecha_nac_dia" />

@@ -1,14 +1,14 @@
 package com.tusueldo.comodin.ui.adapters;
 
-import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import com.github.javiersantos.bottomdialogs.BottomDialog;
 
-/**
- * Created by USUARIO on 05/08/2017.
- */
 
-public class EventDialogDismiss implements DialogInterface.OnClickListener {
+public class EventDialogDismiss implements BottomDialog.ButtonCallback {
+
+
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    public void onClick(@NonNull BottomDialog dialog) {
         dialog.dismiss();
     }
 }

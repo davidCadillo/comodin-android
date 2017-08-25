@@ -1,41 +1,55 @@
 package com.tusueldo.comodin.ui;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.StringRes;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.bottomdialogs.BottomDialog;
 import com.tusueldo.comodin.R;
 import com.tusueldo.comodin.ui.adapters.EventDialogDismiss;
 
-/**
- * Created by David Cadillo on 29/07/2017.
- */
 
 public class ComodinAlertDialog {
 
 
-    public static void showDialog(Context context, @StringRes int title, @StringRes int message,
-                                  DialogInterface.OnClickListener onPositive, DialogInterface.OnClickListener onNegative) {
+    public static void showDialogMaterial(Context context, @StringRes int title, @StringRes int message,
+                                          MaterialDialog.SingleButtonCallback onPositive, MaterialDialog.SingleButtonCallback onNegative) {
 
-        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(context);
-        alerBuilder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes, onPositive)
-                .setNegativeButton(android.R.string.no, onNegative)
-                .create().show();
+        new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
+                .onPositive(onPositive)
+                .onNegative(onNegative)
+                .show();
+
+    }
+
+    public static void showDialogMaterialInformative(Context context, @StringRes int title, @StringRes int message,
+                                                     @StringRes int positiveText) {
+
+        new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
+                .positiveText(positiveText)
+                .show();
+
     }
 
 
     public static void showDialogRuc(Context context, @StringRes int message,
-                                     DialogInterface.OnClickListener onPositive) {
+                                     BottomDialog.ButtonCallback onPositive) {
 
-        AlertDialog.Builder alerBuilder = new AlertDialog.Builder(context);
-        alerBuilder.setTitle(R.string.titulo_ruc_alertdialog)
-                .setMessage(message)
-                .setCancelable(true)
-                .setPositiveButton(R.string.ir, onPositive)
-                .setNegativeButton(android.R.string.ok, new EventDialogDismiss())
-                .create().show();
+
+        new BottomDialog.Builder(context)
+                .setTitle(R.string.titulo_ruc_alertdialog)
+                .setContent(message)
+                .setIcon(R.mipmap.ic_comodin)
+                .setPositiveText(R.string.registrar)
+                .onPositive(onPositive)
+                .setNegativeText(android.R.string.ok)
+                .onNegative(new EventDialogDismiss())
+                .setCancelable(false)
+                .show();
+
     }
 
 

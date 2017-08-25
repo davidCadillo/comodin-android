@@ -1,43 +1,63 @@
 package com.tusueldo.comodin.ui;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.StringRes;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.tusueldo.comodin.R;
 
-/**
- * Created by USUARIO on 05/08/2017.
- */
 
 public class ComodinProgressDialog {
 
-    private static ProgressDialog progressDialog;
 
+    public static MaterialDialog showProgressBar(Context context, @StringRes int title, @StringRes int message, boolean cancelable) {
 
-    public static void showProgressBar(Context context, @StringRes int title, @StringRes int message, boolean cancelable) {
+        MaterialDialog materialDialog;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            materialDialog = new MaterialDialog.Builder(context)
+                    .title(title)
+                    .content(message)
+                    .progress(true, 0)
+                    .cancelable(cancelable)
+                    .icon(context.getResources().getDrawable(R.mipmap.ic_comodin, null))
+                    .show();
+        } else {
+            materialDialog = new MaterialDialog.Builder(context)
+                    .title(title)
+                    .content(message)
+                    .cancelable(cancelable)
+                    .progress(true, 0)
+                    .show();
+        }
+        return materialDialog;
 
-        progressDialog = new ProgressDialog(context, R.style.CircularProgress);
-        progressDialog.setTitle(title);
-        progressDialog.setMessage(context.getString(message));
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(cancelable);
-        progressDialog.show();
     }
 
-    public static void showProgressBar(Context context, @StringRes int title, @StringRes int message) {
+    public static MaterialDialog showProgressBar(Context context, @StringRes int title, @StringRes int message) {
+        MaterialDialog materialDialog;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            materialDialog = new MaterialDialog.Builder(context)
+                    .title(title)
+                    .content(message)
+                    .progress(true, 0)
+                    .icon(context.getResources().getDrawable(R.mipmap.ic_comodin, null))
+                    .show();
+        } else {
+            materialDialog = new MaterialDialog.Builder(context)
+                    .title(title)
+                    .content(message)
+                    .progress(true, 0)
+                    .show();
+        }
+        return materialDialog;
 
-        progressDialog = new ProgressDialog(context, R.style.CircularProgress);
-        progressDialog.setTitle(title);
-        progressDialog.setMessage(context.getString(message));
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
     }
 
 
-    public static void finish() {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
+    public static void finish(MaterialDialog materialDialog) {
+        if (materialDialog.isShowing())
+            materialDialog.dismiss();
+
     }
 
 

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_large_horizontal"
+    android:layout_marginLeft="@dimen/margin_large_horizontal"
+    android:layout_marginRight="@dimen/margin_large_horizontal"
+    android:layout_marginStart="@dimen/margin_large_horizontal"
     android:orientation="vertical"
     tools:context="com.tusueldo.comodin.EmpresaFragment">
 
@@ -10,56 +15,59 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/datos"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:contentDescription="@string/icon_ruc_description"
             android:id="@+id/img_ruc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_large_horizontal"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/icon_ruc_description"
             android:src="@drawable/ic_business_black_24dp"
             android:tint="@color/colorPrimaryDark" />
 
-        <include layout="@layout/layout_ruc" />
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_ruc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterMaxLength="11">
 
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/campo_ruc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ruc"
+                android:inputType="number"
+                android:maxLength="11" />
+
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/img_razon_social"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_large_horizontal"
+            android:layout_marginEnd="@dimen/margin_large_horizontal"
             android:contentDescription="@string/icon_razon_social_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:src="@drawable/ic_business_center_black_24dp"
-            android:tint="@color/colorPrimaryDark" />
-
-        <include layout="@layout/layout_razon_social" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:contentDescription="@string/icon_direccion_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_home_black_24dp"
             android:tint="@color/colorPrimaryDark" />
 
         <android.support.design.widget.TextInputLayout
@@ -70,14 +78,50 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/campo_razon_social"
                 android:layout_width="match_parent"
+                android:inputType="textFilter"
                 android:layout_height="wrap_content"
+                android:hint="@string/razon_social" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_direccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_large_horizontal"
+            android:layout_marginEnd="@dimen/margin_large_horizontal"
+            android:contentDescription="@string/icon_direccion_description"
+            android:src="@drawable/ic_home_black_24dp"
+            android:tint="@color/colorPrimaryDark" />
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/til_direccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/campo_direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textFilter|textNoSuggestions"
                 android:hint="@string/direccion" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
-    <include layout="@layout/layout_telefono" />
+    <include layout="@layout/layout_distrito" />
 
     <include layout="@layout/layout_correo" />
+
+    <include layout="@layout/layout_telefono" />
 
     <include layout="@layout/layout_password" />
 

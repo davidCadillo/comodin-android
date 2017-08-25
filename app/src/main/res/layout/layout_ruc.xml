@@ -3,21 +3,36 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_ruc"
+    <LinearLayout
+        android:id="@+id/layout_ruc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterMaxLength="11">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/campo_ruc"
+        <ImageView
+            android:id="@+id/img_ruc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/icon_ruc_description"
+            android:src="@drawable/ic_business_black_24dp"
+            android:tint="@color/colorPrimaryDark" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_ruc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="RUC"
-            android:inputType="number"
-            android:maxLength="11"
-            android:nextFocusDown="@id/campo_nombre" />
+            app:counterMaxLength="11">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/campo_ruc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ruc"
+                android:inputType="number"
+                android:maxLength="11"
+                android:nextFocusDown="@id/campo_nombre" />
 
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 </merge>

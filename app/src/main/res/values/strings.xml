@@ -1,48 +1,130 @@
 <resources>
+
+    <!--Generales-->
     <string name="app_name">Comodin</string>
-    <string name="hint_username">correo o teléfono</string>
-    <string name="hint_password">contraseña</string>
-    <string name="signin">Ingresar</string>
-    <string name="signup">Registrarse</string>
-    <string name="forgot_password"><u>¿Olvidaste tu contraseña?</u></string>
-    <string name="registrar">Registro</string>
-    <string name="seleccionar_usuario">¿Qué usuario eres?</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="espacio"> </string>
+
+    <!--Activity de inicio de sesion-->
+    <string name="hint_username">Correo</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="signin">Ingresar ahora</string>
+    <string name="signup">Todavía no tienes una cuenta ? <b>Regístrate</b></string>
+    <string name="forgot_password">No puedes recordar tu contraseña?</string>
+    <string name="registrar">Registrarse</string>
+
+    <!--Datos personales de independiente-->
     <string name="independiente">Independiente</string>
     <string name="empresa">Empresa</string>
-    <string name="nombres">Nombre</string>
+    <string name="tengo_ruc">Tengo RUC:</string>
+    <string name="datos_personales">Datos personales</string>
+    <string name="nombres">Nombres y apellidos</string>
     <string name="apellidos">Apellidos</string>
     <string name="correo">Correo</string>
+
+    <string name="separador">/</string>
+    <string name="dd">Día</string>
+    <string name="mm">Mes</string>
+    <string name="yyyy">Año</string>
     <string name="mobile">Celular</string>
     <string name="nacimiento">Fecha de nacimiento</string>
-    <string name="pass">Contraseña</string>
-    <string name="re_pass">Repita su contraseña</string>
-    <string name="genero">Sexo</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="datos_personales">Datos personales</string>
-    <string name="razon_social">Razón social</string>
-    <string name="direccion">Dirección</string>
+    <string name="password">Contraseña</string>
+    <string name="username">Correo o celular</string>
+    <string name="femenino">Femenino</string>
+    <string name="masculino">Masculino</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <!--Datos personales de empresa-->
+    <string name="datos">Datos</string>
+    <string name="direccion">Dirección</string>
+    <string name="razon_social">Razón social</string>
+
+    <!--Description de iconos-->
     <string name="icon_mobilephone_description">Icono de teléfono móvil</string>
     <string name="icon_email_description">Icono de correo electrónico</string>
     <string name="icon_password_description">Icono de password</string>
-    <string name="datos">Datos</string>
-    <string name="separador">/</string>
-    <string name="dd">dd</string>
-    <string name="mm">mm</string>
-    <string name="yyyy">yyyy</string>
+    <string name="icon_independiente_description">Selección de usuario independiente</string>
+    <string name="icon_empresa_description">Selección de usuario empresa</string>
     <string name="icon_ruc_description">Icono de RUC</string>
     <string name="icon_razon_social_description">Icono de razón social</string>
     <string name="icon_direccion_description">Icono de casa - direccion</string>
-    <string name="ir">Ir</string>
+    <string name="icon_genero_description">Seleccionar género</string>
+    <string name="icon_fecha_nac_description">Escribir fecha de nacimiento</string>
+    <string name="icon_username_description">Escribir tu correo electrónico</string>
+    <string name="icon_logo_description">Logo de la aplicación</string>
+    <string name="icon_nombres_description">Escriba sus nombres y apellidos.</string>
 
-    <!--Relacionados con el RUC-->
+
+    <!--Mensaje de AlertDialog-->
     <string name="mensaje_ruc_alertdialog_independiente">El RUC debe ser el de una persona natural, no de empresa. Regístrese como usuario empresa.</string>
-    <string name="mensaje_ruc_alertdialog_empresa">El RUC debe ser el de una empresa. Regístrese como usuario independiente.</string>
+    <string name="mensaje_ruc_alertdialog_empresa">El RUC debe ser el de una empresa. Regístrese como independiente.</string>
     <string name="titulo_ruc_alertdialog">RUC no válido</string>
-    <string name="tengo_ruc">Tengo RUC:</string>
+    <string name="mensaje_ruc_servidor">Ha ocurrido un problema al consultar el RUC. Puede seguir registrándose y luego se validará su RUC de acuerdo a sus datos.</string>
+
+
+    <!--Mensaje Progress Dialog-->
     <string name="titulo_ruc_progressdialog">RUC</string>
     <string name="mensaje_ruc_progressdialog">Buscando RUC</string>
+
+
+    <!--Mensajes de validación-->
+    <string name="no_numeros_validacion">No números</string>
+    <string name="requerido_validacion">Es requerido.</string>
+    <string name="no_permitido_validacion">No permitido.</string>
+    <string name="minimo_letras_validacion">Mínimo 7 letras.</string>
+    <string name="correcto_validacion">Correcto</string>
+    <string name="correo_no_valido_validacion">No es un correo válido.</string>
+    <string name="password_validacion">Entre 8 y 15 caracteres</string>
+    <string name="ruc_no_encontrado_validacion">RUC no encontrado</string>
+    <string name="ruc">RUC</string>
+    <string name="ruc_no_valido_validacion">No validado</string>
+    <string name="o">o</string>
+    <string name="conecta_con_facebook">Conecta con Facebook</string>
+    <string name="conecta_con_google">Conecta con Google+</string>
+
+    <!--Facebook API Id-->
+    <string name="facebook_app_id">1420059591410969</string>
+    <string name="fb_login_protocol_scheme">fb1420059591410969</string>
+
+
+    <string-array name="items">
+        <item>Correo</item>
+        <item>Teléfono</item>
+    </string-array>
+
+    <string-array name="idItems">
+        <item>email</item>
+        <item>phone</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ruc_exception_validacion">Algo no es correcto</string>
+    <string name="distrito">Distrito</string>
+    <string name="icon_distrito_description">Escriba el distrito donde vive</string>
+    <string name="falta_apellido_validacion">Falta su apellido</string>
+    <string name="sin_internet">No hay internet</string>
+    <string name="incorrecto">incorrecto</string>
+    <string name="distrito_validacion">Seleccione uno de la lista.</string>
+    <string name="regitrando">Registrando</string>
+    <string name="esperar">Espere por favor &#8230;</string>
+    <string name="celular_existe">Celular ya registrado.</string>
+    <string name="correo_existe">Correo ya registrado</string>
+    <string name="ruc_existe">Ya registrado</string>
+    <string name="error">Error</string>
+    <string name="error_500_alert_dialog_register">Ha habido un error al registrar. Inténtelo más adelante.</string>
+    <string name="ruc_no_validado">El RUC introducido no se ha encontrado y no será tenido en cuenta en su registro.</string>
+    <string name="terminos_servicio">Estoy de acuerdo con los términos de servicio</string>
+    <string name="terminos_condiciones">Este documento de términos y condiciones de uso, es aplicable para el uso de servicios ofrecidos por <b>COMODIN</b> Perú S.A. C.(En adelante <b>COMODIN</b> para este documento), los usuarios pueden acceder ya se desde la página web www.comodin.pe o desde la aplicación del software desde el teléfono móvil. Los usuarios Solicitante o Service certifican que aceptan todos los términos y condiciones establecidos por <b>COMODIN</b> al requerir o brindar servicios. Si ud. señor usuario, no está de acuerdo con los términos y condiciones del sistema y las políticas de privacidad de <b>COMODIN</b>, no instale la aplicación, bórrela y/o no realice ningún uso de todo lo que implica el sistema <b>COMODIN</b>.</string>
+    <string name="aviso_cambio_condiciones">Le sugerimos revisar el Acuerdo cada vez que utilice la Plataforma, ya que no nos reservamos el derecho de actualizar y/o modificar este Acuerdo en cualquier momento sin previo aviso.</string>
+    <string name="titulo_terminos_condiciones">Términos y Condiciones</string>
+    <string name="ver_mas"><u>Ver más</u></string>
+    <string name="texto_acepto_terminos">Acepto términos y condiciones</string>
+    <string name="texto_acepto_recibir_correos">Recibir correos relacionados a Comodín</string>
+    <string name="continuar_terminos">Continuar</string>
+    <string name="error_fix">Error en FixErros</string>
+    <string name="error_on_response">Error en onresponse</string>
+
 </resources>
 
 

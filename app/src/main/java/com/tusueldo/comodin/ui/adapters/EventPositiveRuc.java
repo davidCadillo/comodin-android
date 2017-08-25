@@ -1,19 +1,17 @@
 package com.tusueldo.comodin.ui.adapters;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import com.github.javiersantos.bottomdialogs.BottomDialog;
 import com.tusueldo.comodin.EmpresaFragment;
 import com.tusueldo.comodin.IndependienteFragment;
 import com.tusueldo.comodin.R;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 
-/**
- * Created by USUARIO on 05/08/2017.
- */
 
-public class EventPositiveRuc implements DialogInterface.OnClickListener {
+public class EventPositiveRuc implements BottomDialog.ButtonCallback {
 
     private Context context;
     private TypeUserLogin typeUserLogin;
@@ -28,9 +26,9 @@ public class EventPositiveRuc implements DialogInterface.OnClickListener {
     }
 
     @Override
-    public void onClick(DialogInterface dialog, int which) {
-        final Activity activity = (Activity) context;
-        FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
+    public void onClick(@NonNull BottomDialog dialog) {
+        final AppCompatActivity activity = (AppCompatActivity) context;
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
         switch (typeUserLogin) {
             case INDEPENDIENTE:
                 fragmentTransaction.replace(R.id.loadFragments, new EmpresaFragment());
@@ -43,7 +41,6 @@ public class EventPositiveRuc implements DialogInterface.OnClickListener {
         }
 
         fragmentTransaction.commit();
-
     }
 
     public Context getContext() {
@@ -61,4 +58,6 @@ public class EventPositiveRuc implements DialogInterface.OnClickListener {
     public void setTypeUserLogin(TypeUserLogin typeUserLogin) {
         this.typeUserLogin = typeUserLogin;
     }
+
+
 }

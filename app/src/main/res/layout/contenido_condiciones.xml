@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.tusueldo.comodin.CondicionesActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/titulo_terminos_condiciones"
+        android:textAlignment="center"
+        android:textColor="#B3000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <TextView
+        android:id="@+id/tv_sugerencia"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/aviso_cambio_condiciones"
+        android:textSize="13sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_terminos_condiciones"
+        app:layout_constraintRight_toRightOf="@+id/tv_terminos_condiciones"
+        app:layout_constraintTop_toBottomOf="@+id/tv_terminos_condiciones" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/icon_logo_description"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_terminos_condiciones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/terminos_condiciones"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_ver_mas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@string/ver_mas"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_sugerencia"
+        app:layout_constraintRight_toRightOf="@+id/tv_sugerencia"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sugerencia" />
+
+    <CheckBox
+        android:id="@+id/chk_acepta_terminos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:checked="true"
+        android:fontFamily="sans-serif"
+        android:gravity="start|center_vertical"
+        android:text="@string/texto_acepto_terminos"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#B3000000"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_ver_mas"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ver_mas" />
+
+    <CheckBox
+        android:id="@+id/chk_enviar_correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:checked="true"
+        android:fontFamily="sans-serif"
+        android:gravity="start|center_vertical"
+        android:text="@string/texto_acepto_recibir_correos"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#B3000000"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/chk_acepta_terminos"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chk_acepta_terminos" />
+
+    <Button
+        android:id="@+id/btn_continuar_terminos"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/selector_button"
+        android:text="@string/continuar_terminos"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chk_enviar_correo" />
+
+
+</android.support.constraint.ConstraintLayout>

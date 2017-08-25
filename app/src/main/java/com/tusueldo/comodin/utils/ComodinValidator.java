@@ -1,14 +1,13 @@
 package com.tusueldo.comodin.utils;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import com.tusueldo.comodin.R;
-import com.tusueldo.comodin.model.connections.RetrofitController;
+import com.tusueldo.comodin.controller.RetrofitController;
 import com.tusueldo.comodin.model.types.TypeFieldDate;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
@@ -19,19 +18,10 @@ import java.util.regex.Pattern;
 
 public class ComodinValidator {
 
-
     private static String campoDia = "";
     private static String campoMes = "";
     private static String campoAnio = "";
-    private static String campoFechaCompleta;
-
-    private static boolean nombreValidado = false;
-    private static boolean apellidoValidado = false;
-    private static boolean telefonoValidado = false;
-    private static boolean correoValidado = false;
-    private static boolean fechaNacimientoValidada = false;
-    private static boolean passwordValidado = false;
-    public static boolean rucvalidado = false;
+    public static String campoFechaCompleta;
 
     private static boolean fechaDiaValidada = false;
     private static boolean fechaMesValidada = false;
@@ -43,298 +33,320 @@ public class ComodinValidator {
     public static TextInputLayout ti_anio = null;
     public static TextInputLayout ti_telefono = null;
 
+    public static boolean validacionCompleta = false;
+    public static String ubigeo;
+    public static String direccion;
 
-    public static void validateRuc(TypeUserLogin typeUserLogin, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout til_razon_social, final ImageView img_ruc) {
+
+    public static boolean nombreValidado = false;
+    public static boolean celularValidado = false;
+    public static boolean correoValidado = false;
+    private static boolean fechaNacimientoValidada = false;
+    private static boolean passwordValidado = false;
+    public static boolean rucvalidado = false;
+    public static boolean distritoValidado = false;
+    public static boolean genero_validado = false;
+    public static boolean ruc_validate_server = true;
+    private static boolean razon_social_validada = false;
+    private static boolean direccion_validada = false;
+
+
+    public static void validateRuc(TypeUserLogin typeUserLogin, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout textInputLayout, final ImageView img_ruc,
+                                   final ImageView img, final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito, Button btn_registro) {
         int tamanioRuc = campo_ruc.length();
-        Context context = til_ruc.getContext();
         boolean alertShowed = false;
-        if (tamanioRuc == 11) {
-
+        if (tamanioRuc == 0) {//Si el campo RUC está vacío se limpian los campos relacionados si tuviese datos.
+            ComodinUtils.setFieldNormal(til_ruc, img_ruc);
+            ComodinUtils.clearField(textInputLayout, img);
+            ComodinUtils.clearField(til_direccion, img_direccion);
+            ComodinUtils.clearField(til_distrito, img_distrito);
+            rucvalidado = false;
+        } else if (tamanioRuc >= 1 && tamanioRuc < 11) {//Se habilita el contador a partir de 1
+            /*til_ruc.setCounterEnabled(true);
+            til_ruc.setCounterMaxLength(11);*/
+            ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.espacio, 11);
+            rucvalidado = false;
+        } else if (tamanioRuc > 11) {
+            rucvalidado = false;
+            til_ruc.setCounterEnabled(false);
+        } else if (tamanioRuc == 11) {
             switch (typeUserLogin) {
-
                 case INDEPENDIENTE:
-                    if (campo_ruc.toString().startsWith("2")) {
-                        ComodinAlertDialog.showDialogRuc(context, R.string.mensaje_ruc_alertdialog_independiente, new EventPositiveRuc(context, typeUserLogin));
+                    if (String.valueOf(campo_ruc.toString().charAt(0)).equals("2")) {
+                        ComodinAlertDialog.showDialogRuc(til_ruc.getContext(), R.string.mensaje_ruc_alertdialog_independiente, new EventPositiveRuc(til_ruc.getContext(), typeUserLogin));
                         alertShowed = true;
                     }
                     break;
                 case EMPRESA:
                     if (campo_ruc.toString().startsWith("1")) {
-                        ComodinAlertDialog.showDialogRuc(context, R.string.mensaje_ruc_alertdialog_empresa, new EventPositiveRuc(context, typeUserLogin));
+                        ComodinAlertDialog.showDialogRuc(til_ruc.getContext(), R.string.mensaje_ruc_alertdialog_empresa, new EventPositiveRuc(til_ruc.getContext(), typeUserLogin));
                         alertShowed = true;
                     }
                     break;
                 default:
+                    alertShowed = true;
                     break;
-
             }
-            if (!alertShowed) {
-                rucvalidado = true;
-                RetrofitController.requestRUC(til_ruc, til_razon_social, campo_ruc, img_ruc);
+            if (!alertShowed)
+                RetrofitController.requestRUC(typeUserLogin, til_ruc, textInputLayout, campo_ruc, img_ruc, img, til_direccion, img_direccion, til_distrito, img_distrito);
+            if (rucvalidado) {
+                Log.d("RUC HOY: ", "El ruc se ha validado");
             }
         } else {
             rucvalidado = false;
-            markEmpty(til_ruc.getContext(), til_ruc, img_ruc, "", 11);
+            ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.espacio, 11);
         }
+//        Log.d("RUC validado: ", String.valueOf(rucvalidado));
+        checkValidation(btn_registro, typeUserLogin);
 
     }
 
-    public static void validatePassword(Context context, CharSequence campo_password, TextInputLayout til_password, ImageView img_password) {
+    public static void validateNombre(TypeUserLogin typeUserLogin, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres, Button btn_registro) {
 
-        int tamanioPassword = campo_password.length();
-
-        if (tamanioPassword < 8) {
-            markEmpty(context, til_password, null, "Entre 8 y 15 caracteres", 15);
-            passwordValidado = false;
-        } else if (tamanioPassword >= 8 && tamanioPassword <= 15) {
-            setFieldValidate(til_password, "Correcto", true);
-            passwordValidado = true;
-        } else if (tamanioPassword > 15) {
-            markEmpty(context, til_password, null, "No permitido", 15);
-            passwordValidado = false;
-        }
-        setIconValidate(context, img_password, passwordValidado);
-//        Log.d("Password", String.valueOf(passwordValidado));
-
-    }
-
-    public static void validateNombre(Context context, CharSequence campo_nombre, TextInputLayout til_nombre, ImageView img_nombres) {
-        String nombre = getTrim(campo_nombre).toLowerCase();
+        String nombre = ComodinUtils.getTrim(campo_nombre).toLowerCase();
         boolean validarNombre = Pattern.matches(ComodinPatterns.NAMES, nombre);
-
-        //Validación para evitar numeros
-        if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, nombre)) {
-            markEmpty(context, til_nombre, img_nombres, "No números", 30);
-            nombreValidado = false;
-            //Validación para que no sea vacío
-        } else if (nombre.length() == 0) {
-            markEmpty(context, til_nombre, img_nombres, "Es requerido.", 30);
-            nombreValidado = false;
-            //Cuando no se ha validado
-        } else if (!validarNombre) {
-            markEmpty(context, til_nombre, img_nombres, "No permitido.", 30);
-            nombreValidado = false;
-            //Cuando se introduce menos de 3 caracteres
-        } else if (nombre.length() < 3) {
-            markEmpty(context, til_nombre, img_nombres, "Mínimo 3 letras.", 30);
-            nombreValidado = false;
-            //Cuando el nombre ya está validado
-        } else {
-            nombreValidado = true;
-            setFieldValidate(til_nombre, "Correcto", true);
-            if (apellidoValidado) {
-                setIconValidate(context, img_nombres);
+        int caracteres = nombre.length();
+        String[] cantidad_nombres = nombre.split(" ");
+        if (validarNombre) {
+            if (cantidad_nombres.length >= 2) {
+                if (caracteres >= 7) {
+                    nombreValidado = true;
+                    ComodinUtils.setFieldValidateFull(til_nombre, R.string.correcto_validacion, img_nombres);
+                } else {
+                    nombreValidado = false;
+                    ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.minimo_letras_validacion, 50);
+                }
+            } else {
+                if (cantidad_nombres.length == 1 && nombre.contains(" ")) {
+                    nombreValidado = false;
+                    ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.falta_apellido_validacion, 50);
+                }
             }
+
+        } else if (nombre.isEmpty()) {
+            ComodinUtils.setFieldNormal(til_nombre, img_nombres);
+            nombreValidado = false;
+
+        } else if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, nombre)) {
+            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_numeros_validacion, 50);
+            nombreValidado = false;
+        } else {
+            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_permitido_validacion, 50);
+            nombreValidado = false;
         }
+        checkValidation(btn_registro, typeUserLogin);
         Log.d("Nombres", String.valueOf(nombreValidado));
     }
 
-    public static void validateApellido(Context context, CharSequence campo_apellido, TextInputLayout til_apellido, ImageView img_nombres) {
-        String apellido = getTrim(campo_apellido);
-        boolean validarApellido = Pattern.matches(ComodinPatterns.NAMES, apellido);
-        if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, apellido)) {
-            markEmpty(context, til_apellido, img_nombres, "No números", 30);
-            apellidoValidado = false;
-        } else if (apellido.length() == 0) {
-            markEmpty(context, til_apellido, img_nombres, "No puede quedar vacío.", 30);
-            apellidoValidado = false;
-        } else if (!validarApellido) {
-            markEmpty(context, til_apellido, img_nombres, "No permitido.", 30);
-            apellidoValidado = false;
-        } else if (apellido.length() < 3) {
-            markEmpty(context, til_apellido, img_nombres, "Mínimo 3 letras.", 30);
-            apellidoValidado = false;
-        } else {
-            apellidoValidado = true;
-            setFieldValidate(til_apellido, "Correcto", true);
-            if (nombreValidado)
-                setIconValidate(context, img_nombres);
-        }
-        Log.d("Apellido", String.valueOf(apellidoValidado));
-    }
-
-    public static void validateCorreo(Context context, CharSequence campo_email, TextInputLayout til_correo, ImageView img_correo) {
-        String correo = getTrim(campo_email).toLowerCase();
+    public static void validateCorreo(TypeUserLogin typeUserLogin, CharSequence campo_email, TextInputLayout til_correo, ImageView img_correo, Button btn_registro) {
+        String correo = ComodinUtils.getTrim(campo_email.toString()).toLowerCase();
         correoValidado = !TextUtils.isEmpty(campo_email) && Pattern.matches(ComodinPatterns.EMAIL, correo);
         if (correoValidado) {
-            setFieldValidate(til_correo, "Correcto", true);
-            setIconValidate(context, img_correo);
+            ComodinUtils.setFieldValidateFull(til_correo, R.string.correcto_validacion, img_correo);
+        } else if (correo.isEmpty()) {
+            ComodinUtils.setFieldNormal(til_correo, img_correo);
         } else {
-            markEmpty(context, til_correo, img_correo, "No es un correo válido.", 30);
+            ComodinUtils.setFieldInvalidateFull(til_correo, img_correo, R.string.correo_no_valido_validacion, 40);
         }
+        checkValidation(btn_registro, typeUserLogin);
         Log.d("Correo", String.valueOf(correoValidado));
     }
 
-    public static void validateTelefono(Context context, CharSequence campo_telefono, TextInputLayout til_telefono, ImageView img_telefono) {
-        String telefono = getTrim(campo_telefono);
+
+    public static void validateTelefono(TypeUserLogin typeUserLogin, CharSequence campo_telefono, TextInputLayout til_telefono, ImageView
+            img_telefono, Button btn_registro) {
+        String telefono = ComodinUtils.getTrim(campo_telefono);
         boolean esVacio = !TextUtils.isEmpty(telefono);
-        telefonoValidado = esVacio && Pattern.matches(ComodinPatterns.MOBILE_PHONE, telefono);
-        if (telefonoValidado) {
-            setFieldValidate(til_telefono, "Correcto", true);
-            setIconValidate(context, img_telefono);
+        celularValidado = esVacio && Pattern.matches(ComodinPatterns.MOBILE_PHONE, telefono);
+        if (celularValidado) {
+            ComodinUtils.setFieldValidateFull(til_telefono, R.string.correcto_validacion, img_telefono);
+        } else if (telefono.isEmpty()) {
+            ComodinUtils.setFieldNormal(til_telefono, img_telefono);
         } else {
-            markEmpty(context, til_telefono, img_telefono, " ", 9);
+            ComodinUtils.setFieldInvalidateFull(til_telefono, img_telefono, R.string.espacio, 9);
         }
-        Log.d("Telefono", String.valueOf(telefonoValidado));
+        checkValidation(btn_registro, typeUserLogin);
+        Log.d("Telefono", String.valueOf(celularValidado));
     }
 
-    public static void validateFechaNacimiento(Context context, TypeFieldDate fieldToValidate, TextInputLayout til_field_date, ImageView imageView) {
-
-        //Se obtiene el campo de la fecha(mes, dia año) y se limpia
-        String field_date = null;
+    public static void validateFechaNacimiento(TypeUserLogin typeUserLogin, TypeFieldDate fieldToValidate, TextInputLayout
+            til_field_date, ImageView imageView, Button btn_registro) {
+        String field_date;
         if (til_field_date.getEditText() != null) {
-            field_date = getTrim(til_field_date.getEditText().getText());
-        }
-        boolean campoValidado = false;
-        //Se evalua el tiempo de campo a validar
-        switch (fieldToValidate.ordinal()) {
+            field_date = ComodinUtils.getTrim(til_field_date.getEditText().getText());
+            if (field_date.isEmpty()) {
+                ComodinUtils.setFieldNormal(til_field_date, imageView);
+            } else {
 
-            case 0://Se va a validar el dia
-                //Se valida el día según una expresión regular
-                fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_DAY, field_date);
-                campoValidado = fechaDiaValidada;
-                //Se guarda el dia introducido
-                campoDia = field_date;
-                //Cuando es correcto el día, pero aún faltan datos en la fecha o no es correcta, entonces se da el foco al mes.
-                if (campoValidado && !fechaNacimientoValidada && ti_mes.getEditText() != null) {
+                boolean campoValidado = false;
+                //Se evalua el tiempo de campo a validar
+                switch (fieldToValidate.ordinal()) {
+                    case 0://Se va a validar el dia
+                        //Se valida el día según una expresión regular
+                        fechaDiaValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_DAY, field_date);
+                        campoValidado = fechaDiaValidada;
+                        //Se guarda el dia introducido
+                        campoDia = field_date;
+                        //Cuando es correcto el día, pero aún faltan datos en la fecha o no es correcta, entonces se da el foco al mes.
+                        if (campoValidado && field_date.length() == 2 && !fechaNacimientoValidada && ti_mes.getEditText() != null)
+                            ti_mes.getEditText().requestFocus();
 
-                    ti_mes.getEditText().requestFocus();
+                        break;
+                    case 1:
+                        fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_MONTH, field_date);
+                        campoValidado = fechaMesValidada;
+                        campoMes = field_date;
+                        if (campoValidado && field_date.length() == 2 && !fechaNacimientoValidada && ti_anio.getEditText() != null)
+                            ti_anio.getEditText().requestFocus();
+                        break;
+                    case 2:
+                        fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_YEAR, field_date);
+                        campoValidado = fechaAnioValidada;
+                        campoAnio = field_date;
+                        break;
                 }
-                break;
-            case 1:
-                fechaMesValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_MONTH, field_date);
-                campoValidado = fechaMesValidada;
-                campoMes = field_date;
-                if (campoValidado && !fechaNacimientoValidada && ti_anio.getEditText() != null) {
-                    ti_anio.getEditText().requestFocus();
-                }
-                break;
-            case 2:
-                fechaAnioValidada = !TextUtils.isEmpty(field_date) && Pattern.matches(ComodinPatterns.DATE_YEAR, field_date);
-                campoValidado = fechaAnioValidada;
-                campoAnio = field_date;
-                break;
-        }
-        if (campoValidado) {
-            camposFechaValidados = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
-            til_field_date.setHintTextAppearance(R.style.Hint);
-            til_field_date.setErrorTextAppearance(R.style.Validado);
-            til_field_date.setErrorEnabled(true);
-            if (camposFechaValidados) {
-                campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoAnio);
-                fechaNacimientoValidada = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
-                if (!fechaNacimientoValidada) {
-                    ti_dia.setHintTextAppearance(R.style.Error);
-                    ti_dia.setErrorTextAppearance(R.style.Error);
-                    ti_dia.setError(" ");
-
-
-                    ti_mes.setHintTextAppearance(R.style.Error);
-                    ti_mes.setErrorTextAppearance(R.style.Error);
-                    ti_mes.setError(" ");
-
-                    ti_anio.setHintTextAppearance(R.style.Error);
-                    ti_anio.setErrorTextAppearance(R.style.Error);
-                    ti_anio.setError(" ");
-                    imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorNoValidado));
-                    return;
+                if (campoValidado) {
+                    camposFechaValidados = fechaDiaValidada && fechaMesValidada && fechaAnioValidada;
+                    ComodinUtils.setFieldValidateSimple(til_field_date);
+                    if (camposFechaValidados) {
+                        if (campoDia.length() == 1) {
+                            campoDia = "0".concat(campoDia);
+                        }
+                        if (campoMes.length() == 1) {
+                            campoMes = "0".concat(campoMes);
+                        }
+                        if (campoAnio.length() == 2) {
+                            campoAnio = "19".concat(campoAnio);
+                        }
+                        Log.d("Dia: ", campoDia);
+                        Log.d("Mes: ", campoMes);
+                        Log.d("Año: ", campoAnio);
+                        campoFechaCompleta = campoDia.concat("/").concat(campoMes).concat("/").concat(campoAnio);
+                        fechaNacimientoValidada = ComodinDateValidator.isThisDateValid(campoFechaCompleta);
+                        Log.d("Fecha actual: ", campoFechaCompleta);
+                        if (!fechaNacimientoValidada) {
+                            ComodinUtils.setFieldInvalidateSimple(ti_dia);
+                            ComodinUtils.setFieldInvalidateSimple(ti_mes);
+                            ComodinUtils.setFieldInvalidateSimple(ti_anio);
+                            ComodinUtils.setColorIconValidate(imageView);
+                        } else {
+                            ComodinUtils.setFieldValidateSimple(ti_dia);
+                            ComodinUtils.setFieldValidateSimple(ti_mes);
+                            ComodinUtils.setFieldValidateSimple(ti_anio);
+                            ComodinUtils.setColorIconValidate(imageView);
+                            Log.d("Fecha a persistir:", campoFechaCompleta);
+                        }
+                    }
                 } else {
-                    setFieldValidate(ti_dia);
-                    setFieldValidate(ti_mes);
-                    setFieldValidate(ti_anio);
-                    imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
-                    if (ti_telefono.getEditText() != null)
-                        ti_telefono.getEditText().requestFocus();
+                    fechaNacimientoValidada = false;
+                    ComodinUtils.setFieldInvalidateSimple(til_field_date);
+                    ComodinUtils.setColorIconValidate(imageView, false);
                 }
+                til_field_date.setError(" ");
             }
-        } else {
-            fechaNacimientoValidada = false;
-            til_field_date.setHintTextAppearance(R.style.Error);
-            til_field_date.setErrorTextAppearance(R.style.Error);
-            setIconValidate(context, imageView, false);
         }
-        til_field_date.setError(" ");
+        checkValidation(btn_registro, typeUserLogin);
         Log.d("Fecha", String.valueOf(fechaNacimientoValidada));
+        //Log.d("Fecha actual", campoFechaCompleta);
     }
 
-    @NonNull
-    private static String getTrim(CharSequence campo_fecha_nac) {
-        return campo_fecha_nac.toString().trim();
-    }
+    public static void validatePassword(TypeUserLogin typeUserLogin, CharSequence campo_password, TextInputLayout til_password, ImageView
+            img_password, Button btn_registro) {
 
+//        Log.d("RUC Accedido: ", String.valueOf(campoRucAccedido));
+        int tamanioPassword = campo_password.length();
 
-    /**
-     * Esta función marca en rojo(error) un textinputlayout, además le quita el icono verde si es que el campo ha estado validado,
-     * también marca en rojo el icono a los campos a los que representa. Se puede especificar un mensaje y el tamaño del contador.
-     *
-     * @param context          la activity
-     * @param textInputLayout  el cuadro de texto en el que se efectúa la función
-     * @param imageView        un icono
-     * @param message          texto descriptivo informativo
-     * @param counterMaxLength cantidad máxima de caracteres permitidos del cuadro de texto.
-     */
-    public static void markEmpty(Context context, TextInputLayout textInputLayout, ImageView imageView, String message, int counterMaxLength) {
-        textInputLayout.setCounterEnabled(true);
-        textInputLayout.setCounterMaxLength(counterMaxLength);
-        textInputLayout.setHintTextAppearance(R.style.Error);
-        textInputLayout.setErrorTextAppearance(R.style.Error);
-        textInputLayout.setError(message);
-        if (textInputLayout.getEditText() != null)
-            textInputLayout.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        if (imageView != null)
-            setIconValidate(context, imageView, false);
-    }
-
-
-    /**
-     * Esta función pone en verde a un TextInput layout, le añade un texto y además añade un pequeño icono verde a la derecha del campo
-     * si es que se especifica.
-     *
-     * @param campo      cuadro de texto a marcar
-     * @param message    una descripcion informativa
-     * @param checkImage un booleando que comprueba si se deberá marcar el campo
-     */
-    public static void setFieldValidate(TextInputLayout campo, String message, boolean checkImage) {
-        campo.setHintTextAppearance(R.style.Hint);
-        campo.setErrorTextAppearance(R.style.Validado);
-        campo.setErrorEnabled(true);
-        campo.setError(message);
-        if (checkImage && campo.getEditText() != null)
-            campo.getEditText().setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_black_24px, 0);
-    }
-
-    /**
-     * Esta función marca en verde un TextInputLayout sin agregarle iconos y sin texto
-     *
-     * @param campo cuadro de texto a marcar
-     */
-    private static void setFieldValidate(TextInputLayout campo) {
-        setFieldValidate(campo, " ", false);
-    }
-
-    /**
-     * Esta función establece el icono de los formularios en rojo o verde, de acuerdo a si sus campos
-     * correspondientes están validados o no.
-     *
-     * @param context   activy
-     * @param imageView imagen a pintar
-     * @param validate  indica si la validación es buena o mala para ver el color del imageview a pintar
-     */
-    public static void setIconValidate(Context context, ImageView imageView, boolean validate) {
-        if (validate)
-            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
-        else {
-            imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorNoValidado));
+        if (ComodinUtils.getTrim(campo_password).isEmpty()) {
+            ComodinUtils.setFieldNormal(til_password, img_password);
+            passwordValidado = false;
+            til_password.setPasswordVisibilityToggleTintList(ContextCompat.getColorStateList(til_password.getContext(), R.color.colorPrimaryDark));
+        } else if (tamanioPassword < 8) {
+            ComodinUtils.setFieldInvalidateFull(til_password, img_password, R.string.password_validacion, 15);
+            passwordValidado = false;
+            til_password.setPasswordVisibilityToggleTintList(ContextCompat.getColorStateList(til_password.getContext(), R.color.colorPrimaryDark));
+        } else if (tamanioPassword >= 8 && tamanioPassword <= 15) {
+            ComodinUtils.setFieldValidateFull(til_password, R.string.correcto_validacion, img_password);
+            til_password.setPasswordVisibilityToggleTintList(ContextCompat.getColorStateList(til_password.getContext(), R.color.colorValidado));
+            passwordValidado = true;
+        } else if (tamanioPassword > 15) {
+            ComodinUtils.setFieldInvalidateFull(til_password, img_password, R.string.no_permitido_validacion, 15);
+            passwordValidado = false;
+            til_password.setPasswordVisibilityToggleTintList(ContextCompat.getColorStateList(til_password.getContext(), R.color.colorPrimaryDark));
         }
+        checkValidation(btn_registro, typeUserLogin);
+        Log.d("Password", String.valueOf(passwordValidado));
+
     }
 
-    /**
-     * Esta función marca en verde un icono.
-     *
-     * @param context   la activity
-     * @param imageView icono a pintar
-     */
-    public static void setIconValidate(Context context, ImageView imageView) {
-        imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorValidado));
+
+    public static void validateDistrito(TypeUserLogin typeUserLogin, CharSequence distrito, TextInputLayout til_distrito, ImageView img_distrito, Button btn_registro) {
+        if (distrito.toString().isEmpty()) {
+            ComodinUtils.setFieldNormal(til_distrito, img_distrito);
+            til_distrito.setCounterEnabled(false);
+            distritoValidado = false;
+        }
+        checkValidation(btn_registro, typeUserLogin);
+        Log.d("DISTRITO: ", String.valueOf(distritoValidado));
     }
+
+    public static void validateRazonSocial(TypeUserLogin typeUserLogin, CharSequence charSequence, TextInputLayout textInputLayout, ImageView imageView, Button btn_registro) {
+        if (textInputLayout.isEnabled()) {
+            if (charSequence.length() >= 8) {
+                ComodinUtils.setFieldValidateFull(textInputLayout, R.string.correcto_validacion, imageView);
+                razon_social_validada = true;
+
+            } else if (charSequence.toString().isEmpty()) {
+                ComodinUtils.setFieldNormal(textInputLayout, imageView);
+                razon_social_validada = false;
+            } else {
+                ComodinUtils.setFieldInvalidateFull(textInputLayout, imageView, R.string.espacio, 50);
+                razon_social_validada = false;
+            }
+        }
+        checkValidation(btn_registro, typeUserLogin);
+    }
+
+    public static void validateDireccion(TypeUserLogin typeUserLogin, CharSequence charSequence, TextInputLayout textInputLayout, ImageView imageView, Button btn_registro) {
+        if (textInputLayout.isEnabled()) {
+            if (charSequence.length() >= 15) {
+                ComodinUtils.setFieldValidateFull(textInputLayout, R.string.correcto_validacion, imageView);
+                direccion_validada = true;
+            } else if (charSequence.toString().isEmpty()) {
+                ComodinUtils.setFieldNormal(textInputLayout, imageView);
+                direccion_validada = false;
+            } else {
+                ComodinUtils.setFieldInvalidateFull(textInputLayout, imageView, R.string.espacio, 50);
+                direccion_validada = false;
+            }
+        }
+        checkValidation(btn_registro, typeUserLogin);
+    }
+
+    public static void checkValidation(Button button, TypeUserLogin typeUserLogin) {
+
+        boolean validacion = false;
+        if (typeUserLogin == TypeUserLogin.INDEPENDIENTE) {
+            validacion = nombreValidado && correoValidado && fechaNacimientoValidada
+                    && distritoValidado && genero_validado && celularValidado && passwordValidado;
+        } else if (typeUserLogin == TypeUserLogin.EMPRESA) {
+            if (ruc_validate_server) {
+                validacion = rucvalidado && correoValidado && celularValidado && passwordValidado;
+            } else {
+                validacion = rucvalidado && correoValidado && celularValidado && passwordValidado && distritoValidado
+                        && direccion_validada && razon_social_validada;
+            }
+        }
+        if (validacion) {
+            button.setEnabled(true);
+            button.setBackground(ContextCompat.getDrawable(button.getContext(), R.drawable.selector_button));
+            validacionCompleta = true;
+        } else {
+            button.setEnabled(false);
+            button.setBackgroundColor(ContextCompat.getColor(button.getContext(), android.R.color.darker_gray));
+            validacionCompleta = false;
+        }
+
+    }
+
+
 }
