@@ -18,6 +18,8 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 
 public class InicioActivity extends AppCompatActivity {
 
@@ -35,9 +37,8 @@ public class InicioActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_inicio);
         ButterKnife.bind(this);
-        campoPassword.setTypeface(campoUsuario.getTypeface());
         callbackManager = CallbackManager.Factory.create();
-        //loginButton.setReadPermissions(Arrays.asList("email", "user_birthday", "user_friends"));
+        loginButton.setReadPermissions(Arrays.asList("id", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
@@ -47,17 +48,17 @@ public class InicioActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-                                //Gson gson = new Gson();
-                                //UserFacebook usuario = gson.fromJson(object.toString(), UserFacebook.class);
+//                                Log.v("LoginActivity", response.toString());
                                 try {
-                                    Toast.makeText(loginButton.getContext(), "Correo: " + object.getString("email"), Toast.LENGTH_LONG).show();
+                                    String email = object.getString("email");
+                                    Log.d("Email: ", email);
                                 } catch (JSONException e) {
-                                    Toast.makeText(loginButton.getContext(), "Ha ocurrido un error", Toast.LENGTH_LONG).show();
+                                    Log.d("Email: ", "nada");
                                 }
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+                parameters.putString("fields", "id,email");
                 request.setParameters(parameters);
                 request.executeAsync();
 

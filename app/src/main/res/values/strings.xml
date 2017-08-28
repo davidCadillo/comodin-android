@@ -122,8 +122,6 @@
     <string name="texto_acepto_terminos">Acepto términos y condiciones</string>
     <string name="texto_acepto_recibir_correos">Recibir correos relacionados a Comodín</string>
     <string name="continuar_terminos">Continuar</string>
-    <string name="error_fix">Error en FixErros</string>
-    <string name="error_on_response">Error en onresponse</string>
 
 </resources>
 

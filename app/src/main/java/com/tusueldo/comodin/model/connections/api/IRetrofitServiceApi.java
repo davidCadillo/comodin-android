@@ -24,4 +24,9 @@ public interface IRetrofitServiceApi {
     @Headers("Content-Type:application/json")
     @POST("api/v1/register")
     Call<ResponseBody> regiserUserEmpresa(@Body UserEmpresa userEmpresa);
+
+
+    @Headers("Content-Type:application/json")
+    @POST("api/v1/login")
+    Call<ResponseBody> login(@Body UserEmpresa userEmpresa);
 }

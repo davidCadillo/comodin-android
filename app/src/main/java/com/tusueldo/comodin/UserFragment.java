@@ -138,7 +138,7 @@ public abstract class UserFragment extends Fragment {
 
     public void fixErrors(Response<ResponseBody> response) {
         if (response.code() == 500) {
-            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_fix, android.R.string.ok);
+            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
         } else if (response.code() == 422) {
             setValidateErrors(response);
         }
@@ -170,10 +170,8 @@ public abstract class UserFragment extends Fragment {
                         ComodinProgressDialog.finish(materialDialog);
                         fixErrors(response);
                     }
-
                 } catch (Exception e) {
-                    ComodinProgressDialog.finish(materialDialog);
-                    ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_on_response, android.R.string.ok);
+                    ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
                 }
             }
 

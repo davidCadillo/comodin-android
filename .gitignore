@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+/bitbucket
+/bitbucket.pub
+app/libs/
