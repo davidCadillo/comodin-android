@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SignupActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.loadFragments) FrameLayout frameLayout;
 
@@ -45,8 +45,8 @@ public class SignupActivity extends AppCompatActivity {
 
             case R.id.btn_independiente:
             default:
-                getSupportFragmentManager().beginTransaction().hide(fragmentEmpresa);
-                getSupportFragmentManager().beginTransaction().show(fragmentIndependiente);
+                getSupportFragmentManager().beginTransaction().hide(fragmentEmpresa).commit();
+                getSupportFragmentManager().beginTransaction().show(fragmentIndependiente).commit();
 //                getSupportFragmentManager().beginTransaction().replace(R.id.loadFragments, fragmentIndependiente).commit();
                 break;
         }

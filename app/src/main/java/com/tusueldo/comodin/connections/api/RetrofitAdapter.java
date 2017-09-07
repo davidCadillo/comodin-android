@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.api;
+package com.tusueldo.comodin.connections.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

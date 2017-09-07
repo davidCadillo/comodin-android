@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.ruc;
+package com.tusueldo.comodin.connections.ruc;
 
 /**
  * Created by David Cadillo Blas on 29/07/2017.

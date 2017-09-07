@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="7e00dfe0-322d-47dc-a266-186495412131">
-        <schema name="heroku_f1ed0714a0077ea" object-types="column, function, table, view" />
+        <schema name="heroku_f1ed0714a0077ea" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -93,7 +93,7 @@
           <charset value="UTF-8" />
           <ddl-file-binding value="true" />
           <database-logging value="false" />
-          <connect-automatically value="true" />
+          <connect-automatically value="false" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="true" />
           <environment-type value="default" />

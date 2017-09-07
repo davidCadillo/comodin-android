@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.ruc;
+package com.tusueldo.comodin.connections.ruc;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

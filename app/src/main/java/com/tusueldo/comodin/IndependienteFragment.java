@@ -1,6 +1,7 @@
 package com.tusueldo.comodin;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +13,9 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.*;
 import butterknife.*;
 import com.tusueldo.comodin.model.UserIndependiente;
-import com.tusueldo.comodin.model.UserIndependienteRUC;
 import com.tusueldo.comodin.model.types.ComodinValues;
 import com.tusueldo.comodin.model.types.TypeFieldDate;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
@@ -39,11 +37,14 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.til_fecha_nac_dia) TextInputLayout til_fecha_nac_dia;
     @BindView(R.id.til_fecha_nac_mes) TextInputLayout til_fecha_nac_mes;
     @BindView(R.id.til_fecha_nac_anio) TextInputLayout til_fecha_nac_anio;
+    @BindView(R.id.til_genero) TextInputLayout til_genero;
 
     /*Se cargan otros widgets*/
     @BindView(R.id.sw_ruc) SwitchCompat sw_ruc;
+    @BindView(R.id.campo_genero) AutoCompleteTextView campo_genero;
     @BindColor(R.color.colorAccent) ColorStateList colorAccent;
     @BindColor(R.color.colorValidado) ColorStateList colorValidado;
+
 
     /*Cargando los imageView*/
     @BindView(R.id.img_nombres) ImageView img_nombres;
@@ -51,7 +52,6 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.img_genero) ImageView img_genero;
     @BindView(R.id.layout_ruc) LinearLayout layout_ruc;
     @BindView(R.id.btn_registro) Button button_registro;
-    @BindView(R.id.rb_masculino) AppCompatRadioButton radioButton;
 
     private static boolean gender;
 
@@ -73,6 +73,16 @@ public class IndependienteFragment extends UserFragment {
         ComodinValidator.ti_anio = til_fecha_nac_anio;
         ComodinValidator.ti_telefono = til_celular;
         layout_ruc.setVisibility(View.GONE);
+        String[] genero = {"Masculino", "Hombre", "Femenino", "Mujer"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, genero);
+        campo_genero.setAdapter(adapter);
+        campo_genero.setThreshold(1);
+        campo_genero.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "Posición: " + parent.getAdapter().getItem(position), Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
@@ -89,16 +99,13 @@ public class IndependienteFragment extends UserFragment {
     @OnClick(R.id.btn_registro)
     public void click() {
 
-        UserIndependiente userIndependiente;
+        UserIndependiente userIndependiente = new UserIndependiente();
         if (ComodinValidator.validacionCompleta) {
 
             if (ComodinValidator.rucvalidado) {
-                userIndependiente = new UserIndependienteRUC();
-                ((UserIndependienteRUC) userIndependiente).setRuc(campo_ruc.getText().toString());
-                ((UserIndependienteRUC) userIndependiente).setDireccion(ComodinValidator.direccion);
-                ((UserIndependienteRUC) userIndependiente).setValidate_ruc(ComodinValidator.ruc_validate_server);
-            } else {
-                userIndependiente = new UserIndependiente();
+                userIndependiente.setRuc(campo_ruc.getText().toString());
+                userIndependiente.setDireccion(ComodinValidator.direccion);
+                userIndependiente.setValidate_ruc(ComodinValidator.ruc_validate_server);
             }
             userIndependiente.setTipo_usuario_id(1);
             userIndependiente.setNombresyapellidos(campo_nombre.getText().toString().toLowerCase());
@@ -109,27 +116,17 @@ public class IndependienteFragment extends UserFragment {
             userIndependiente.setCelular(campo_celular.getText().toString());
             userIndependiente.setGender(gender);
 
-            registerUser(userIndependiente);
+
+            Intent i = new Intent(getActivity(), CondicionesActivity.class);
+            i.putExtra("user", userIndependiente);
+            startActivity(i);
+
+//            registerUser(userIndependiente);
 
         }
 
     }
 
-    @OnClick({R.id.rb_masculino, R.id.rb_femenino})
-    public void click(AppCompatRadioButton boton) {
-        if (boton.isChecked()) {
-            switch (boton.getId()) {
-                case R.id.rb_masculino:
-                    gender = true;
-                    break;
-                case R.id.rb_femenino:
-                    gender = false;
-                    break;
-            }
-            ComodinUtils.setColorIconValidate(img_genero);
-            ComodinValidator.genero_validado = true;
-        }
-    }
 
     @OnTextChanged(R.id.campo_nombre)
     protected void onTextChangedNombre(CharSequence nombre) {
@@ -203,7 +200,6 @@ public class IndependienteFragment extends UserFragment {
             case R.id.campo_fecha_nac_mes:
                 ComodinUtils.setHintFocusField(hasFocus, til_fecha_nac_mes, ComodinValues.MONTH, ComodinValues.MONTH_SIMPLE);
                 break;
-
             case R.id.campo_fecha_nac_anio:
                 ComodinUtils.setHintFocusField(hasFocus, til_fecha_nac_anio, ComodinValues.YEAR, ComodinValues.YEAR_SIMPLE);
                 break;

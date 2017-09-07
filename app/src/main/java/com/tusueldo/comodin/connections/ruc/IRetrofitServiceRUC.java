@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.ruc;
+package com.tusueldo.comodin.connections.ruc;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

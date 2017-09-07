@@ -1,13 +1,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--    <item android:drawable="@color/colorPrimaryDark" android:state_pressed="true" />
-        <item android:drawable="@color/textColorPrimary" android:state_focused="true" />
-        <item android:drawable="@color/colorAccent" />-->
+
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
             <stroke android:width="3dp" android:color="@color/colorAccent" />
-            <gradient android:angle="90" android:endColor="@color/colorAccent" android:startColor="@color/colorAccent" />
+            <gradient android:angle="-90" android:endColor="@color/colorAccent" android:startColor="@color/colorAccent" />
         </shape>
     </item>
     <item android:state_focused="true">

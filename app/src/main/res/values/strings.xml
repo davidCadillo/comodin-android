@@ -79,13 +79,15 @@
     <string name="ruc">RUC</string>
     <string name="ruc_no_valido_validacion">No validado</string>
     <string name="o">o</string>
-    <string name="conecta_con_facebook">Conecta con Facebook</string>
-    <string name="conecta_con_google">Conecta con Google+</string>
+    <string name="conecta_con_facebook">Iniciar sesión con Facebook</string>
+    <string name="conecta_con_google">Conecta con Google</string>
 
     <!--Facebook API Id-->
     <string name="facebook_app_id">1420059591410969</string>
     <string name="fb_login_protocol_scheme">fb1420059591410969</string>
 
+    <string name="campos_incompletos">Campos incompletos</string>
+    <string name="usuario_no_valido">Usuario no válido.</string>
 
     <string-array name="items">
         <item>Correo</item>
@@ -97,7 +99,6 @@
         <item>phone</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ruc_exception_validacion">Algo no es correcto</string>
     <string name="distrito">Distrito</string>
@@ -119,9 +120,30 @@
     <string name="aviso_cambio_condiciones">Le sugerimos revisar el Acuerdo cada vez que utilice la Plataforma, ya que no nos reservamos el derecho de actualizar y/o modificar este Acuerdo en cualquier momento sin previo aviso.</string>
     <string name="titulo_terminos_condiciones">Términos y Condiciones</string>
     <string name="ver_mas"><u>Ver más</u></string>
-    <string name="texto_acepto_terminos">Acepto términos y condiciones</string>
+    <string name="texto_acepto_terminos"><u>Acepto términos y condiciones</u></string>
     <string name="texto_acepto_recibir_correos">Recibir correos relacionados a Comodín</string>
     <string name="continuar_terminos">Continuar</string>
+    <string name="cargando">Cargando...</string>
+    <string name="error_500_alert_dialog_login">Ha ocurrido un error al loguearse.</string>
+    <string name="password_incorrecto">La contraseña es incorrecta</string>
+    <string name="account_disabled">Su cuenta está deshabilitada.</string>
+    <string name="account_no_account">No existe una cuenta asociada a los datos introducidos.</string>
+    <string name="account_suspendend">Su cuenta ha sido suspendida. Póngase en contacto con nostros.</string>
+    <string name="error_login">Error al iniciar</string>
+    <string name="iniciando_sesion">Iniciando sesión</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="logout">Salir</string>
+    <string name="loading">Cargando...</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="regresar">Regresar</string>
+    <string name="genero">Género</string>
+
+
 
 </resources>
 

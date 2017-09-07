@@ -1,10 +1,10 @@
 
-package com.tusueldo.comodin.model.connections.api;
+package com.tusueldo.comodin.connections.api.register;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ErrorResponse {
+public class ComodinRegisterResponse {
 
     @SerializedName("data")
     @Expose
@@ -16,10 +16,10 @@ public class ErrorResponse {
     /**
      * No args constructor for use in serialization
      */
-    public ErrorResponse() {
+    public ComodinRegisterResponse() {
     }
 
-    public ErrorResponse(Data data, int code) {
+    public ComodinRegisterResponse(Data data, int code) {
         super();
         this.data = data;
         this.code = code;
@@ -43,7 +43,7 @@ public class ErrorResponse {
 
     @Override
     public String toString() {
-        return "ErrorResponse{" +
+        return "ComodinRegisterResponse{" +
                 "data=" + data +
                 ", code=" + code +
                 '}';

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "773092021984",
+    "project_id": "comodin-166623"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773092021984:android:38e2393b8546924c",
+        "android_client_info": {
+          "package_name": "com.tusueldo.comodin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773092021984-0s367ebadve7s7h9j680643fho8kbe0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tusueldo.comodin",
+            "certificate_hash": "4c3054ea6c2e0a55bb4e7a02aacf5039aac00a70"
+          }
+        },
+        {
+          "client_id": "773092021984-kns82sbd4b75r7h4gea4ftp61rmtsvg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD23proNDaR_BBdg7vXPEdxRdVePhpYwgQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

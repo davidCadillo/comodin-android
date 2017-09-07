@@ -1,5 +1,5 @@
 
-package com.tusueldo.comodin.model.connections.api;
+package com.tusueldo.comodin.connections.api.register;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,9 +18,6 @@ public class Data {
     @Expose
     private List<String> celular = null;
 
-    /**
-     * No args constructor for use in serialization
-     */
     public Data() {
     }
 

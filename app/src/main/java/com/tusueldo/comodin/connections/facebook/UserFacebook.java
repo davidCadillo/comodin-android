@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.facebook;
+package com.tusueldo.comodin.connections.facebook;
 
 public class UserFacebook {
 

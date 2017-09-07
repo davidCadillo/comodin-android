@@ -6,22 +6,22 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
+import butterknife.*;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tusueldo.comodin.model.*;
-import com.tusueldo.comodin.model.connections.api.IRetrofitServiceApi;
-import com.tusueldo.comodin.model.connections.api.RetrofitAdapter;
+import com.tusueldo.comodin.connections.api.IRetrofitServiceApi;
+import com.tusueldo.comodin.connections.api.RetrofitAdapter;
 import com.tusueldo.comodin.model.databases.DatabaseUbigeosHelper;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
-import com.tusueldo.comodin.utils.ComodinErrors;
+import com.tusueldo.comodin.connections.api.register.ComodinRegisterErrors;
 import com.tusueldo.comodin.utils.ComodinUtils;
 import com.tusueldo.comodin.utils.ComodinValidator;
 import okhttp3.ResponseBody;
@@ -45,6 +45,9 @@ public abstract class UserFragment extends Fragment {
     @BindView(R.id.campo_telefono) TextInputEditText campo_celular;
     @BindView(R.id.campo_correo) TextInputEditText campo_correo;
     @BindView(R.id.campo_distrito) AutoCompleteTextView campo_distrito;
+
+    @BindView(R.id.chk_acepta_terminos) AppCompatCheckBox chkAceptaTerminos;
+    @BindView(R.id.chk_enviar_correo) AppCompatCheckBox chkEnviarCorreo;
 
     @BindView(R.id.img_correo) ImageView img_correo;
     @BindView(R.id.img_telefono) ImageView img_celular;
@@ -97,6 +100,28 @@ public abstract class UserFragment extends Fragment {
     }
 
 
+    @OnCheckedChanged({R.id.chk_acepta_terminos, R.id.chk_enviar_correo})
+    public void cambiado() {
+        /*if (chkAceptaTerminos.isChecked() && chkEnviarCorreo.isChecked()) {
+            Intent i = new Intent(getActivity(), CondicionesActivity.class);
+            startActivity(i);
+//            btn_continuar_teminos.setEnabled(true);
+//            btn_continuar_teminos.setBackground(ContextCompat.getDrawable(btn_continuar_teminos.getContext(), R.drawable.selector_button));
+        } else {
+            *//*btn_continuar_teminos.setEnabled(false);
+            btn_continuar_teminos.setBackgroundColor(ContextCompat.getColor(btn_continuar_teminos.getContext(), android.R.color.darker_gray));*//*
+        }*/
+
+    }
+
+    @OnClick(R.id.chk_acepta_terminos)
+    public void onClick() {
+        Intent i = new Intent(getActivity(), CondicionesActivity.class);
+        startActivity(i);
+        chkAceptaTerminos.setChecked(true);
+    }
+
+
     @OnTextChanged(R.id.campo_correo)
     protected void onTextChangedEmail(CharSequence email) {
         ComodinValidator.validateCorreo(getTypeUser(), email, til_correo, img_correo, button_registro);
@@ -117,44 +142,14 @@ public abstract class UserFragment extends Fragment {
         ComodinValidator.validateDistrito(getTypeUser(), distrito, til_distrito, img_distrito, button_registro);
     }
 
-    public void setValidateErrors(Response<ResponseBody> response) {
-        ComodinErrors comodinErrors = new ComodinErrors(response);
-        if (comodinErrors.isErrorCelular()) {
-            ComodinUtils.setFieldInvalidateFull(til_celular, img_celular, R.string.celular_existe, 9);
-            ComodinValidator.celularValidado = false;
-        }
-
-        if (comodinErrors.isErrorCorreo()) {
-            ComodinUtils.setFieldInvalidateFull(til_correo, img_correo, R.string.correo_existe, 40);
-            ComodinValidator.correoValidado = false;
-        }
-
-        if (comodinErrors.isErrorRuc()) {
-            ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.ruc_existe, 11);
-            ComodinValidator.rucvalidado = false;
-        }
-        ComodinValidator.checkValidation(button_registro, getTypeUser());
-    }
-
-    public void fixErrors(Response<ResponseBody> response) {
-        if (response.code() == 500) {
-            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
-        } else if (response.code() == 422) {
-            setValidateErrors(response);
-        }
-
-    }
-
 
     public void registerUser(User user) {
         IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
         Call<ResponseBody> call;
-        if (user instanceof UserIndependienteRUC) {
-            call = serviceApi.regiserUserIndependienteRuc((UserIndependienteRUC) user);
-        } else if (user instanceof UserEmpresa) {
-            call = serviceApi.regiserUserEmpresa((UserEmpresa) user);
-        } else {
+        if (user instanceof UserIndependiente) {
             call = serviceApi.regiserUserIndependiente((UserIndependiente) user);
+        } else {
+            call = serviceApi.regiserUserEmpresa((UserEmpresa) user);
         }
         final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(getActivity(), R.string.regitrando, R.string.esperar);
         call.enqueue(new Callback<ResponseBody>() {
@@ -181,6 +176,34 @@ public abstract class UserFragment extends Fragment {
                 ComodinProgressDialog.finish(materialDialog);
             }
         });
+    }
+
+    public void fixErrors(Response<ResponseBody> response) {
+        if (response.code() == 500) {
+            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
+        } else if (response.code() == 422) {
+            setValidateErrors(response);
+        }
+
+    }
+
+    public void setValidateErrors(Response<ResponseBody> response) {
+        ComodinRegisterErrors comodinRegisterErrors = new ComodinRegisterErrors(response);
+        if (comodinRegisterErrors.isErrorCelular()) {
+            ComodinUtils.setFieldInvalidateFull(til_celular, img_celular, R.string.celular_existe, 9);
+            ComodinValidator.celularValidado = false;
+        }
+
+        if (comodinRegisterErrors.isErrorCorreo()) {
+            ComodinUtils.setFieldInvalidateFull(til_correo, img_correo, R.string.correo_existe, 40);
+            ComodinValidator.correoValidado = false;
+        }
+
+        if (comodinRegisterErrors.isErrorRuc()) {
+            ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.ruc_existe, 11);
+            ComodinValidator.rucvalidado = false;
+        }
+        ComodinValidator.checkValidation(button_registro, getTypeUser());
     }
 
 

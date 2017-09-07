@@ -1,5 +1,7 @@
-package com.tusueldo.comodin.model.connections.api;
+package com.tusueldo.comodin.connections.api;
 
+import com.tusueldo.comodin.connections.api.login.ComodinLoginRequest;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
 import com.tusueldo.comodin.model.UserEmpresa;
 import com.tusueldo.comodin.model.UserIndependiente;
 import com.tusueldo.comodin.model.UserIndependienteRUC;
@@ -28,5 +30,5 @@ public interface IRetrofitServiceApi {
 
     @Headers("Content-Type:application/json")
     @POST("api/v1/login")
-    Call<ResponseBody> login(@Body UserEmpresa userEmpresa);
+    Call<ComodinLoginResponse> login(@Body ComodinLoginRequest request);
 }

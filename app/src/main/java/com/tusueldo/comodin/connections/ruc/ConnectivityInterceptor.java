@@ -1,4 +1,4 @@
-package com.tusueldo.comodin.model.connections.ruc;
+package com.tusueldo.comodin.connections.ruc;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

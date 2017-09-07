@@ -6,7 +6,7 @@
     android:layout_marginEnd="@dimen/margin_large_horizontal"
     android:layout_marginStart="@dimen/margin_large_horizontal"
     android:orientation="vertical"
-    tools:context="com.tusueldo.comodin.IndependienteFragment">
+    tools:activity="com.tusueldo.comodin.IndependienteFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -195,13 +195,13 @@
     <!--END Aqui va la fecha de nacimiento-->
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/img_genero"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/margin_large_horizontal"
@@ -209,37 +209,46 @@
             android:src="@drawable/ic_human_male_female_24dp"
             android:tint="@color/colorPrimaryDark" />
 
-        <RadioGroup
-            android:id="@+id/rg_genero"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_genero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:hint="@string/genero">
 
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_masculino"
-                android:layout_width="wrap_content"
+            <AutoCompleteTextView
+                android:id="@+id/campo_genero"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/masculino"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="16sp" />
+                android:inputType="textFilter" />
 
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_femenino"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/femenino"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="16sp" />
-        </RadioGroup>
-
-
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
 
     <include layout="@layout/layout_password" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_condiciones" />
+
+        <Button
+            android:id="@+id/btn_registro"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@android:color/darker_gray"
+            android:enabled="false"
+            android:text="@string/registrar"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:theme="@style/RaissedButton" />
+    </LinearLayout>
 
 </LinearLayout>

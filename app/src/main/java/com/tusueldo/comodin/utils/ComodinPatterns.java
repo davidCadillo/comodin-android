@@ -3,13 +3,13 @@ package com.tusueldo.comodin.utils;
 import android.util.Patterns;
 
 
-class ComodinPatterns {
+public class ComodinPatterns {
 
     /*Expresión regular usado para validar un celular con el formato 9XXXXXXXXX*/
-    static final String MOBILE_PHONE = "9\\d{8}";
+    public static final String MOBILE_PHONE = "9\\d{8}";
 
     /*Expresión regular para validar un email. Se usa el que viene con Android*/
-    static final String EMAIL = Patterns.EMAIL_ADDRESS.pattern();
+    public static final String EMAIL = Patterns.EMAIL_ADDRESS.pattern();
 
     /*Expresión regular para el nombre en el que se aceptan todas las letras del abecedarios, las tildes de las letras,
     los espacios y el guion.

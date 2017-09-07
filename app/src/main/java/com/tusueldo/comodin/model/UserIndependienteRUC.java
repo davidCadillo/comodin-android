@@ -1,6 +1,8 @@
 package com.tusueldo.comodin.model;
 
 
+import android.os.Parcel;
+
 public class UserIndependienteRUC extends UserIndependiente {
 
     private String ruc;
@@ -43,4 +45,8 @@ public class UserIndependienteRUC extends UserIndependiente {
                 ", direccion='" + direccion + '\'' +
                 '}';
     }
+
+
+
+
 }
