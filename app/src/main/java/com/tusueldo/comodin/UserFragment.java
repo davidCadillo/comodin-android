@@ -158,7 +158,7 @@ public abstract class UserFragment extends Fragment {
                 try {
                     if (response.isSuccessful()) {
                         ComodinProgressDialog.finish(materialDialog);
-                        Intent i = new Intent(getActivity(), CondicionesActivity.class);
+                        Intent i = new Intent(getActivity(), PresentacionActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.animator.enter, R.animator.exit);
                     } else {

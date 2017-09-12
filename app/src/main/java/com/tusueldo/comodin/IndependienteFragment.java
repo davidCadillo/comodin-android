@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class IndependienteFragment extends UserFragment {
 
     /*Se cargan otros widgets*/
     @BindView(R.id.sw_ruc) SwitchCompat sw_ruc;
-    @BindView(R.id.campo_genero) AutoCompleteTextView campo_genero;
+    @BindView(R.id.campo_genero) AppCompatSpinner campo_genero;
     @BindColor(R.color.colorAccent) ColorStateList colorAccent;
     @BindColor(R.color.colorValidado) ColorStateList colorValidado;
 
@@ -73,14 +74,30 @@ public class IndependienteFragment extends UserFragment {
         ComodinValidator.ti_anio = til_fecha_nac_anio;
         ComodinValidator.ti_telefono = til_celular;
         layout_ruc.setVisibility(View.GONE);
-        String[] genero = {"Masculino", "Hombre", "Femenino", "Mujer"};
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, genero);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.genero, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         campo_genero.setAdapter(adapter);
-        campo_genero.setThreshold(1);
-        campo_genero.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        campo_genero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Posición: " + parent.getAdapter().getItem(position), Toast.LENGTH_LONG).show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (campo_genero.getSelectedItemPosition() > 0) {
+                    gender = campo_genero.getSelectedItemPosition() == 1;
+                    if (gender) {
+                        Toast.makeText(getActivity(), "Soy un hombre", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Soy una mujer", Toast.LENGTH_SHORT).show();
+                    }
+                    ComodinValidator.genero_validado = true;
+                    ComodinUtils.setColorIconValidate(img_genero);
+                } else {
+                    ComodinUtils.setColorIconPrimary(img_genero);
+                    ComodinValidator.genero_validado = false;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
@@ -99,9 +116,11 @@ public class IndependienteFragment extends UserFragment {
     @OnClick(R.id.btn_registro)
     public void click() {
 
+        /*int position = campo_genero.getSelectedItemPosition();
+        Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();*/
+
         UserIndependiente userIndependiente = new UserIndependiente();
         if (ComodinValidator.validacionCompleta) {
-
             if (ComodinValidator.rucvalidado) {
                 userIndependiente.setRuc(campo_ruc.getText().toString());
                 userIndependiente.setDireccion(ComodinValidator.direccion);
@@ -115,11 +134,10 @@ public class IndependienteFragment extends UserFragment {
             userIndependiente.setPassword(campo_password.getText().toString());
             userIndependiente.setCelular(campo_celular.getText().toString());
             userIndependiente.setGender(gender);
-
-
-            Intent i = new Intent(getActivity(), CondicionesActivity.class);
+            Toast.makeText(getActivity(), userIndependiente.toString(), Toast.LENGTH_SHORT).show();
+            /*Intent i = new Intent(getActivity(), CondicionesActivity.class);
             i.putExtra("user", userIndependiente);
-            startActivity(i);
+            startActivity(i);*/
 
 //            registerUser(userIndependiente);
 

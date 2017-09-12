@@ -122,7 +122,7 @@ public class ComodinUtils {
      *
      * @param imageView icono a pintar
      */
-    private static void setColorIconPrimary(ImageView imageView) {
+    public static void setColorIconPrimary(ImageView imageView) {
         imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.colorPrimaryDark));
     }
 

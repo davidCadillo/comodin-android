@@ -37,7 +37,6 @@ public class ComodinValidator {
     public static String ubigeo;
     public static String direccion;
 
-
     public static boolean nombreValidado = false;
     public static boolean celularValidado = false;
     public static boolean correoValidado = false;
@@ -62,8 +61,7 @@ public class ComodinValidator {
             ComodinUtils.clearField(til_distrito, img_distrito);
             rucvalidado = false;
         } else if (tamanioRuc >= 1 && tamanioRuc < 11) {//Se habilita el contador a partir de 1
-            /*til_ruc.setCounterEnabled(true);
-            til_ruc.setCounterMaxLength(11);*/
+
             ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.espacio, 11);
             rucvalidado = false;
         } else if (tamanioRuc > 11) {

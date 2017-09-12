@@ -94,9 +94,10 @@
         <item>Teléfono</item>
     </string-array>
 
-    <string-array name="idItems">
-        <item>email</item>
-        <item>phone</item>
+    <string-array name="genero">
+        <item>Seleccione sexo</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -24,9 +24,9 @@ public class CondicionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condiciones);
         ButterKnife.bind(this);
-        UserIndependiente userIndependiente = getIntent().getParcelableExtra("user");
+      /*  UserIndependiente userIndependiente = getIntent().getParcelableExtra("user");
         if (userIndependiente != null)
-            Toast.makeText(this, userIndependiente.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, userIndependiente.toString(), Toast.LENGTH_LONG).show();*/
     }
 
 
