@@ -21,16 +21,16 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-            fragmentIndependiente = new IndependienteFragment();
-            fragmentEmpresa = new EmpresaFragment();
-            fragmentTransaction.add(R.id.loadFragments, fragmentIndependiente);
-            fragmentTransaction.add(R.id.loadFragments, fragmentEmpresa);
-            fragmentTransaction.hide(fragmentEmpresa);
-            fragmentTransaction.commit();
+        fragmentIndependiente = new IndependienteFragment();
+        fragmentEmpresa = new EmpresaFragment();
+        fragmentTransaction.add(R.id.loadFragments, fragmentIndependiente);
+        fragmentTransaction.add(R.id.loadFragments, fragmentEmpresa);
+        fragmentTransaction.hide(fragmentEmpresa);
+        fragmentTransaction.commit();
     }
 
 

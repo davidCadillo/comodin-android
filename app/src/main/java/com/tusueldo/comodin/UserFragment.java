@@ -18,10 +18,12 @@ import com.tusueldo.comodin.model.*;
 import com.tusueldo.comodin.connections.api.IRetrofitServiceApi;
 import com.tusueldo.comodin.connections.api.RetrofitAdapter;
 import com.tusueldo.comodin.model.databases.DatabaseUbigeosHelper;
+import com.tusueldo.comodin.model.types.ComodinValues;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
 import com.tusueldo.comodin.connections.api.register.ComodinRegisterErrors;
+import com.tusueldo.comodin.utils.ComodinSharedPreferences;
 import com.tusueldo.comodin.utils.ComodinUtils;
 import com.tusueldo.comodin.utils.ComodinValidator;
 import okhttp3.ResponseBody;
@@ -56,7 +58,6 @@ public abstract class UserFragment extends Fragment {
     @BindView(R.id.img_distrito) ImageView img_distrito;
 
     @BindView(R.id.btn_registro) Button button_registro;
-
     public static List<String> distritos;
 
 
@@ -65,7 +66,6 @@ public abstract class UserFragment extends Fragment {
         View view = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, view);
         return view;
-
     }
 
 
@@ -74,6 +74,10 @@ public abstract class UserFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loadDatabase(getTypeUser());
 
+    }
+
+    public boolean isNews() {
+        return chkEnviarCorreo.isChecked();
     }
 
     public abstract int getLayoutId();
@@ -99,20 +103,6 @@ public abstract class UserFragment extends Fragment {
         });
     }
 
-
-    @OnCheckedChanged({R.id.chk_acepta_terminos, R.id.chk_enviar_correo})
-    public void cambiado() {
-        /*if (chkAceptaTerminos.isChecked() && chkEnviarCorreo.isChecked()) {
-            Intent i = new Intent(getActivity(), CondicionesActivity.class);
-            startActivity(i);
-//            btn_continuar_teminos.setEnabled(true);
-//            btn_continuar_teminos.setBackground(ContextCompat.getDrawable(btn_continuar_teminos.getContext(), R.drawable.selector_button));
-        } else {
-            *//*btn_continuar_teminos.setEnabled(false);
-            btn_continuar_teminos.setBackgroundColor(ContextCompat.getColor(btn_continuar_teminos.getContext(), android.R.color.darker_gray));*//*
-        }*/
-
-    }
 
     @OnClick(R.id.chk_acepta_terminos)
     public void onClick() {
@@ -158,7 +148,8 @@ public abstract class UserFragment extends Fragment {
                 try {
                     if (response.isSuccessful()) {
                         ComodinProgressDialog.finish(materialDialog);
-                        Intent i = new Intent(getActivity(), PresentacionActivity.class);
+                        Intent i = new Intent(getActivity(), BienvenidoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.animator.enter, R.animator.exit);
                     } else {
@@ -172,7 +163,7 @@ public abstract class UserFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
+                ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_login, android.R.string.ok);
                 ComodinProgressDialog.finish(materialDialog);
             }
         });
@@ -180,7 +171,7 @@ public abstract class UserFragment extends Fragment {
 
     public void fixErrors(Response<ResponseBody> response) {
         if (response.code() == 500) {
-            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_register, android.R.string.ok);
+            ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_500_alert_dialog_login, android.R.string.ok);
         } else if (response.code() == 422) {
             setValidateErrors(response);
         }

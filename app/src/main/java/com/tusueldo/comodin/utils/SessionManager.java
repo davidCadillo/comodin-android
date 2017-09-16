@@ -2,14 +2,12 @@ package com.tusueldo.comodin.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.tusueldo.comodin.LoginActivity;
 import com.tusueldo.comodin.MainActivity;
 import com.tusueldo.comodin.R;
@@ -19,22 +17,29 @@ public class SessionManager {
     private Activity activity;
     private ComodinSharedPreferences preferences;
     private GoogleApiClient mGoogleApiClient;
+    private static SessionManager sesion;
+    public static final String nameSession = "LOGIN";
 
-    public SessionManager(Activity activity) {
-        this.activity = activity;
-        preferences = new ComodinSharedPreferences(activity);
+      public static SessionManager getInstance() {
+        if (sesion == null)
+            sesion = new SessionManager();
+        return sesion;
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+        preferences = new ComodinSharedPreferences(activity, nameSession);
+    }
 
     public void logout() {
         preferences.remove("token");
         LoginManager.getInstance().logOut();
         activity.startActivity(new Intent(activity, LoginActivity.class));
         activity.finish();
-    }
-
-    public String print() {
-        return preferences.read("token", "nulo");
     }
 
     public void checkSession() {
@@ -73,5 +78,6 @@ public class SessionManager {
                 }
             });*/
     }
+
 
 }

@@ -33,12 +33,12 @@ import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
 import com.tusueldo.comodin.connections.api.login.ComodinTypeDateLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
+import com.tusueldo.comodin.utils.SessionManager;
 import org.json.JSONException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.tusueldo.comodin.LoginActivity.sessionManager;
 
 public class LoginGoogleFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -118,6 +118,8 @@ public class LoginGoogleFragment extends Fragment implements GoogleApiClient.OnC
                 public void onResponse(Call<ComodinLoginResponse> call, Response<ComodinLoginResponse> response) {
                     ComodinLoginResponse loginResponse = response.body();
                     if (loginResponse != null && loginResponse.getCode() == 200) {
+                        SessionManager sessionManager = SessionManager.getInstance();
+                        sessionManager.setActivity(getActivity());
                         sessionManager.createSession(loginResponse.getMessage());
                         sessionManager.setmGoogleApiClient(mGoogleApiClient);
                         Intent i = new Intent(getActivity(), MainActivity.class);

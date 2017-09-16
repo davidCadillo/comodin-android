@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/margin_large_horizontal"
             android:layout_marginRight="@dimen/margin_large_horizontal"
             android:contentDescription="@string/icon_ruc_description"
             android:src="@drawable/ic_business_black_24dp"

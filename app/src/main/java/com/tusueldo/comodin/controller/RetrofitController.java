@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tusueldo.comodin.R;
 import com.tusueldo.comodin.connections.ruc.IRetrofitServiceRUC;
@@ -28,7 +29,8 @@ import retrofit2.Response;
 public class RetrofitController {
 
     public static void requestRUC(final TypeUserLogin typeUserLogin, final TextInputLayout til_ruc, final TextInputLayout textInputLayout, CharSequence campo_ruc, final ImageView img_ruc, final ImageView img,
-                                  final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito) {
+                                  final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito,
+                                  final LinearLayout layout_nombreComercial) {
         IRetrofitServiceRUC service = new RetrofitAdapter().getAdapater(ComodinValues.BASE_URL_RUC, til_ruc.getContext()).create(IRetrofitServiceRUC.class);
         RequestRUC requestRUC = new RequestRUC(ComodinValues.API_TOKEN_RUC, campo_ruc.toString());
         Call<InformationRUC> call = service.loadInfoRuc(requestRUC);
@@ -53,9 +55,10 @@ public class RetrofitController {
                                 til_direccion.getEditText().setText(entity.getDireccion());
                                 til_direccion.getEditText().setEnabled(false);
                                 ComodinUtils.setColorIconValidate(img_direccion);
-                                if (typeUserLogin == TypeUserLogin.INDEPENDIENTE) {
-                                    ComodinValidator.nombreValidado = true;
-                                }
+                            }
+                            if (typeUserLogin == TypeUserLogin.INDEPENDIENTE) {
+                                ComodinValidator.nombreValidado = true;
+                                layout_nombreComercial.setVisibility(View.VISIBLE);
                             }
                             if (til_distrito.getEditText() != null && img_distrito != null) {
                                 til_distrito.getEditText().setText(ComodinUtils.formatDistrito(entity.getDistrito(), entity.getProvincia()));
@@ -66,6 +69,7 @@ public class RetrofitController {
                                 ComodinValidator.direccion = entity.getDireccion();
 
                             }
+
                             ComodinValidator.ruc_validate_server = true;
                         }
                     } else {
@@ -73,6 +77,7 @@ public class RetrofitController {
                         ComodinUtils.clearField(textInputLayout, img);
                         ComodinUtils.clearField(til_direccion, img_direccion);
                         ComodinUtils.clearField(til_distrito, img_distrito);
+                        layout_nombreComercial.setVisibility(View.GONE);
                         ComodinProgressDialog.finish(materialDialog);
                         ComodinValidator.rucvalidado = false;
 

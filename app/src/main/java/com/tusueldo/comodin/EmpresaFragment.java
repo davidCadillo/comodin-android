@@ -63,7 +63,6 @@ public class EmpresaFragment extends UserFragment {
 
     @OnClick(R.id.btn_registro)
     public void click() {
-//        Toast.makeText(getActivity(), ComodinValidator.user.toString(), Toast.LENGTH_LONG).show();
         if (ComodinValidator.validacionCompleta) {
             UserEmpresa userEmpresa = new UserEmpresa();
             userEmpresa.setRuc(campo_ruc.getText().toString());
@@ -75,16 +74,15 @@ public class EmpresaFragment extends UserFragment {
             userEmpresa.setCelular(campo_celular.getText().toString());
             userEmpresa.setPassword(campo_password.getText().toString());
             userEmpresa.setTipo_usuario_id(2);
+            userEmpresa.setNews(isNews());
             registerUser(userEmpresa);
-
         }
     }
 
 
-
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(TypeUserLogin.EMPRESA, ruc, til_ruc, til_razon_social, img_ruc, img_razon_social, til_direccion, img_direccion, til_distrito, img_distrito, button_registro);
+        ComodinValidator.validateRuc(TypeUserLogin.EMPRESA, ruc, til_ruc, til_razon_social, img_ruc, img_razon_social, til_direccion, img_direccion, til_distrito, img_distrito, null, button_registro);
     }
 
     @OnTextChanged(R.id.campo_razon_social)

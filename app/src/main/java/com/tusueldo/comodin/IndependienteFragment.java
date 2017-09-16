@@ -32,6 +32,7 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.campo_fecha_nac_anio) TextInputEditText campo_fecha_nac_anio;
     @BindView(R.id.campo_fecha_nac_dia) TextInputEditText campo_fecha_nac_dia;
     @BindView(R.id.campo_nombre) TextInputEditText campo_nombre;
+    @BindView(R.id.campo_nombreComercial) TextInputEditText campo_nombreComercial;
 
     /*Se cargan los TextInputLayout*/
     @BindView(R.id.til_nombre) TextInputLayout til_nombre;
@@ -39,6 +40,7 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.til_fecha_nac_mes) TextInputLayout til_fecha_nac_mes;
     @BindView(R.id.til_fecha_nac_anio) TextInputLayout til_fecha_nac_anio;
     @BindView(R.id.til_genero) TextInputLayout til_genero;
+    @BindView(R.id.til_nombreComercial) TextInputLayout til_nombreComercial;
 
     /*Se cargan otros widgets*/
     @BindView(R.id.sw_ruc) SwitchCompat sw_ruc;
@@ -51,7 +53,9 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.img_nombres) ImageView img_nombres;
     @BindView(R.id.img_fecha_nac) ImageView img_fecha_nac;
     @BindView(R.id.img_genero) ImageView img_genero;
+    @BindView(R.id.img_nombre_comercial) ImageView img_nombreComercial;
     @BindView(R.id.layout_ruc) LinearLayout layout_ruc;
+    @BindView(R.id.layout_nombreComercial) LinearLayout layout_nombrecomercial;
     @BindView(R.id.btn_registro) Button button_registro;
 
     private static boolean gender;
@@ -82,13 +86,9 @@ public class IndependienteFragment extends UserFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (campo_genero.getSelectedItemPosition() > 0) {
                     gender = campo_genero.getSelectedItemPosition() == 1;
-                    if (gender) {
-                        Toast.makeText(getActivity(), "Soy un hombre", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Soy una mujer", Toast.LENGTH_SHORT).show();
-                    }
                     ComodinValidator.genero_validado = true;
                     ComodinUtils.setColorIconValidate(img_genero);
+                    ComodinValidator.checkValidation(button_registro, getTypeUser());
                 } else {
                     ComodinUtils.setColorIconPrimary(img_genero);
                     ComodinValidator.genero_validado = false;
@@ -134,12 +134,10 @@ public class IndependienteFragment extends UserFragment {
             userIndependiente.setPassword(campo_password.getText().toString());
             userIndependiente.setCelular(campo_celular.getText().toString());
             userIndependiente.setGender(gender);
-            Toast.makeText(getActivity(), userIndependiente.toString(), Toast.LENGTH_SHORT).show();
-            /*Intent i = new Intent(getActivity(), CondicionesActivity.class);
-            i.putExtra("user", userIndependiente);
-            startActivity(i);*/
-
-//            registerUser(userIndependiente);
+            userIndependiente.setNews(isNews());
+            userIndependiente.setNombre_comercial(campo_nombreComercial.getText().toString());
+//            Toast.makeText(getActivity(), userIndependiente.toString(), Toast.LENGTH_SHORT).show();
+            registerUser(userIndependiente);
 
         }
 
@@ -151,6 +149,10 @@ public class IndependienteFragment extends UserFragment {
         ComodinValidator.validateNombre(TypeUserLogin.INDEPENDIENTE, nombre, til_nombre, img_nombres, button_registro);
     }
 
+    @OnTextChanged(R.id.campo_nombreComercial)
+    protected void onTextChangedNombreComercial(CharSequence nombreComercial) {
+        ComodinValidator.validateNombreComercial(TypeUserLogin.INDEPENDIENTE, nombreComercial, til_nombreComercial, img_nombreComercial);
+    }
 
     @OnTextChanged(R.id.campo_fecha_nac_dia)
     protected void onTextChangedFechaDia() {
@@ -169,7 +171,7 @@ public class IndependienteFragment extends UserFragment {
 
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(TypeUserLogin.INDEPENDIENTE, ruc, til_ruc, til_nombre, img_ruc, img_nombres, null, null, til_distrito, img_distrito, button_registro);
+        ComodinValidator.validateRuc(TypeUserLogin.INDEPENDIENTE, ruc, til_ruc, til_nombre, img_ruc, img_nombres, null, null, til_distrito, img_distrito, layout_nombrecomercial, button_registro);
     }
 
     @SuppressLint("SetTextI18n")

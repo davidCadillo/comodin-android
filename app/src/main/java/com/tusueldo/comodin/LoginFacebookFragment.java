@@ -24,6 +24,7 @@ import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
 import com.tusueldo.comodin.connections.api.login.ComodinTypeDateLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
+import com.tusueldo.comodin.utils.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import retrofit2.Call;
@@ -33,7 +34,6 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tusueldo.comodin.LoginActivity.sessionManager;
 
 public class LoginFacebookFragment extends Fragment {
 
@@ -64,7 +64,7 @@ public class LoginFacebookFragment extends Fragment {
                                     request.setType_date_login(ComodinTypeDateLogin.FACEBOOK);
                                     request.setId(object.getString("id"));
                                     request.setEmail(object.getString("email"));
-                                    IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
+                                    final IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
                                     final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(getActivity(), R.string.iniciando_sesion, R.string.cargando);
                                     Call<ComodinLoginResponse> call = serviceApi.login(request);
                                     call.enqueue(new Callback<ComodinLoginResponse>() {
@@ -72,6 +72,8 @@ public class LoginFacebookFragment extends Fragment {
                                         public void onResponse(Call<ComodinLoginResponse> call, Response<ComodinLoginResponse> response) {
                                             ComodinLoginResponse loginResponse = response.body();
                                             if (loginResponse != null && loginResponse.getCode() == 200) {
+                                                SessionManager sessionManager = SessionManager.getInstance();
+                                                sessionManager.setActivity(getActivity());
                                                 sessionManager.createSession(loginResponse.getMessage());
                                                 Intent i = new Intent(getActivity(), MainActivity.class);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

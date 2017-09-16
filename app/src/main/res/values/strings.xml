@@ -143,7 +143,10 @@
     <string name="aceptar">Aceptar</string>
     <string name="regresar">Regresar</string>
     <string name="genero">Género</string>
-
+    <string name="nombreComercial">Nombre comercial</string>
+    <string name="txt_bienvenida">Ahora ya formas parte de la comunidad</string>
+    <string name="txt_novedades">Ya puedes iniciar sesión para disfrutar de todas nuestras novedades</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
 
 
 </resources>

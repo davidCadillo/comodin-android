@@ -74,9 +74,6 @@
             android:name=".SlideActivity"
             android:theme="@style/WelcomeScreenTheme" />
         <activity
-            android:name=".PresentacionActivity"
-            android:theme="@style/ComodinTheme.NoActionBar" />
-        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/ComodinTheme.NoActionBar" />

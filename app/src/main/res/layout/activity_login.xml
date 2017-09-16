@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            layout="@layout/contenido_signup"
+            layout="@layout/contenido_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="0dp"

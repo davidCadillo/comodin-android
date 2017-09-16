@@ -3,7 +3,6 @@ package com.tusueldo.comodin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,17 +37,16 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.username) TextInputLayout username;
     @BindView(R.id.campo_password) EditText campoPassword;
     @BindView(R.id.password) TextInputLayout password;
-    public static SessionManager sessionManager;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance();
+        sessionManager.setActivity(this);
         sessionManager.checkSession();
-//        Toast.makeText(this, sessionManager.print(),Toast.LENGTH_LONG).show();
-
     }
 
     @OnClick({R.id.btn_registrarse, R.id.btn_login})
@@ -59,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
             case R.id.btn_registrarse:
                 intent = new Intent(this, RegisterActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK  | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 overridePendingTransition(R.animator.enter, R.animator.exit);
                 break;
@@ -77,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ComodinLoginResponse loginResponse = response.body();
                                 if (loginResponse != null && loginResponse.getCode() == 200) {
                                     sessionManager.createSession(loginResponse.getMessage());
+                                    Log.d("TOKEN: ", loginResponse.getMessage());
                                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);
@@ -102,10 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Log.d("LOGIN: ", "NULO");
                 }
-
-
                 break;
-
         }
     }
 
@@ -136,4 +131,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Header:", "Me destruyo");
+    }
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import com.tusueldo.comodin.R;
 import com.tusueldo.comodin.controller.RetrofitController;
 import com.tusueldo.comodin.model.types.TypeFieldDate;
@@ -51,7 +52,8 @@ public class ComodinValidator {
 
 
     public static void validateRuc(TypeUserLogin typeUserLogin, final CharSequence campo_ruc, final TextInputLayout til_ruc, final TextInputLayout textInputLayout, final ImageView img_ruc,
-                                   final ImageView img, final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito, Button btn_registro) {
+                                   final ImageView img, final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito,
+                                   LinearLayout layout_nombrecomercial, Button btn_registro) {
         int tamanioRuc = campo_ruc.length();
         boolean alertShowed = false;
         if (tamanioRuc == 0) {//Si el campo RUC está vacío se limpian los campos relacionados si tuviese datos.
@@ -86,7 +88,7 @@ public class ComodinValidator {
                     break;
             }
             if (!alertShowed)
-                RetrofitController.requestRUC(typeUserLogin, til_ruc, textInputLayout, campo_ruc, img_ruc, img, til_direccion, img_direccion, til_distrito, img_distrito);
+                RetrofitController.requestRUC(typeUserLogin, til_ruc, textInputLayout, campo_ruc, img_ruc, img, til_direccion, img_direccion, til_distrito, img_distrito, layout_nombrecomercial);
             if (rucvalidado) {
                 Log.d("RUC HOY: ", "El ruc se ha validado");
             }
@@ -94,7 +96,6 @@ public class ComodinValidator {
             rucvalidado = false;
             ComodinUtils.setFieldInvalidateFull(til_ruc, img_ruc, R.string.espacio, 11);
         }
-//        Log.d("RUC validado: ", String.valueOf(rucvalidado));
         checkValidation(btn_registro, typeUserLogin);
 
     }
@@ -147,7 +148,6 @@ public class ComodinValidator {
             ComodinUtils.setFieldInvalidateFull(til_correo, img_correo, R.string.correo_no_valido_validacion, 40);
         }
         checkValidation(btn_registro, typeUserLogin);
-        Log.d("Correo", String.valueOf(correoValidado));
     }
 
 
@@ -164,7 +164,6 @@ public class ComodinValidator {
             ComodinUtils.setFieldInvalidateFull(til_telefono, img_telefono, R.string.espacio, 9);
         }
         checkValidation(btn_registro, typeUserLogin);
-        Log.d("Telefono", String.valueOf(celularValidado));
     }
 
     public static void validateFechaNacimiento(TypeUserLogin typeUserLogin, TypeFieldDate fieldToValidate, TextInputLayout
@@ -272,7 +271,6 @@ public class ComodinValidator {
             til_password.setPasswordVisibilityToggleTintList(ContextCompat.getColorStateList(til_password.getContext(), R.color.colorPrimaryDark));
         }
         checkValidation(btn_registro, typeUserLogin);
-        Log.d("Password", String.valueOf(passwordValidado));
 
     }
 
@@ -284,7 +282,6 @@ public class ComodinValidator {
             distritoValidado = false;
         }
         checkValidation(btn_registro, typeUserLogin);
-        Log.d("DISTRITO: ", String.valueOf(distritoValidado));
     }
 
     public static void validateRazonSocial(TypeUserLogin typeUserLogin, CharSequence charSequence, TextInputLayout textInputLayout, ImageView imageView, Button btn_registro) {
@@ -318,6 +315,19 @@ public class ComodinValidator {
             }
         }
         checkValidation(btn_registro, typeUserLogin);
+    }
+
+    public static void validateNombreComercial(TypeUserLogin typeUserLogin, CharSequence charSequence, TextInputLayout textInputLayout, ImageView imageView) {
+        if (textInputLayout.isEnabled()) {
+            if (charSequence.length() >= 6) {
+                ComodinUtils.setFieldValidateFull(textInputLayout, R.string.correcto_validacion, imageView);
+            } else if (charSequence.toString().isEmpty()) {
+                ComodinUtils.setFieldNormal(textInputLayout, imageView);
+            } else {
+                ComodinUtils.setFieldInvalidateFull(textInputLayout, imageView, R.string.espacio, 70);
+            }
+        }
+
     }
 
     public static void checkValidation(Button button, TypeUserLogin typeUserLogin) {

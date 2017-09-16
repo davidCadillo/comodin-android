@@ -7,6 +7,8 @@
         android:id="@+id/area_correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginStart="-2dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatCheckBox
@@ -14,30 +16,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:linksClickable="true"
             android:fontFamily="sans-serif"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:linksClickable="true"
             android:text="@string/texto_acepto_terminos"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            app:buttonTint="@color/colorPrimaryDark"
-            app:paddingStart="16dp" />
+            android:paddingLeft="@dimen/margin_large_horizontal"
+            android:textSize="14sp"
+            app:buttonTint="@color/colorPrimaryDark" />
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/chk_enviar_correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="@dimen/margin_large_horizontal"
             android:checked="true"
             android:fontFamily="sans-serif"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="8dp"
             android:text="@string/texto_acepto_recibir_correos"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:buttonTint="@color/colorPrimaryDark" />
     </LinearLayout>
 

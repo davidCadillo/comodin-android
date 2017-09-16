@@ -18,5 +18,6 @@ public class ComodinValues {
     public static final String TELEFONO = "telefono";
     public static final String PASSWORD = "password";
     public static final String DISTRITO = "distrito";
+    public static boolean newUser = false;
     public static final int MAX_REGISTERS_CONSECUTIVE = 3;
 }

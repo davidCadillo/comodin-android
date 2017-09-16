@@ -10,6 +10,7 @@ public class UserIndependiente extends User {
     private String ruc;
     private boolean validate_ruc;
     private String direccion;
+    private String nombre_comercial;
 
     public UserIndependiente() {
 
@@ -71,6 +72,14 @@ public class UserIndependiente extends User {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getNombre_comercial() {
+        return nombre_comercial;
+    }
+
+    public void setNombre_comercial(String nombre_comercial) {
+        this.nombre_comercial = nombre_comercial;
     }
 
     @Override
