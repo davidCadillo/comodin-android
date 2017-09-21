@@ -1,7 +1,6 @@
 package com.tusueldo.comodin.utils;
 
 import android.util.Base64;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.tusueldo.comodin.model.Payload;
 import com.tusueldo.comodin.model.UserJson;
@@ -15,9 +14,9 @@ public class ComodinJWTUtils {
     private String signature;
     private Payload payload;
 
-    public ComodinJWTUtils(String JWTEncoded) {
+    public ComodinJWTUtils(String token) {
         try {
-            String[] split = JWTEncoded.split("\\.");
+            String[] split = token.split("\\.");
             this.header = getJson(split[0]);
             this.body = getJson(split[1]);
             this.signature = getJson(split[2]);

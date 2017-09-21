@@ -11,6 +11,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.tusueldo.comodin.LoginActivity;
 import com.tusueldo.comodin.MainActivity;
 import com.tusueldo.comodin.R;
+import com.tusueldo.comodin.model.UserJson;
 
 public class SessionManager {
 
@@ -18,9 +19,9 @@ public class SessionManager {
     private ComodinSharedPreferences preferences;
     private GoogleApiClient mGoogleApiClient;
     private static SessionManager sesion;
-    public static final String nameSession = "LOGIN";
+    private static final String nameSession = "LOGIN";
 
-      public static SessionManager getInstance() {
+    public static SessionManager getInstance() {
         if (sesion == null)
             sesion = new SessionManager();
         return sesion;
@@ -34,6 +35,7 @@ public class SessionManager {
         this.activity = activity;
         preferences = new ComodinSharedPreferences(activity, nameSession);
     }
+
 
     public void logout() {
         preferences.remove("token");
@@ -49,12 +51,16 @@ public class SessionManager {
             activity.startActivity(i);
             activity.overridePendingTransition(R.animator.enter, R.animator.exit);
         }
+    }
 
+    public UserJson getUser() {
+        return new ComodinJWTUtils(preferences.read("token", "nulo")).getUser();
     }
 
     public void createSession(String token) {
         preferences.write("token", token);
     }
+
 
     public GoogleApiClient getmGoogleApiClient() {
         return mGoogleApiClient;

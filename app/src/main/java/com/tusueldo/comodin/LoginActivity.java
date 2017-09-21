@@ -21,6 +21,7 @@ import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
 import com.tusueldo.comodin.connections.api.login.ComodinTypeDateLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
+import com.tusueldo.comodin.utils.ComodinJWTUtils;
 import com.tusueldo.comodin.utils.ComodinPatterns;
 import com.tusueldo.comodin.utils.SessionManager;
 import retrofit2.Call;
@@ -74,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                                 ComodinLoginResponse loginResponse = response.body();
                                 if (loginResponse != null && loginResponse.getCode() == 200) {
                                     sessionManager.createSession(loginResponse.getMessage());
-                                    Log.d("TOKEN: ", loginResponse.getMessage());
                                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);

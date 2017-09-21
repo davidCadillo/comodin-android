@@ -25,7 +25,6 @@ public class ComodinAlertDialog {
 
     public static void showDialogMaterialInformative(Context context, @StringRes int title, @StringRes int message,
                                                      @StringRes int positiveText) {
-
         new MaterialDialog.Builder(context)
                 .title(title)
                 .content(message)

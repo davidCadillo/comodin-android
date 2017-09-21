@@ -44,7 +44,6 @@ public class ComodinUtils {
                                 ComodinUtils.setFieldInvalidateFull(textInputLayout, imageView, R.string.falta_apellido_validacion, 50);
                             }
                             break;
-
                         case ComodinValues.CORREO:
                             break;
                         case ComodinValues.PASSWORD:
@@ -269,5 +268,19 @@ public class ComodinUtils {
     @NonNull
     static String getTrim(CharSequence campo_fecha_nac) {
         return campo_fecha_nac.toString();
+    }
+
+    public static String toUpperWord(String word) {
+
+        String[] words = word.split(" ");
+        StringBuilder stringBuffer = new StringBuilder();
+        for (String w : words) {
+            stringBuffer.append(toCapitalLetter(w)).append(" ");
+        }
+        return stringBuffer.toString().trim();
+    }
+
+    public static String toCapitalLetter(String word){
+        return  word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
     }
 }

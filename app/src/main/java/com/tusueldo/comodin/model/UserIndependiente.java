@@ -94,41 +94,4 @@ public class UserIndependiente extends User {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.nombresyapellidos);
-        dest.writeByte(this.gender ? (byte) 1 : (byte) 0);
-        dest.writeString(this.fecha_nac);
-        dest.writeString(this.ruc);
-        dest.writeByte(this.validate_ruc ? (byte) 1 : (byte) 0);
-        dest.writeString(this.direccion);
-    }
-
-    protected UserIndependiente(Parcel in) {
-        super(in);
-        this.nombresyapellidos = in.readString();
-        this.gender = in.readByte() != 0;
-        this.fecha_nac = in.readString();
-        this.ruc = in.readString();
-        this.validate_ruc = in.readByte() != 0;
-        this.direccion = in.readString();
-    }
-
-    public static final Creator<UserIndependiente> CREATOR = new Creator<UserIndependiente>() {
-        @Override
-        public UserIndependiente createFromParcel(Parcel source) {
-            return new UserIndependiente(source);
-        }
-
-        @Override
-        public UserIndependiente[] newArray(int size) {
-            return new UserIndependiente[size];
-        }
-    };
 }

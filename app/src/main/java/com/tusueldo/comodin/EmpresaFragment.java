@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
@@ -25,12 +26,16 @@ public class EmpresaFragment extends UserFragment {
 
     @BindView(R.id.til_razon_social) TextInputLayout til_razon_social;
     @BindView(R.id.til_direccion) TextInputLayout til_direccion;
+    @BindView(R.id.til_nombreComercial) TextInputLayout til_nombreComercial;
 
     @BindView(R.id.campo_razon_social) TextInputEditText campo_razon_social;
+    @BindView(R.id.campo_nombreComercial) TextInputEditText campo_nombreComercial;
     @BindView(R.id.campo_direccion) TextInputEditText campo_direccion;
 
+    @BindView(R.id.layout_nombreComercial) LinearLayout layout_nombrecomercial;
     @BindView(R.id.img_razon_social) ImageView img_razon_social;
     @BindView(R.id.img_direccion) ImageView img_direccion;
+    @BindView(R.id.img_nombre_comercial) ImageView img_nombreComercial;
 
     @BindView(R.id.btn_registro) Button button_registro;
 
@@ -73,6 +78,7 @@ public class EmpresaFragment extends UserFragment {
             userEmpresa.setEmail(campo_correo.getText().toString());
             userEmpresa.setCelular(campo_celular.getText().toString());
             userEmpresa.setPassword(campo_password.getText().toString());
+            userEmpresa.setNombre_comercial(campo_nombreComercial.getText().toString());
             userEmpresa.setTipo_usuario_id(2);
             userEmpresa.setNews(isNews());
             registerUser(userEmpresa);
@@ -82,7 +88,7 @@ public class EmpresaFragment extends UserFragment {
 
     @OnTextChanged(R.id.campo_ruc)
     protected void onTextChangedRuc(CharSequence ruc) {
-        ComodinValidator.validateRuc(TypeUserLogin.EMPRESA, ruc, til_ruc, til_razon_social, img_ruc, img_razon_social, til_direccion, img_direccion, til_distrito, img_distrito, null, button_registro);
+        ComodinValidator.validateRuc(TypeUserLogin.EMPRESA, ruc, til_ruc, til_razon_social, img_ruc, img_razon_social, til_direccion, img_direccion, til_distrito, img_distrito, layout_nombrecomercial, button_registro);
     }
 
     @OnTextChanged(R.id.campo_razon_social)
@@ -93,6 +99,12 @@ public class EmpresaFragment extends UserFragment {
     @OnTextChanged(R.id.campo_direccion)
     protected void onTextChangedDireccion(CharSequence direccion) {
         ComodinValidator.validateDireccion(TypeUserLogin.EMPRESA, direccion, til_direccion, img_direccion, button_registro);
+    }
+
+
+    @OnTextChanged(R.id.campo_nombreComercial)
+    protected void onTextChangedNombreComercial(CharSequence nombreComercial) {
+        ComodinValidator.validateNombreComercial(TypeUserLogin.EMPRESA, nombreComercial, til_nombreComercial, img_nombreComercial);
     }
 
 }

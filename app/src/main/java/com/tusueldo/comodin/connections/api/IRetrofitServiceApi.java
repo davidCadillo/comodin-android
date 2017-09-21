@@ -18,10 +18,6 @@ public interface IRetrofitServiceApi {
     @POST("api/v1/register")
     Call<ResponseBody> regiserUserIndependiente(@Body UserIndependiente userIndependiente);
 
-    @Headers("Content-Type:application/json")
-    @POST("api/v1/register")
-    Call<ResponseBody> regiserUserIndependienteRuc(@Body UserIndependienteRUC userIndependienteRUC);
-
 
     @Headers("Content-Type:application/json")
     @POST("api/v1/register")

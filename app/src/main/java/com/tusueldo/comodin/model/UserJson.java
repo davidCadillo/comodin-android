@@ -1,9 +1,11 @@
 package com.tusueldo.comodin.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserJson {
+public class UserJson implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -356,4 +358,111 @@ public class UserJson {
         this.rubroId = rubroId;
     }
 
+    @Override
+    public String toString() {
+        return "UserJson{" +
+                "id=" + id +
+                ", nombresyapellidos='" + nombresyapellidos + '\'' +
+                ", email='" + email + '\'' +
+                ", fechaNac='" + fechaNac + '\'' +
+                ", dni='" + dni + '\'' +
+                ", direccionUser='" + direccionUser + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", celular='" + celular + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", ubigeoId='" + ubigeoId + '\'' +
+                ", situacionUsuarioId=" + situacionUsuarioId +
+                ", tipoUsuarioId=" + tipoUsuarioId +
+                ", tipoFormalidadId=" + tipoFormalidadId +
+                ", gender=" + gender +
+                ", msjWelcome=" + msjWelcome +
+                ", news=" + news +
+                ", fbId='" + fbId + '\'' +
+                ", gId='" + gId + '\'' +
+                ", validateRuc=" + validateRuc +
+                ", companyId=" + companyId +
+                ", ruc='" + ruc + '\'' +
+                ", nombreComercial='" + nombreComercial + '\'' +
+                ", razonSocial='" + razonSocial + '\'' +
+                ", direccionCompany='" + direccionCompany + '\'' +
+                ", numAcc=" + numAcc +
+                ", rubroId=" + rubroId +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.nombresyapellidos);
+        dest.writeString(this.email);
+        dest.writeString(this.fechaNac);
+        dest.writeString(this.dni);
+        dest.writeString(this.direccionUser);
+        dest.writeString(this.descripcion);
+        dest.writeString(this.celular);
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.ubigeoId);
+        dest.writeInt(this.situacionUsuarioId);
+        dest.writeInt(this.tipoUsuarioId);
+        dest.writeInt(this.tipoFormalidadId);
+        dest.writeInt(this.gender);
+        dest.writeInt(this.msjWelcome);
+        dest.writeInt(this.news);
+        dest.writeString(this.fbId);
+        dest.writeString(this.gId);
+        dest.writeInt(this.validateRuc);
+        dest.writeInt(this.companyId);
+        dest.writeString(this.ruc);
+        dest.writeString(this.nombreComercial);
+        dest.writeString(this.razonSocial);
+        dest.writeString(this.direccionCompany);
+        dest.writeInt(this.numAcc);
+        dest.writeInt(this.rubroId);
+    }
+
+    protected UserJson(Parcel in) {
+        this.id = in.readInt();
+        this.nombresyapellidos = in.readString();
+        this.email = in.readString();
+        this.fechaNac = in.readString();
+        this.dni = in.readString();
+        this.direccionUser = in.readString();
+        this.descripcion = in.readString();
+        this.celular = in.readString();
+        this.imageUrl = in.readString();
+        this.ubigeoId = in.readString();
+        this.situacionUsuarioId = in.readInt();
+        this.tipoUsuarioId = in.readInt();
+        this.tipoFormalidadId = in.readInt();
+        this.gender = in.readInt();
+        this.msjWelcome = in.readInt();
+        this.news = in.readInt();
+        this.fbId = in.readString();
+        this.gId = in.readString();
+        this.validateRuc = in.readInt();
+        this.companyId = in.readInt();
+        this.ruc = in.readString();
+        this.nombreComercial = in.readString();
+        this.razonSocial = in.readString();
+        this.direccionCompany = in.readString();
+        this.numAcc = in.readInt();
+        this.rubroId = in.readInt();
+    }
+
+    public static final Parcelable.Creator<UserJson> CREATOR = new Parcelable.Creator<UserJson>() {
+        @Override
+        public UserJson createFromParcel(Parcel source) {
+            return new UserJson(source);
+        }
+
+        @Override
+        public UserJson[] newArray(int size) {
+            return new UserJson[size];
+        }
+    };
 }

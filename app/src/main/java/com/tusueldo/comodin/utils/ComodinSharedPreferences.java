@@ -59,7 +59,8 @@ public class ComodinSharedPreferences {
     }
 
     public void remove(String key) {
-        editor.remove(key).commit();
+        editor = sharedPreferences.edit();
+        editor.remove(key).apply();
     }
 
 

@@ -1,11 +1,8 @@
 package com.tusueldo.comodin.model;
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class User implements Parcelable {
+public abstract class User {
 
     @SerializedName("ubigeo_id")
     private String ubigeo_id;
@@ -96,30 +93,6 @@ public abstract class User implements Parcelable {
                         ", tipo_usuario_id=" + tipo_usuario_id;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.ubigeo_id);
-        dest.writeString(this.email);
-        dest.writeString(this.celular);
-        dest.writeString(this.password);
-        dest.writeInt(this.tipo_usuario_id);
-        dest.writeByte(this.news ? (byte) 1 : (byte) 0);
-    }
-
-    protected User(Parcel in) {
-        this.ubigeo_id = in.readString();
-        this.email = in.readString();
-        this.celular = in.readString();
-        this.password = in.readString();
-        this.tipo_usuario_id = in.readInt();
-        this.news = in.readByte() != 0;
-    }
 
 
 }

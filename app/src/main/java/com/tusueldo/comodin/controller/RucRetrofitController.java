@@ -26,7 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RetrofitController {
+public class RucRetrofitController {
 
     public static void requestRUC(final TypeUserLogin typeUserLogin, final TextInputLayout til_ruc, final TextInputLayout textInputLayout, CharSequence campo_ruc, final ImageView img_ruc, final ImageView img,
                                   final TextInputLayout til_direccion, final ImageView img_direccion, final TextInputLayout til_distrito, final ImageView img_distrito,
@@ -47,7 +47,7 @@ public class RetrofitController {
                             EditText textInputEditText = textInputLayout.getEditText();
                             ComodinValidator.rucvalidado = true;
                             if (textInputEditText != null) {
-                                textInputEditText.setText(entity.getNombreORazonSocial());
+                                textInputEditText.setText(ComodinUtils.toUpperWord(entity.getNombreORazonSocial()));
                                 textInputEditText.setEnabled(false);
                                 ComodinUtils.setFieldValidateFull(textInputLayout, R.string.correcto_validacion, img);
                             }
@@ -55,10 +55,6 @@ public class RetrofitController {
                                 til_direccion.getEditText().setText(entity.getDireccion());
                                 til_direccion.getEditText().setEnabled(false);
                                 ComodinUtils.setColorIconValidate(img_direccion);
-                            }
-                            if (typeUserLogin == TypeUserLogin.INDEPENDIENTE) {
-                                ComodinValidator.nombreValidado = true;
-                                layout_nombreComercial.setVisibility(View.VISIBLE);
                             }
                             if (til_distrito.getEditText() != null && img_distrito != null) {
                                 til_distrito.getEditText().setText(ComodinUtils.formatDistrito(entity.getDistrito(), entity.getProvincia()));
@@ -68,6 +64,10 @@ public class RetrofitController {
                                 ComodinValidator.ubigeo = entity.getUbigeo();
                                 ComodinValidator.direccion = entity.getDireccion();
 
+                            }
+//                            ComodinValidator.nombreValidado = true;
+                            if (layout_nombreComercial != null) {
+                                layout_nombreComercial.setVisibility(View.VISIBLE);
                             }
 
                             ComodinValidator.ruc_validate_server = true;
