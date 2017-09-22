@@ -155,6 +155,7 @@
     <string name="menu_drawer_redes_sociales">Conectar con Redes Sociales</string>
     <string name="etiqueta_contrasena">Cambiar contraseña</string>
     <string name="txt_cambiar_password">Cambiar contraseña</string>
+    <string name="continuar">Continuar</string>
 
 
 </resources>

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.*;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -30,9 +29,6 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class LoginFacebookFragment extends Fragment {
@@ -61,12 +57,12 @@ public class LoginFacebookFragment extends Fragment {
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
                                     ComodinLoginRequest request = new ComodinLoginRequest();
-                                    request.setType_date_login(ComodinTypeDateLogin.FACEBOOK);
+                                    request.setTypeDateLogin(ComodinTypeDateLogin.FACEBOOK);
                                     request.setId(object.getString("id"));
                                     request.setEmail(object.getString("email"));
-                                    final IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
-                                    final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(getActivity(), R.string.iniciando_sesion, R.string.cargando);
-                                    Call<ComodinLoginResponse> call = serviceApi.login(request);
+                                    final IRetrofitServiceApi serviceApi = RetrofitAdapter.getClient().create(IRetrofitServiceApi.class);
+                                    ComodinProgressDialog.showProgressBar(getActivity(), R.string.iniciando_sesion, R.string.cargando);
+                                    Call<ComodinLoginResponse> call = serviceApi.loginUser(request);
                                     call.enqueue(new Callback<ComodinLoginResponse>() {
                                         @Override
                                         public void onResponse(Call<ComodinLoginResponse> call, Response<ComodinLoginResponse> response) {
@@ -77,11 +73,11 @@ public class LoginFacebookFragment extends Fragment {
                                                 sessionManager.createSession(loginResponse.getMessage());
                                                 Intent i = new Intent(getActivity(), MainActivity.class);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                ComodinProgressDialog.finish(materialDialog);
+                                                ComodinProgressDialog.finish();
                                                 startActivity(i);
                                                 getActivity().overridePendingTransition(R.animator.enter, R.animator.exit);
                                             } else {
-                                                ComodinProgressDialog.finish(materialDialog);
+                                                ComodinProgressDialog.finish();
                                                 ComodinLoginErrors.from(response.body());
                                                 ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error_login, ComodinLoginErrors.showMessageError(), android.R.string.ok);
                                             }
@@ -89,7 +85,7 @@ public class LoginFacebookFragment extends Fragment {
 
                                         @Override
                                         public void onFailure(Call<ComodinLoginResponse> call, Throwable t) {
-                                            ComodinProgressDialog.finish(materialDialog);
+                                            ComodinProgressDialog.finish();
                                             ComodinAlertDialog.showDialogMaterialInformative(getContext(), R.string.error, R.string.error_500_alert_dialog_login, android.R.string.ok);
 
                                         }

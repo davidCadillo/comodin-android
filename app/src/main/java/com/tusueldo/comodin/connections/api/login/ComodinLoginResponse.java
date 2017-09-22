@@ -1,19 +1,30 @@
+
 package com.tusueldo.comodin.connections.api.login;
 
-/**
- * Created by USUARIO on 28/08/2017.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class ComodinLoginResponse {
 
+    @SerializedName("code")
+    @Expose
     private int code;
+    @SerializedName("message")
+    @Expose
     private String message;
 
-
+    /**
+     * No args constructor for use in serialization
+     */
     public ComodinLoginResponse() {
     }
 
+    /**
+     * @param message
+     * @param code
+     */
     public ComodinLoginResponse(int code, String message) {
+        super();
         this.code = code;
         this.message = message;
     }
@@ -33,4 +44,5 @@ public class ComodinLoginResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

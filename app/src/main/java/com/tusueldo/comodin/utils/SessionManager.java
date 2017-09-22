@@ -36,6 +36,9 @@ public class SessionManager {
         preferences = new ComodinSharedPreferences(activity, nameSession);
     }
 
+    public void print(){
+        Toast.makeText(activity, preferences.read("token", "nulo"), Toast.LENGTH_SHORT).show();
+    }
 
     public void logout() {
         preferences.remove("token");

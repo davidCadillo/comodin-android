@@ -9,12 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -22,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.tusueldo.comodin.connections.api.IRetrofitServiceApi;
@@ -34,7 +30,6 @@ import com.tusueldo.comodin.connections.api.login.ComodinTypeDateLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
 import com.tusueldo.comodin.utils.SessionManager;
-import org.json.JSONException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,12 +102,12 @@ public class LoginGoogleFragment extends Fragment implements GoogleApiClient.OnC
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
             ComodinLoginRequest request = new ComodinLoginRequest();
-            request.setType_date_login(ComodinTypeDateLogin.GOOGLE);
+            request.setTypeDateLogin(ComodinTypeDateLogin.GOOGLE);
             request.setId(acct.getId());
             request.setEmail(acct.getEmail());
-            IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
-            final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(getActivity(), R.string.iniciando_sesion, R.string.cargando);
-            Call<ComodinLoginResponse> call = serviceApi.login(request);
+            IRetrofitServiceApi serviceApi = RetrofitAdapter.getClient().create(IRetrofitServiceApi.class);
+            ComodinProgressDialog.showProgressBar(getActivity(), R.string.iniciando_sesion, R.string.cargando);
+            Call<ComodinLoginResponse> call = serviceApi.loginUser(request);
             call.enqueue(new Callback<ComodinLoginResponse>() {
                 @Override
                 public void onResponse(Call<ComodinLoginResponse> call, Response<ComodinLoginResponse> response) {
@@ -124,11 +119,11 @@ public class LoginGoogleFragment extends Fragment implements GoogleApiClient.OnC
                         sessionManager.setmGoogleApiClient(mGoogleApiClient);
                         Intent i = new Intent(getActivity(), MainActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        ComodinProgressDialog.finish(materialDialog);
+                        ComodinProgressDialog.finish();
                         startActivity(i);
                         getActivity().overridePendingTransition(R.animator.enter, R.animator.exit);
                     } else {
-                        ComodinProgressDialog.finish(materialDialog);
+                        ComodinProgressDialog.finish();
                         ComodinLoginErrors.from(response.body());
                         ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error_login, ComodinLoginErrors.showMessageError(), android.R.string.ok);
                     }
@@ -137,7 +132,7 @@ public class LoginGoogleFragment extends Fragment implements GoogleApiClient.OnC
 
                 @Override
                 public void onFailure(Call<ComodinLoginResponse> call, Throwable t) {
-                    ComodinProgressDialog.finish(materialDialog);
+                    ComodinProgressDialog.finish();
                     ComodinAlertDialog.showDialogMaterialInformative(getContext(), R.string.error, R.string.error_500_alert_dialog_login, android.R.string.ok);
 
                 }

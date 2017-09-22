@@ -1,6 +1,8 @@
 package com.tusueldo.comodin.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -8,10 +10,22 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import com.tusueldo.comodin.MainActivity;
 import com.tusueldo.comodin.R;
+import com.tusueldo.comodin.connections.api.IRetrofitServiceApi;
+import com.tusueldo.comodin.connections.api.RetrofitAdapter;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginErrors;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginRequest;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
 import com.tusueldo.comodin.model.types.ComodinValues;
+import com.tusueldo.comodin.ui.ComodinAlertDialog;
+import com.tusueldo.comodin.ui.ComodinProgressDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @author David Cadillo Blas
@@ -280,7 +294,51 @@ public class ComodinUtils {
         return stringBuffer.toString().trim();
     }
 
-    public static String toCapitalLetter(String word){
-        return  word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+    static String toCapitalLetter(String word) {
+        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+    }
+
+    public static void login(final Activity activity, final ComodinLoginRequest request, final SessionManager sessionManager, final ComodinUsuariosGuardados usuariosGuardados, boolean showProgressBar) {
+        if (request != null) {
+            IRetrofitServiceApi serviceApi = RetrofitAdapter.getClient().create(IRetrofitServiceApi.class);
+            Call<ComodinLoginResponse> call = serviceApi.loginUser(request);
+            if (showProgressBar) {
+                ComodinProgressDialog.showProgressBar(activity, R.string.iniciando_sesion, R.string.cargando);
+            }
+            call.enqueue(new Callback<ComodinLoginResponse>() {
+                @Override
+                public void onResponse(Call<ComodinLoginResponse> call, Response<ComodinLoginResponse> response) {
+
+                    if (response.isSuccessful()) {
+                        ComodinLoginResponse loginResponse = response.body();
+                        if (loginResponse != null && loginResponse.getCode() == 200) {
+                            sessionManager.createSession(loginResponse.getMessage());
+                            usuariosGuardados.rememberEmail(request.getEmail());
+                            ComodinProgressDialog.finish();
+                            Intent i = new Intent(activity, MainActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(i);
+                            activity.overridePendingTransition(R.animator.enter, R.animator.exit);
+
+                        } else {
+                            ComodinProgressDialog.finish();
+                            ComodinLoginErrors.from(response.body());
+                            ComodinAlertDialog.showDialogMaterialInformative(activity, R.string.error_login, ComodinLoginErrors.showMessageError(), android.R.string.ok);
+                        }
+                    } else {
+                        ComodinProgressDialog.finish();
+                        ComodinAlertDialog.showDialogMaterialInformative(activity, R.string.error_login, R.string.error_500_alert_dialog_login, android.R.string.ok);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ComodinLoginResponse> call, Throwable t) {
+                    ComodinProgressDialog.finish();
+                    ComodinAlertDialog.showDialogMaterialInformative(activity, R.string.error, R.string.error_500_alert_dialog_login, android.R.string.ok);
+                }
+            });
+        } else {
+            Log.d("LOGIN: ", "NULO");
+        }
     }
 }

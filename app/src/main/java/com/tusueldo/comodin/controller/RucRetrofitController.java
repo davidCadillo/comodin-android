@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.tusueldo.comodin.R;
 import com.tusueldo.comodin.connections.ruc.IRetrofitServiceRUC;
 import com.tusueldo.comodin.connections.ruc.InformationRUC;
@@ -34,7 +33,7 @@ public class RucRetrofitController {
         IRetrofitServiceRUC service = new RetrofitAdapter().getAdapater(ComodinValues.BASE_URL_RUC, til_ruc.getContext()).create(IRetrofitServiceRUC.class);
         RequestRUC requestRUC = new RequestRUC(ComodinValues.API_TOKEN_RUC, campo_ruc.toString());
         Call<InformationRUC> call = service.loadInfoRuc(requestRUC);
-        final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(til_ruc.getContext(), R.string.titulo_ruc_progressdialog, R.string.mensaje_ruc_progressdialog);
+        ComodinProgressDialog.showProgressBar(til_ruc.getContext(), R.string.titulo_ruc_progressdialog, R.string.mensaje_ruc_progressdialog);
         call.enqueue(new Callback<InformationRUC>() {
             @Override
             public void onResponse(@NonNull Call<InformationRUC> call, @NonNull Response<InformationRUC> response) {
@@ -78,11 +77,11 @@ public class RucRetrofitController {
                         ComodinUtils.clearField(til_direccion, img_direccion);
                         ComodinUtils.clearField(til_distrito, img_distrito);
                         layout_nombreComercial.setVisibility(View.GONE);
-                        ComodinProgressDialog.finish(materialDialog);
+                        ComodinProgressDialog.finish();
                         ComodinValidator.rucvalidado = false;
 
                     }
-                    ComodinProgressDialog.finish(materialDialog);
+                    ComodinProgressDialog.finish();
 
                 } catch (Exception e) {
                     ComodinUtils.setFieldInvalidateFull(til_ruc, null, R.string.ruc_exception_validacion, 11);
@@ -90,7 +89,7 @@ public class RucRetrofitController {
                     if (textInputLayout.getEditText() != null) {
                         textInputLayout.getEditText().setText(null);
                     }
-                    ComodinProgressDialog.finish(materialDialog);
+                    ComodinProgressDialog.finish();
                     ComodinValidator.rucvalidado = false;
                 }
             }
@@ -113,7 +112,7 @@ public class RucRetrofitController {
                     ComodinValidator.rucvalidado = true;
                 }
 
-                ComodinProgressDialog.finish(materialDialog);
+                ComodinProgressDialog.finish();
 
 
             }

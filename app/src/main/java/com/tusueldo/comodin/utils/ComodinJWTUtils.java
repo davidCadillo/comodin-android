@@ -7,14 +7,14 @@ import com.tusueldo.comodin.model.UserJson;
 
 import java.io.UnsupportedEncodingException;
 
-public class ComodinJWTUtils {
+ class ComodinJWTUtils {
 
     private String header;
     private String body;
     private String signature;
     private Payload payload;
 
-    public ComodinJWTUtils(String token) {
+     ComodinJWTUtils(String token) {
         try {
             String[] split = token.split("\\.");
             this.header = getJson(split[0]);
@@ -31,7 +31,7 @@ public class ComodinJWTUtils {
         return payload;
     }
 
-    public UserJson getUser() {
+     UserJson getUser() {
         return payload.getUserJson();
     }
 

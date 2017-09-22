@@ -2,9 +2,7 @@ package com.tusueldo.comodin.connections.api;
 
 import com.tusueldo.comodin.connections.api.login.ComodinLoginRequest;
 import com.tusueldo.comodin.connections.api.login.ComodinLoginResponse;
-import com.tusueldo.comodin.model.UserEmpresa;
-import com.tusueldo.comodin.model.UserIndependiente;
-import com.tusueldo.comodin.model.UserIndependienteRUC;
+import com.tusueldo.comodin.model.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,15 +14,10 @@ public interface IRetrofitServiceApi {
 
     @Headers("Content-Type:application/json")
     @POST("api/v1/register")
-    Call<ResponseBody> regiserUserIndependiente(@Body UserIndependiente userIndependiente);
-
-
-    @Headers("Content-Type:application/json")
-    @POST("api/v1/register")
-    Call<ResponseBody> regiserUserEmpresa(@Body UserEmpresa userEmpresa);
+    Call<ResponseBody> registerUser(@Body User user);
 
 
     @Headers("Content-Type:application/json")
     @POST("api/v1/login")
-    Call<ComodinLoginResponse> login(@Body ComodinLoginRequest request);
+    Call<ComodinLoginResponse> loginUser(@Body ComodinLoginRequest request);
 }

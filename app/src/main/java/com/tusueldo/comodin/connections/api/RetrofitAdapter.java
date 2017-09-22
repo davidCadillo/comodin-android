@@ -5,18 +5,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAdapter {
 
-    private Retrofit retrofit;
+
+    private static Retrofit retrofit = null;
 
     public RetrofitAdapter() {
 
     }
 
-    public Retrofit getAdapater() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://comodinapi.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    public static Retrofit getClient() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("https://comodinapi.herokuapp.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
         return retrofit;
 
     }

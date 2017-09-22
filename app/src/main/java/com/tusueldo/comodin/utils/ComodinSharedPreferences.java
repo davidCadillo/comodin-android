@@ -4,25 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class ComodinSharedPreferences {
+import java.util.*;
+
+class ComodinSharedPreferences {
 
     private Activity activity;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public ComodinSharedPreferences(Activity activity, String name) {
+    ComodinSharedPreferences(Activity activity, String name) {
         this.activity = activity;
         sharedPreferences = this.activity.getSharedPreferences(name, Context.MODE_PRIVATE);
-
     }
 
-    public void write(String key, String value) {
+    void write(String key, String value) {
         editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
-    public void write(String key, int value) {
+    void write(String key, int value) {
         editor = sharedPreferences.edit();
         editor.putInt(key, value);
         editor.apply();
@@ -40,11 +41,11 @@ public class ComodinSharedPreferences {
         editor.apply();
     }
 
-    public String read(String key, String defaultValue) {
+    String read(String key, String defaultValue) {
         return sharedPreferences.getString(key, defaultValue);
     }
 
-    public int read(String key, int defaultValue) {
+    int read(String key, int defaultValue) {
         return sharedPreferences.getInt(key, defaultValue);
     }
 
@@ -58,13 +59,32 @@ public class ComodinSharedPreferences {
         return sharedPreferences.getFloat(key, defaultValue);
     }
 
-    public void remove(String key) {
+    void remove(String key) {
         editor = sharedPreferences.edit();
         editor.remove(key).apply();
     }
 
+    public List<String> getAllValuesWhitoutRepeated() {
+        Map<String, ?> keys = sharedPreferences.getAll();
+        List<String> values;
+        Set<String> rawValues = new HashSet<>();
+        for (Map.Entry<String, ?> entry : keys.entrySet()) {
+            if (!entry.getKey().equals("contador"))
+                rawValues.add(entry.getValue().toString());
+        }
+        values = new ArrayList<>(rawValues);
+        return values;
+    }
 
     public void clear() {
         editor.clear().commit();
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

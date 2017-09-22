@@ -1,54 +1,108 @@
+
 package com.tusueldo.comodin.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class User {
-
-    @SerializedName("ubigeo_id")
-    private String ubigeo_id;
-
-    @SerializedName("email")
-    private String email;
-
-    @SerializedName("celular")
-    private String celular;
-
-    @SerializedName("password")
-    private String password;
+public class User {
 
     @SerializedName("tipo_usuario_id")
-    private int tipo_usuario_id;
-
+    @Expose
+    private int tipoUsuarioId;
+    @SerializedName("nombresyapellidos")
+    @Expose
+    private String nombresyapellidos;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("celular")
+    @Expose
+    private String celular;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("ubigeo_id")
+    @Expose
+    private String ubigeoId;
+    @SerializedName("fecha_nac")
+    @Expose
+    private String fechaNac;
     @SerializedName("news")
+    @Expose
     private boolean news;
+    @SerializedName("ruc")
+    @Expose
+    private String ruc;
+    @SerializedName("validate_ruc")
+    @Expose
+    private boolean validateRuc;
+    @SerializedName("gender")
+    @Expose
+    private boolean gender;
+    @SerializedName("direccion")
+    @Expose
+    private String direccion;
+    @SerializedName("nombre_comercial")
+    @Expose
+    private String nombreComercial;
+    @SerializedName("razon_social")
+    @Expose
+    private String razonSocial;
 
-    User() {
-
+    /**
+     * No args constructor for use in serialization
+     */
+    public User() {
     }
 
-    public User(String ubigeo_id, String email, String celular, String password, int tipo_usuario_id, boolean news) {
-        this.ubigeo_id = ubigeo_id;
+    /**
+     * @param tipoUsuarioId
+     * @param nombreComercial
+     * @param direccion
+     * @param validateRuc
+     * @param razonSocial
+     * @param fechaNac
+     * @param news
+     * @param ruc
+     * @param ubigeoId
+     * @param password
+     * @param nombresyapellidos
+     * @param email
+     * @param gender
+     * @param celular
+     */
+    public User(int tipoUsuarioId, String nombresyapellidos, String email, String celular, String password, String ubigeoId, String fechaNac, boolean news, String ruc, boolean validateRuc, boolean gender, String direccion, String nombreComercial, String razonSocial) {
+        super();
+        this.tipoUsuarioId = tipoUsuarioId;
+        this.nombresyapellidos = nombresyapellidos;
         this.email = email;
         this.celular = celular;
         this.password = password;
-        this.tipo_usuario_id = tipo_usuario_id;
+        this.ubigeoId = ubigeoId;
+        this.fechaNac = fechaNac;
         this.news = news;
+        this.ruc = ruc;
+        this.validateRuc = validateRuc;
+        this.gender = gender;
+        this.direccion = direccion;
+        this.nombreComercial = nombreComercial;
+        this.razonSocial = razonSocial;
     }
 
-    public boolean isNews() {
-        return news;
+    public int getTipoUsuarioId() {
+        return tipoUsuarioId;
     }
 
-    public void setNews(boolean news) {
-        this.news = news;
+    public void setTipoUsuarioId(int tipoUsuarioId) {
+        this.tipoUsuarioId = tipoUsuarioId;
     }
 
-    public String getUbigeo_id() {
-        return ubigeo_id;
+    public String getNombresyapellidos() {
+        return nombresyapellidos;
     }
 
-    public void setUbigeo_id(String ubigeo_id) {
-        this.ubigeo_id = ubigeo_id;
+    public void setNombresyapellidos(String nombresyapellidos) {
+        this.nombresyapellidos = nombresyapellidos;
     }
 
     public String getEmail() {
@@ -75,26 +129,76 @@ public abstract class User {
         this.password = password;
     }
 
-    public int getTipo_usuario_id() {
-        return tipo_usuario_id;
+    public String getUbigeoId() {
+        return ubigeoId;
     }
 
-    public void setTipo_usuario_id(int tipo_usuario_id) {
-        this.tipo_usuario_id = tipo_usuario_id;
+    public void setUbigeoId(String ubigeoId) {
+        this.ubigeoId = ubigeoId;
     }
 
-    @Override
-    public String toString() {
-        return
-                "ubigeo_id='" + ubigeo_id + '\'' +
-                        ", email='" + email + '\'' +
-                        ", celular='" + celular + '\'' +
-                        ", password='" + password + '\'' +
-                        ", tipo_usuario_id=" + tipo_usuario_id;
+    public String getFechaNac() {
+        return fechaNac;
     }
 
+    public void setFechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
 
+    public boolean isNews() {
+        return news;
+    }
+
+    public void setNews(boolean news) {
+        this.news = news;
+    }
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
+    public boolean isValidateRuc() {
+        return validateRuc;
+    }
+
+    public void setValidateRuc(boolean validateRuc) {
+        this.validateRuc = validateRuc;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getNombreComercial() {
+        return nombreComercial;
+    }
+
+    public void setNombreComercial(String nombreComercial) {
+        this.nombreComercial = nombreComercial;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
 
 }
-
-

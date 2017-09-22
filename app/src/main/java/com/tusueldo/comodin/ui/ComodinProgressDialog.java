@@ -10,9 +10,10 @@ import com.tusueldo.comodin.R;
 public class ComodinProgressDialog {
 
 
-    public static MaterialDialog showProgressBar(Context context, @StringRes int title, @StringRes int message, boolean cancelable) {
+    private static MaterialDialog materialDialog = null;
 
-        MaterialDialog materialDialog;
+    public static void showProgressBar(Context context, @StringRes int title, @StringRes int message, boolean cancelable) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             materialDialog = new MaterialDialog.Builder(context)
                     .title(title)
@@ -29,12 +30,10 @@ public class ComodinProgressDialog {
                     .progress(true, 0)
                     .show();
         }
-        return materialDialog;
 
     }
 
-    public static MaterialDialog showProgressBar(Context context, @StringRes int title, @StringRes int message) {
-        MaterialDialog materialDialog;
+    public static void showProgressBar(Context context, @StringRes int title, @StringRes int message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             materialDialog = new MaterialDialog.Builder(context)
                     .title(title)
@@ -49,14 +48,16 @@ public class ComodinProgressDialog {
                     .progress(true, 0)
                     .show();
         }
-        return materialDialog;
 
     }
 
 
-    public static void finish(MaterialDialog materialDialog) {
-        if (materialDialog.isShowing())
+    public static void finish() {
+        if (materialDialog != null && materialDialog.isShowing()){
             materialDialog.dismiss();
+            materialDialog = null;
+        }
+
 
     }
 

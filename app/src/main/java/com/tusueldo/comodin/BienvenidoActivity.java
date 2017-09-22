@@ -5,17 +5,24 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.stephentuso.welcome.WelcomeHelper;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginRequest;
+import com.tusueldo.comodin.utils.ComodinUsuariosGuardados;
+import com.tusueldo.comodin.utils.ComodinUtils;
+import com.tusueldo.comodin.utils.SessionManager;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
 public class BienvenidoActivity extends AppCompatActivity {
 
-    private KonfettiView konfettiView;
     WelcomeHelper welcomeScreen;
+    ComodinLoginRequest request = null;
+    SessionManager sessionManager;
+    private ComodinUsuariosGuardados usuariosGuardados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +31,11 @@ public class BienvenidoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         welcomeScreen = new WelcomeHelper(this, SlideActivity.class);
         welcomeScreen.forceShow();
-/*        if (getIntent().getBooleanExtra("nuevoUsuario", false)) {
-            welcomeScreen.forceShow();
-        } else {
-            welcomeScreen.show(savedInstanceState);
-        }*/
-        konfettiView = (KonfettiView) findViewById(R.id.viewKonfetti);
+        sessionManager = SessionManager.getInstance();
+        sessionManager.setActivity(this);
+        usuariosGuardados = ComodinUsuariosGuardados.getInstance(this);
+        request = getIntent().getParcelableExtra("request");
+        KonfettiView konfettiView = (KonfettiView) findViewById(R.id.viewKonfetti);
         konfettiView.build()
                 .addColors(ContextCompat.getColor(this, R.color.colorPrimaryDark), Color.RED, Color.YELLOW, Color.GREEN)
                 .setDirection(0.0, 359.0)
@@ -44,9 +50,7 @@ public class BienvenidoActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_continuar_bienvenida)
     public void click() {
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.animator.enter, R.animator.exit);
+        ComodinUtils.login(BienvenidoActivity.this, request, sessionManager, usuariosGuardados, false);
     }
 
     @Override
@@ -54,4 +58,6 @@ public class BienvenidoActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         welcomeScreen.onSaveInstanceState(outState);
     }
+
+
 }

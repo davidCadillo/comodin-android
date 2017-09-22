@@ -6,24 +6,22 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.*;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.tusueldo.comodin.connections.api.login.ComodinLoginRequest;
+import com.tusueldo.comodin.connections.api.login.ComodinTypeDateLogin;
 import com.tusueldo.comodin.model.*;
 import com.tusueldo.comodin.connections.api.IRetrofitServiceApi;
 import com.tusueldo.comodin.connections.api.RetrofitAdapter;
 import com.tusueldo.comodin.model.databases.DatabaseUbigeosHelper;
-import com.tusueldo.comodin.model.types.ComodinValues;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.ui.ComodinAlertDialog;
 import com.tusueldo.comodin.ui.ComodinProgressDialog;
 import com.tusueldo.comodin.connections.api.register.ComodinRegisterErrors;
-import com.tusueldo.comodin.utils.ComodinSharedPreferences;
 import com.tusueldo.comodin.utils.ComodinUtils;
 import com.tusueldo.comodin.utils.ComodinValidator;
 import okhttp3.ResponseBody;
@@ -133,27 +131,25 @@ public abstract class UserFragment extends Fragment {
     }
 
 
-    public void registerUser(User user) {
-        IRetrofitServiceApi serviceApi = new RetrofitAdapter().getAdapater().create(IRetrofitServiceApi.class);
-        Call<ResponseBody> call;
-        if (user instanceof UserIndependiente) {
-            call = serviceApi.regiserUserIndependiente((UserIndependiente) user);
-        } else {
-            call = serviceApi.regiserUserEmpresa((UserEmpresa) user);
-        }
-        final MaterialDialog materialDialog = ComodinProgressDialog.showProgressBar(getActivity(), R.string.regitrando, R.string.esperar);
+    public void registerUser(final User user) {
+        IRetrofitServiceApi serviceApi = RetrofitAdapter.getClient().create(IRetrofitServiceApi.class);
+        Call<ResponseBody> call = serviceApi.registerUser(user);
+         ComodinProgressDialog.showProgressBar(getActivity(), R.string.regitrando, R.string.esperar);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-                        ComodinProgressDialog.finish(materialDialog);
+                        ComodinProgressDialog.finish();
                         Intent i = new Intent(getActivity(), BienvenidoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("request", new ComodinLoginRequest(ComodinTypeDateLogin.EMAIL, user.getEmail(), user.getPassword()));
+                        i.putExtras(bundle);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.animator.enter, R.animator.exit);
                     } else {
-                        ComodinProgressDialog.finish(materialDialog);
+                        ComodinProgressDialog.finish();
                         fixErrors(response);
                     }
                 } catch (Exception e) {
@@ -163,8 +159,8 @@ public abstract class UserFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                ComodinProgressDialog.finish();
                 ComodinAlertDialog.showDialogMaterialInformative(getActivity(), R.string.error, R.string.error_login, android.R.string.ok);
-                ComodinProgressDialog.finish(materialDialog);
             }
         });
     }

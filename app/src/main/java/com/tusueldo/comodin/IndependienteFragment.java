@@ -1,14 +1,12 @@
 package com.tusueldo.comodin;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -16,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.*;
-import com.tusueldo.comodin.model.UserIndependiente;
+import com.tusueldo.comodin.model.User;
 import com.tusueldo.comodin.model.types.ComodinValues;
 import com.tusueldo.comodin.model.types.TypeFieldDate;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
@@ -115,32 +113,26 @@ public class IndependienteFragment extends UserFragment {
 
     @OnClick(R.id.btn_registro)
     public void click() {
-
-        /*int position = campo_genero.getSelectedItemPosition();
-        Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();*/
-
-        UserIndependiente userIndependiente = new UserIndependiente();
+        User user = new User();
         if (ComodinValidator.validacionCompleta) {
             if (ComodinValidator.rucvalidado) {
-                userIndependiente.setRuc(campo_ruc.getText().toString());
-                userIndependiente.setDireccion(ComodinValidator.direccion);
-                userIndependiente.setValidate_ruc(ComodinValidator.ruc_validate_server);
+                user.setRuc(campo_ruc.getText().toString());
+                user.setDireccion(ComodinValidator.direccion);
+                user.setValidateRuc(ComodinValidator.ruc_validate_server);
+                user.setNombreComercial(campo_nombreComercial.getText().toString());
             }
-            userIndependiente.setTipo_usuario_id(1);
-            userIndependiente.setNombresyapellidos(campo_nombre.getText().toString().toLowerCase());
-            userIndependiente.setUbigeo_id(ComodinValidator.ubigeo);
-            userIndependiente.setFecha_nac(ComodinValidator.campoFechaCompleta);
-            userIndependiente.setEmail(campo_correo.getText().toString());
-            userIndependiente.setPassword(campo_password.getText().toString());
-            userIndependiente.setCelular(campo_celular.getText().toString());
-            userIndependiente.setGender(gender);
-            userIndependiente.setNews(isNews());
-            userIndependiente.setNombre_comercial(campo_nombreComercial.getText().toString());
-//            Toast.makeText(getActivity(), userIndependiente.toString(), Toast.LENGTH_SHORT).show();
-            registerUser(userIndependiente);
+            user.setTipoUsuarioId(1);
+            user.setNombresyapellidos(campo_nombre.getText().toString().toLowerCase());
+            user.setUbigeoId(ComodinValidator.ubigeo);
+            user.setFechaNac(ComodinValidator.campoFechaCompleta);
+            user.setEmail(campo_correo.getText().toString());
+            user.setPassword(campo_password.getText().toString());
+            user.setCelular(campo_celular.getText().toString());
+            user.setGender(gender);
+            user.setNews(isNews());
+            registerUser(user);
 
         }
-
     }
 
 

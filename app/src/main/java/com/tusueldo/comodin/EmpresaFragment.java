@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import com.tusueldo.comodin.model.UserEmpresa;
+import com.tusueldo.comodin.model.User;
 import com.tusueldo.comodin.model.types.TypeUserLogin;
 import com.tusueldo.comodin.utils.ComodinValidator;
 
@@ -69,19 +69,19 @@ public class EmpresaFragment extends UserFragment {
     @OnClick(R.id.btn_registro)
     public void click() {
         if (ComodinValidator.validacionCompleta) {
-            UserEmpresa userEmpresa = new UserEmpresa();
-            userEmpresa.setRuc(campo_ruc.getText().toString());
-            userEmpresa.setRazon_social(campo_razon_social.getText().toString());
-            userEmpresa.setDireccion(campo_direccion.getText().toString());
-            userEmpresa.setValidate_ruc(ComodinValidator.ruc_validate_server);
-            userEmpresa.setUbigeo_id(ComodinValidator.ubigeo);
-            userEmpresa.setEmail(campo_correo.getText().toString());
-            userEmpresa.setCelular(campo_celular.getText().toString());
-            userEmpresa.setPassword(campo_password.getText().toString());
-            userEmpresa.setNombre_comercial(campo_nombreComercial.getText().toString());
-            userEmpresa.setTipo_usuario_id(2);
-            userEmpresa.setNews(isNews());
-            registerUser(userEmpresa);
+            User user = new User();
+            user.setRuc(campo_ruc.getText().toString());
+            user.setRazonSocial(campo_razon_social.getText().toString());
+            user.setDireccion(campo_direccion.getText().toString());
+            user.setValidateRuc(ComodinValidator.ruc_validate_server);
+            user.setUbigeoId(ComodinValidator.ubigeo);
+            user.setEmail(campo_correo.getText().toString());
+            user.setCelular(campo_celular.getText().toString());
+            user.setPassword(campo_password.getText().toString());
+            user.setNombreComercial(campo_nombreComercial.getText().toString());
+            user.setTipoUsuarioId(2);
+            user.setNews(isNews());
+            registerUser(user);
         }
     }
 
