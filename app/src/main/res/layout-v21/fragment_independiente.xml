@@ -38,7 +38,6 @@
 
 
     </LinearLayout>
-
     <!--BEGIN Aqui va los campos de nombres y apellidos -->
     <LinearLayout
         android:id="@+id/datos_basicos"
@@ -56,21 +55,48 @@
             android:src="@drawable/ic_person_black_24dp"
             android:tint="@color/colorPrimaryDark" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_nombre"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/campo_nombre"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nombres"
-                android:inputType="textPersonName"
-                android:maxLength="50"
+                android:layout_weight="1"
                 android:nextFocusDown="@+id/campo_apellido"
-                android:nextFocusRight="@+id/campo_apellido" />
-        </android.support.design.widget.TextInputLayout>
+                android:nextFocusRight="@+id/campo_apellido">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/campo_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nombres"
+                    android:inputType="textPersonName"
+                    android:maxLength="30" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_apellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/campo_apellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/apellidos"
+                    android:inputType="textPersonName"
+                    android:maxLength="30"
+                    android:nextFocusDown="@+id/campo_correo_"
+                    android:nextFocusRight="@+id/campo_correo_" />
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -79,10 +105,11 @@
 
     <!--BEGIN Aqui va el campo de correo-->
 
-    <include layout="@layout/layout_correo" />
+    <include
+        android:id="@+id/campo_correo_"
+        layout="@layout/layout_correo" />
 
     <!--END Aqui va el campo de correo-->
-
 
     <!--BEGIN Aqui va la fecha de nacimiento-->
 

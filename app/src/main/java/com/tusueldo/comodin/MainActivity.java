@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        agregarToolbar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -88,20 +89,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragmentoGenerico = null;
+        Fragment fragmentSelected = null;
         int id = item.getItemId();
         if (id == R.id.nav_home) {
+            fragmentSelected = new TimelineFragment();
         } else if (id == R.id.nav_myaccount) {
-            fragmentoGenerico = new CuentaFragment(getUser());
+            fragmentSelected = new CuentaFragment(getUser());
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_social_network) {
         }
 
-        if (fragmentoGenerico != null) {
+        if (fragmentSelected != null) {
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.contenedor_principal, fragmentoGenerico)
+                    .replace(R.id.contenedor_principal, fragmentSelected)
                     .commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,6 +122,19 @@ public class MainActivity extends AppCompatActivity
         return usuario != null;
     }
 
+
+
+    private void agregarToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.drawer_toggle);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
     class HeaderViewHolder {
 
         @BindView(R.id.img_user) ImageView img_user;
@@ -135,7 +150,7 @@ public class MainActivity extends AppCompatActivity
             if (checkUser()) {
                 tv_email.setText(user.getEmail());
                 if (user.getTipoUsuarioId() == 1 && user.getRuc() == null) {
-                    tv_nombre.setText(ComodinUtils.toUpperWord(user.getNombresyapellidos()));
+                    tv_nombre.setText(ComodinUtils.formatNames(user.getNombresyapellidos()));
                 } else {
                     tv_nombre.setText(user.getNombreComercial());
                 }

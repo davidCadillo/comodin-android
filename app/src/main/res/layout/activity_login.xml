@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3FFFFFF"
+    android:background="@drawable/login_background"
     tools:activity="com.tusueldo.comodin.RegisterActivity">
 
     <android.support.v4.widget.NestedScrollView

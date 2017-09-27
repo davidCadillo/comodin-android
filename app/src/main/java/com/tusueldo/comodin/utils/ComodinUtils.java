@@ -49,22 +49,6 @@ public class ComodinUtils {
                 if (TextUtils.isEmpty(texto)) {//Si este es vacío se desactiva el error y el contador
                     textInputLayout.setErrorEnabled(false);
                     textInputLayout.setCounterEnabled(false);
-                } else {
-                    switch (campo) {
-                        case ComodinValues.NOMBRE:
-                            String[] nombres = texto.split(" ");
-                            if (nombres.length == 1) {
-                                ComodinValidator.nombreValidado = false;
-                                ComodinUtils.setFieldInvalidateFull(textInputLayout, imageView, R.string.falta_apellido_validacion, 50);
-                            }
-                            break;
-                        case ComodinValues.CORREO:
-                            break;
-                        case ComodinValues.PASSWORD:
-                            break;
-                        case ComodinValues.TELEFONO:
-                            break;
-                    }
                 }
             }
         } else {
@@ -292,6 +276,11 @@ public class ComodinUtils {
             stringBuffer.append(toCapitalLetter(w)).append(" ");
         }
         return stringBuffer.toString().trim();
+    }
+
+    public static String formatNames(String names) {
+        String[] nombre = names.split("#");
+        return toUpperWord(nombre[1].concat(" ").concat(nombre[0]));
     }
 
     static String toCapitalLetter(String word) {

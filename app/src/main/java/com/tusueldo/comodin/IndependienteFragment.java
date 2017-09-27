@@ -30,10 +30,12 @@ public class IndependienteFragment extends UserFragment {
     @BindView(R.id.campo_fecha_nac_anio) TextInputEditText campo_fecha_nac_anio;
     @BindView(R.id.campo_fecha_nac_dia) TextInputEditText campo_fecha_nac_dia;
     @BindView(R.id.campo_nombre) TextInputEditText campo_nombre;
+    @BindView(R.id.campo_apellido) TextInputEditText campo_apellido;
     @BindView(R.id.campo_nombreComercial) TextInputEditText campo_nombreComercial;
 
     /*Se cargan los TextInputLayout*/
     @BindView(R.id.til_nombre) TextInputLayout til_nombre;
+    @BindView(R.id.til_apellido) TextInputLayout til_apellido;
     @BindView(R.id.til_fecha_nac_dia) TextInputLayout til_fecha_nac_dia;
     @BindView(R.id.til_fecha_nac_mes) TextInputLayout til_fecha_nac_mes;
     @BindView(R.id.til_fecha_nac_anio) TextInputLayout til_fecha_nac_anio;
@@ -122,7 +124,7 @@ public class IndependienteFragment extends UserFragment {
                 user.setNombreComercial(campo_nombreComercial.getText().toString());
             }
             user.setTipoUsuarioId(1);
-            user.setNombresyapellidos(campo_nombre.getText().toString().toLowerCase());
+            user.setNombresyapellidos(campo_apellido.getText().toString().concat("#").concat(campo_nombre.getText().toString()));
             user.setUbigeoId(ComodinValidator.ubigeo);
             user.setFechaNac(ComodinValidator.campoFechaCompleta);
             user.setEmail(campo_correo.getText().toString());
@@ -139,6 +141,11 @@ public class IndependienteFragment extends UserFragment {
     @OnTextChanged(R.id.campo_nombre)
     protected void onTextChangedNombre(CharSequence nombre) {
         ComodinValidator.validateNombre(TypeUserLogin.INDEPENDIENTE, nombre, til_nombre, img_nombres, button_registro);
+    }
+
+    @OnTextChanged(R.id.campo_apellido)
+    protected void onTextChangedApellido(CharSequence apellido) {
+        ComodinValidator.validateApellido(TypeUserLogin.INDEPENDIENTE, apellido, til_apellido, img_nombres, button_registro);
     }
 
     @OnTextChanged(R.id.campo_nombreComercial)

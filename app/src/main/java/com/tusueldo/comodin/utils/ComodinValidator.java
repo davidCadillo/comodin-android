@@ -39,7 +39,8 @@ public class ComodinValidator {
     public static String ubigeo;
     public static String direccion;
 
-    public static boolean nombreValidado = false;
+    static boolean nombreValidado = false;
+    static boolean apellidoValidado = false;
     public static boolean celularValidado = false;
     public static boolean correoValidado = false;
     private static boolean fechaNacimientoValidada = false;
@@ -106,37 +107,53 @@ public class ComodinValidator {
 
         String nombre = ComodinUtils.getTrim(campo_nombre).toLowerCase();
         boolean validarNombre = Pattern.matches(ComodinPatterns.NAMES, nombre);
-        int caracteres = nombre.length();
-        String[] cantidad_nombres = nombre.split(" ");
         if (validarNombre) {
-            if (cantidad_nombres.length >= 2) {
-                if (caracteres >= 7) {
-                    nombreValidado = true;
-                    ComodinUtils.setFieldValidateFull(til_nombre, R.string.correcto_validacion, img_nombres);
-                } else {
-                    nombreValidado = false;
-                    ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.minimo_letras_validacion, 50);
-                }
-            } else {
-                if (cantidad_nombres.length == 1 && nombre.contains(" ")) {
-                    nombreValidado = false;
-                    ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.falta_apellido_validacion, 50);
-                }
+            if (nombre.length() >= 3) {
+                nombreValidado = true;
+                ComodinUtils.setFieldValidateWithMessageAndCheck(til_nombre, R.string.correcto_validacion, true);
+                if (apellidoValidado)
+                    ComodinUtils.setColorIconValidate(img_nombres);
             }
-
         } else if (nombre.isEmpty()) {
             ComodinUtils.setFieldNormal(til_nombre, img_nombres);
             nombreValidado = false;
 
         } else if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, nombre)) {
-            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_numeros_validacion, 50);
+            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_numeros_validacion, 30);
             nombreValidado = false;
         } else {
-            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_permitido_validacion, 50);
+            ComodinUtils.setFieldInvalidateFull(til_nombre, img_nombres, R.string.no_permitido_validacion, 30);
             nombreValidado = false;
         }
         checkValidation(btn_registro, typeUserLogin);
         Log.d("Nombres", String.valueOf(nombreValidado));
+    }
+
+
+    public static void validateApellido(TypeUserLogin typeUserLogin, CharSequence campo_apellido, TextInputLayout til_apellido, ImageView img_nombres, Button btn_registro) {
+        String apellido = ComodinUtils.getTrim(campo_apellido).toLowerCase();
+        boolean validarApellido = Pattern.matches(ComodinPatterns.NAMES, apellido);
+        if (validarApellido) {
+            if (apellido.length() >= 3) {
+                apellidoValidado = true;
+                ComodinUtils.setFieldValidateWithMessageAndCheck(til_apellido, R.string.correcto_validacion, true);
+                if (nombreValidado)
+                    ComodinUtils.setColorIconValidate(img_nombres);
+            }
+
+        } else if (apellido.isEmpty()) {
+            ComodinUtils.setFieldNormal(til_apellido, img_nombres);
+            apellidoValidado = false;
+
+        } else if (Pattern.matches(ComodinPatterns.HAS_SOME_NUMBER, apellido)) {
+            ComodinUtils.setFieldInvalidateFull(til_apellido, img_nombres, R.string.no_numeros_validacion, 30);
+            apellidoValidado = false;
+        } else {
+            ComodinUtils.setFieldInvalidateFull(til_apellido, img_nombres, R.string.no_permitido_validacion, 30);
+            apellidoValidado = false;
+        }
+        checkValidation(btn_registro, typeUserLogin);
+        Log.d("Apellidos", String.valueOf(apellidoValidado));
     }
 
     public static void validateCorreo(TypeUserLogin typeUserLogin, CharSequence campo_email, TextInputLayout til_correo, ImageView img_correo, Button btn_registro) {
@@ -336,7 +353,7 @@ public class ComodinValidator {
 
         boolean validacion = false;
         if (typeUserLogin == TypeUserLogin.INDEPENDIENTE) {
-            validacion = nombreValidado && correoValidado && fechaNacimientoValidada
+            validacion = nombreValidado && apellidoValidado && correoValidado && fechaNacimientoValidada
                     && distritoValidado && genero_validado && celularValidado && passwordValidado;
         } else if (typeUserLogin == TypeUserLogin.EMPRESA) {
             if (ruc_validate_server) {

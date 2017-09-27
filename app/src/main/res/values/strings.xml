@@ -19,7 +19,7 @@
     <string name="empresa">Empresa</string>
     <string name="tengo_ruc">Tengo RUC:</string>
     <string name="datos_personales">Datos personales</string>
-    <string name="nombres">Nombres y apellidos</string>
+    <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
     <string name="correo">Correo</string>
 
