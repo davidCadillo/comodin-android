@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.tusueldo.comodin.utils.ComodinUtils;
 
 public class UserJson implements Parcelable {
 
@@ -159,7 +160,7 @@ public class UserJson implements Parcelable {
     }
 
     public String getNombresyapellidos() {
-        return nombresyapellidos;
+        return ComodinUtils.formatNames(nombresyapellidos);
     }
 
     public void setNombresyapellidos(String nombresyapellidos) {

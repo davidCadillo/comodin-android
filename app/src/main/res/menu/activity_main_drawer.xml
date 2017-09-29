@@ -12,21 +12,9 @@
             android:id="@+id/nav_myaccount"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/menu_drawer_micuenta" />
-
-
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/menu_drawer_settings" />
     </group>
-        <item android:title="@string/menu_drawer_item_ajustes">
-            <menu>
-
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings_black_24dp"
-                    android:title="@string/menu_drawer_settings" />
-                <item
-                    android:id="@+id/nav_social_network"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_drawer_redes_sociales" />
-
-            </menu>
-        </item>
 </menu>

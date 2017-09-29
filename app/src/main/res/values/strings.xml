@@ -156,6 +156,9 @@
     <string name="etiqueta_contrasena">Cambiar contraseña</string>
     <string name="txt_cambiar_password">Cambiar contraseña</string>
     <string name="continuar">Continuar</string>
+    <string name="redes_sociales">Redes sociales</string>
+    <string name="conectar_con_facebook">Conectar con facebook</string>
+    <string name="conectar_con_google">Conectar con Google</string>
 
 
 </resources>

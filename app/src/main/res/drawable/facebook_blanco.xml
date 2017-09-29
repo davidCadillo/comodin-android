@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/ic_facebook_box"
-    android:tint="#B3FFFFFF" />
+    android:tint="#3b5998" />
 
     <!--android:tint="#3b5998"-->

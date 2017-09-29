@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity
             fragmentSelected = new CuentaFragment(getUser());
         } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_social_network) {
         }
 
         if (fragmentSelected != null) {
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity
             if (checkUser()) {
                 tv_email.setText(user.getEmail());
                 if (user.getTipoUsuarioId() == 1 && user.getRuc() == null) {
-                    tv_nombre.setText(ComodinUtils.formatNames(user.getNombresyapellidos()));
+                    tv_nombre.setText(user.getNombresyapellidos());
                 } else {
                     tv_nombre.setText(user.getNombreComercial());
                 }
